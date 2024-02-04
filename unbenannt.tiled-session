@@ -1,0 +1,98 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "assets/tilesets/pa1-terrain.tsx",
+    "expandedProjectPaths": [
+        ".",
+        "assets/tilesets",
+        "assets"
+    ],
+    "file.lastUsedOpenFilter": "Alle Dateien (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "C:/Users/fboro/Desktop/Tiled/level1.tmx#level1": {
+            "scaleInEditor": 1
+        },
+        "C:/Users/fboro/Desktop/Tiled/level1.tmx#sky": {
+            "scaleInEditor": 1
+        },
+        "C:/Users/fboro/Desktop/Tiled/tilesets/blue_sky1.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/fboro/Desktop/Tiled/tilesets/pa1-terrain.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/fboro/Desktop/Tiled/unbenannt.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 271.5,
+                "y": 4
+            }
+        },
+        "assets/tilemaps/blue_sky1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "assets/tilemaps/pa1-terrain.tsx": {
+            "scaleInDock": 1
+        },
+        "assets/tilemaps/sky.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "assets/tilesets/blue_sky1.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "assets/tilesets/pa1-terrain.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "assets/tilesets/wl3-north.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/fboro/Desktop/MI2 Phaser Game/assets/tilemaps",
+    "last.externalTilesetPath": "C:/Users/fboro/Desktop/Tiled/tilesets",
+    "last.imagePath": "C:/Users/fboro/Desktop/MI2 Phaser Game/assets/tilemaps",
+    "map.fixedSize": false,
+    "map.height": 30,
+    "map.lastUsedExportFilter": "JSON-Kartendateien (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 200,
+    "openFiles": [
+        "C:/Users/fboro/Desktop/Tiled/unbenannt.tmx",
+        "assets/tilesets/pa1-terrain.tsx",
+        "assets/tilesets/blue_sky1.tsx"
+    ],
+    "project": "unbenannt.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "C:/Users/fboro/Desktop/Tiled/tilesets/pa1-terrain.tsx",
+        "assets/tilemaps/sky.tsx",
+        "assets/tilemaps/blue_sky1.tsx",
+        "C:/Users/fboro/Desktop/Tiled/unbenannt.tmx",
+        "assets/tilesets/blue_sky1.tsx",
+        "assets/tilesets/pa1-terrain.tsx",
+        "assets/tilesets/wl3-north.tsx"
+    ],
+    "tileset.lastUsedFilter": "Tiled-Kachelsatzdateien (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.transparentColor": "#000000",
+    "tileset.useTransparentColor": true
+}

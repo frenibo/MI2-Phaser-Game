@@ -25,7 +25,7 @@ class Example extends Phaser.Scene
         this.input.on('pointerdown', () =>
         {
             this.input.stopPropagation();
-            this.scene.switch('firstScene');
+            this.scene.switch('titleScreen');
         });
 
         this.add.image(400, 300, 'sky');
