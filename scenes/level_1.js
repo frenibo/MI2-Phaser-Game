@@ -8,7 +8,8 @@ class Level_1 extends Phaser.Scene
     player;
     tileset;
     map;
-    interactive;
+    semiPlatform;
+    solid;
     background;
     helptext;
 
@@ -44,9 +45,15 @@ class Level_1 extends Phaser.Scene
         // index (0 in this case).
         
         this.background = this.map.createLayer('Background', this.tiles, 0, 0);
-        this.interactive = this.map.createLayer('Interactive', this.tiles, 0, 0);
+        this.solid = this.map.createLayer('Solid', this.tiles, 0, 0);
+        this.semiPlatform = this.map.createLayer('SemiPlatform', this.tiles, 0, 0);
 
-        this.interactive.setCollisionByProperty({ collider: true });
+        this.solid.setCollisionByProperty({ collides: true});
+        //this.semiPlatform.setCollisionByProperty({ oneWay: true});
+
+        this.semiPlatform.forEachTile(tile => {
+              tile.setCollision(false, false, true, false, false);
+        });
 
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
@@ -58,7 +65,8 @@ class Level_1 extends Phaser.Scene
         this.player.body.setBounce(0.2);
         this.player.body.setCollideWorldBounds(true);
 
-        this.physics.add.collider(this.player, this.interactive);
+        this.physics.add.collider(this.player, this.solid);
+        this.physics.add.collider(this.player, this.semiPlatform);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -79,7 +87,7 @@ class Level_1 extends Phaser.Scene
     update ()
     {
         this.player.body.setVelocityX(0);
-        this.physics.world.collide(this.player, this.interactive);
+        this.physics.world.collide(this.player, this.solid);
 
         if (this.cursors.left.isDown)
         {
