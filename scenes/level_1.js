@@ -29,12 +29,6 @@ class Level_1 extends Phaser.Scene
 
     create ()
     {
-        this.input.on('pointerdown', () =>
-        {
-            this.input.stopPropagation();
-            this.scene.switch('titleScreen');
-        });
-
         this.map = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
 
         // The first parameter is the name of the tileset in Tiled and the second parameter is the key
@@ -49,20 +43,16 @@ class Level_1 extends Phaser.Scene
         this.semiPlatform = this.map.createLayer('SemiPlatform', this.tiles, 0, 0);
 
         this.solid.setCollisionByProperty({ collides: true});
-        //this.semiPlatform.setCollisionByProperty({ oneWay: true});
 
         this.semiPlatform.forEachTile(tile => {
               tile.setCollision(false, false, true, false, false);
         });
 
-
-        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-
         this.player = this.add.rectangle(200, 240, 16, 32, 0xffff00);
 
         this.physics.add.existing(this.player);
 
-        this.player.body.setBounce(0.2);
+        //this.player.body.setBounce(0.2);
         this.player.body.setCollideWorldBounds(true);
 
         this.physics.add.collider(this.player, this.solid);
@@ -79,8 +69,13 @@ class Level_1 extends Phaser.Scene
             }
         }, this);
 
-        //const camera = this.camera.game;
-        //camera.startFollow(this.player);
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+        this.cameras.main.setViewport(0,0,576,320);
+
+        //this.cameras.main.setZoom(1.5);
+
+        this.cameras.main.startFollow(this.player);
 
     }
 
