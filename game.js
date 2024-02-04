@@ -1,11 +1,14 @@
 import FirstScene from "./scenes/scene1.js";
+import Example from "./scenes/example.js";
 
-var firstScene = new FirstScene();
+var firstScene = new Example();
 
 const config = {
-  type: Phaser.AUTO,
-  width: 640,
-	height: 360,
+	type: Phaser.AUTO,
+	//width: 640,
+	//height: 360,
+	width: 800,
+	height: 600,
 	backgroundColor: "b9eaff",
 	physics: {
 		default: 'arcade',
@@ -15,8 +18,8 @@ const config = {
 			debug: false,
 		}
 	},
-  //scene: [ FirstScene ]
-  scene: [ Phaser.Scene ]
+	//scene: [ FirstScene ]
+	scene: [ Phaser.Scene ]
 };
 
 var game = new Phaser.Game(config);

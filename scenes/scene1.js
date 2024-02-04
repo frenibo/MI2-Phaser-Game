@@ -4,7 +4,6 @@ class FirstScene extends Phaser.Scene {
         super({key:'firstScene'});
     };
 
-
     preload () {
         this.load.image('bug1', './assets/bug_1.png');
         this.load.image('bug2', './assets/bug_2.png');
@@ -14,7 +13,7 @@ class FirstScene extends Phaser.Scene {
     }
     
     create () {
-
+        
         const gameState = {
             score: 0
         }
