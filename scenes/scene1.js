@@ -13,6 +13,12 @@ class FirstScene extends Phaser.Scene {
     }
     
     create () {
+
+        this.input.on('pointerdown', () =>
+        {
+            this.input.stopPropagation();
+            this.scene.switch('exampleScene');
+        });
         
         const gameState = {
             score: 0

@@ -8,7 +8,7 @@ class Example extends Phaser.Scene
     player;
 
     constructor() {
-        super({key:'firstScene'});
+        super({key:'exampleScene'});
     };
 
     preload ()
@@ -22,6 +22,12 @@ class Example extends Phaser.Scene
 
     create ()
     {
+        this.input.on('pointerdown', () =>
+        {
+            this.input.stopPropagation();
+            this.scene.switch('firstScene');
+        });
+
         this.add.image(400, 300, 'sky');
 
         this.platforms = this.physics.add.staticGroup();

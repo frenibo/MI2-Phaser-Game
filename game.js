@@ -1,7 +1,8 @@
 import FirstScene from "./scenes/scene1.js";
 import Example from "./scenes/example.js";
 
-var firstScene = new Example();
+var firstScene = new FirstScene();
+var exampleScene = new Example();
 
 const config = {
 	type: Phaser.AUTO,
@@ -25,5 +26,12 @@ const config = {
 var game = new Phaser.Game(config);
 
 game.scene.add('firstScene', firstScene);
+game.scene.add('exampleScene', exampleScene);
 
-game.scene.start('firstScene');
+game.scene.start('exampleScene');
+
+this.input.on('pointerdown', () =>
+{
+	this.input.stopPropagation();
+	this.scene.switch('firstScene');
+});
