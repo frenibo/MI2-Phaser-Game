@@ -6,11 +6,11 @@ class FirstScene extends Phaser.Scene {
 
 
     preload () {
-        this.load.image('bug1', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/bug_1.png');
-        this.load.image('bug2', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/bug_2.png');
-        this.load.image('bug3', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/bug_3.png');
-        this.load.image('platform', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/platform.png');
-        this.load.image('codey', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/codey.png');
+        this.load.image('bug1', './assets/bug_1.png');
+        this.load.image('bug2', './assets/bug_2.png');
+        this.load.image('bug3', './assets/bug_3.png');
+        this.load.image('platform', './assets/platform.png');
+        this.load.image('codey', './assets/codey.png');
     }
     
     create () {
