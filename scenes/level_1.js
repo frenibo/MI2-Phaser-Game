@@ -76,10 +76,9 @@ class Level_1 extends Phaser.Scene
         //this.player.body.setBounce(0.2);
         this.player.body.setCollideWorldBounds(true);
 
-        this.physics.add.collider(this.player, this.solid);
-        this.physics.add.collider(this.player, this.semiPlatform);
+        this.physics.add.collider(this.player, this.interactiveLayer);
 
-        this.createCamera(this.player, this.map, 1);
+        this.createCamera(this.player, this.map, 2);
 
         // ENEMY //
 
@@ -97,8 +96,7 @@ class Level_1 extends Phaser.Scene
         //this.enemy1 = this.add.rectangle(330, 230, 24, 16, 0x013220);
         this.physics.add.existing(this.enemy1);
         this.enemy1.body.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemy1, this.solid);
-        this.physics.add.collider(this.enemy1, this.semiPlatform);
+        this.physics.add.collider(this.enemy1, this.interactiveLayer);
         this.physics.add.collider(this.enemy1, this.player);
 
         window.enemy2 = this.enemy2 = this.add.character({
@@ -115,8 +113,7 @@ class Level_1 extends Phaser.Scene
         //this.enemy1 = this.add.rectangle(330, 230, 24, 16, 0x013220);
         this.physics.add.existing(this.enemy2);
         this.enemy2.body.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemy2, this.solid);
-        this.physics.add.collider(this.enemy2, this.semiPlatform);
+        this.physics.add.collider(this.enemy2, this.interactiveLayer);
         this.physics.add.collider(this.enemy2, this.player);
 
     }
@@ -206,22 +203,19 @@ class Level_1 extends Phaser.Scene
         // TODO: Layers need to be normed.
         // You can load a layer from the map using the layer name from Tiled, or by using the layer
         // index (0 in this case).
-        this.background = this.map.createLayer('Background', this.tiles, this.rPos.x, this.rPos.y);
-        this.solid = this.map.createLayer('Solid', this.tiles, this.rPos.x, this.rPos.y);
-        this.semiPlatform = this.map.createLayer('SemiPlatform', this.tiles, this.rPos.x, this.rPos.y);
+        this.backgroundLayer = this.map.createLayer('Background', this.tiles, this.rPos.x, this.rPos.y);
+        this.interactiveLayer = this.map.createLayer('Interactive', this.tiles, this.rPos.x, this.rPos.y);
+        this.overheadLayer = this.map.createLayer('Overhead', this.tiles, this.rPos.x, this.rPos.y);
+        this.scriptLayer = this.map.createLayer('Script', this.tiles, this.rPos.x, this.rPos.y);
 
-        this.solid.forEachTile(tile => {
+        this.interactiveLayer.forEachTile(tile => {
             if(tile.properties['collides']) {
                 tile.setCollision(true, true, true, true, false);
             }
-        });
-
-        this.semiPlatform.forEachTile(tile => {
             if(tile.properties['oneWay']) {
                 tile.setCollision(false, false, true, false, false);
             }
         });
-
     }
 
 }

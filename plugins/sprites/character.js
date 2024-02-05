@@ -118,10 +118,11 @@ export class Character extends Phaser.GameObjects.Sprite {
             offsetX = this.body.width + 2;    
         }
         
-        var tile = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Solid');
+        var tile = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
         
         //if(this.body.blocked.down && tile && tile.index < 0) {     
-        if(this.body.blocked.down && tile && tile.collides == false) { 
+        //if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) { 
+        if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) { 
             return true;    
         } 
         else {
