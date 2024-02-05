@@ -12,9 +12,12 @@ var level_1 = new Level_1();
 
 const config = {
 	type: Phaser.AUTO,
-	width: 576,
-	height: 320,
-	backgroundColor: "b9eaff",
+	//canvas dimensions
+	//width: 576,
+	//height: 320,
+	width: 800,
+	height: 600,
+	backgroundColor: "000000",
 	physics: {
 		default: 'arcade',
 		arcade: {

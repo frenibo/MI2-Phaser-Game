@@ -16,6 +16,25 @@ class Level_1 extends Phaser.Scene
         x:200,
         y:240,
     }
+    //relativePosition
+    rPos = {
+        x: 0,
+        y: 0
+    }
+    //mapDimensions
+    mapDimensions = {
+        x: 0,
+        y: 0
+    }
+    canvasDimensions = {
+        width: 0,
+        height: 0
+    }
+    tileDimensions = {
+        width: 16,
+        height: 16
+    }
+    playerSpeed = 200;
 
     constructor() {
         super({key:'level_1'});
@@ -35,38 +54,21 @@ class Level_1 extends Phaser.Scene
 
     create ()
     {
-        this.map = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
-
+        // sceneCreateDefault() completes all the nonspecific initial steps in create() of a scene.
         // The first parameter is the name of the tileset in Tiled and the second parameter is the key
         // of the tileset image used when loading the file in preload.
-        this.tiles = this.map.addTilesetImage('level1', 'tiles', 16, 16);
-
-        // You can load a layer from the map using the layer name from Tiled, or by using the layer
-        // index (0 in this case).
-        
-        this.background = this.map.createLayer('Background', this.tiles, 0, 0);
-        this.solid = this.map.createLayer('Solid', this.tiles, 0, 0);
-        this.semiPlatform = this.map.createLayer('SemiPlatform', this.tiles, 0, 0);
-
-        //this.solid.setCollisionByProperty({ collides: true});
-
-        this.solid.forEachTile(tile => {
-            tile.setCollision(true, true, true, true, false);
-        });
-
-        this.semiPlatform.forEachTile(tile => {
-              tile.setCollision(false, false, true, false, false);
-        });
+        this.sceneCreateDefault('level1', 'tiles');
+        //console.log(window.canvasDimensions.x);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
         window.player = this.player = this.add.character({
-			x: this.spawnPoint.x,
-			y: this.spawnPoint.y,
+			x: this.spawnPoint.x + this.rPos.x,
+			y: this.spawnPoint.y + this.rPos.y,
             image: 'player',
             name: 'player',
             playable: true,
-			speed: 200
+			speed: this.playerSpeed
 		});
 
         this.physics.add.existing(this.player);
@@ -77,13 +79,13 @@ class Level_1 extends Phaser.Scene
         this.physics.add.collider(this.player, this.solid);
         this.physics.add.collider(this.player, this.semiPlatform);
 
-        this.createCamera(this.player, this.map);
+        this.createCamera(this.player, this.map, 1);
 
         // ENEMY //
 
         window.enemy1 = this.enemy1 = this.add.character({
-			x: 330,
-			y: 230,
+			x: 330 + this.rPos.x,
+			y: 230 + this.rPos.y,
             image: 'enemy',
             name: 'enemy1',
             playable: false,
@@ -145,15 +147,77 @@ class Level_1 extends Phaser.Scene
     };
     */
 
-    createCamera = function(player, map, zoom = 1, gameWidth = this.cameras.main.centerX*2, gameHeight = this.cameras.main.centerY*2) {
+    createCamera = function(player, map, zoom = 1, canvasWidth = this.canvasDimensions.width, canvasHeight = this.canvasDimensions.height) {
 
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        //this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(0, 0, canvasWidth, canvasHeight);
 
-        this.cameras.main.setViewport(0,0,gameWidth,gameHeight);
+        this.cameras.main.setViewport(0,0,canvasWidth,canvasHeight);
 
         this.cameras.main.setZoom(zoom);
 
         this.cameras.main.startFollow(player);
+
+    }
+
+    // sceneCreateDefault() completes all the nonspecific initial steps in create() of a scene.
+    // The first parameter is the name of the tileset in Tiled and the second parameter is the key
+    // of the tileset image used when loading the file in preload.
+    sceneCreateDefault = function(tilesetNameInTiled, tilesetImageKey) {
+
+        this.canvasDimensions = {
+            width: this.cameras.main.centerX*2, // is 800
+            height: this.cameras.main.centerY*2 // is 600
+        }
+
+        this.map = this.make.tilemap({ 
+            key: 'map', 
+            tileWidth: this.tileDimensions.width, // is 16
+            tileHeight: this.tileDimensions.height // is 16
+        });
+
+        // The first parameter is the name of the tileset in Tiled and the second parameter is the key
+        // of the tileset image used when loading the file in preload.
+        this.tiles = this.map.addTilesetImage(tilesetNameInTiled, tilesetImageKey, this.tileDimensions.width, this.tileDimensions.height);
+
+        this.mapDimensions = {
+            x: this.map.widthInPixels,
+            y: this.map.heightInPixels
+        }
+
+        // Places the map in he middle of the canvas if the map is smaller than the canvas
+        if(this.mapDimensions.x < this.canvasDimensions.width && this.mapDimensions.y < this.canvasDimensions.height) {
+            // relativePosition
+            this.rPos = {
+                x: (this.canvasDimensions.width - this.mapDimensions.x) / 2,
+                y: (this.canvasDimensions.height - this.mapDimensions.y) / 2
+            }
+        }
+        else {
+            this.rPos = {
+                x: 0,
+                y: 0
+            }
+        }
+        
+        // TODO: Layers need to be normed.
+        // You can load a layer from the map using the layer name from Tiled, or by using the layer
+        // index (0 in this case).
+        this.background = this.map.createLayer('Background', this.tiles, this.rPos.x, this.rPos.y);
+        this.solid = this.map.createLayer('Solid', this.tiles, this.rPos.x, this.rPos.y);
+        this.semiPlatform = this.map.createLayer('SemiPlatform', this.tiles, this.rPos.x, this.rPos.y);
+
+        this.solid.forEachTile(tile => {
+            if(tile.properties['collides']) {
+                tile.setCollision(true, true, true, true, false);
+            }
+        });
+
+        this.semiPlatform.forEachTile(tile => {
+            if(tile.properties['oneWay']) {
+                tile.setCollision(false, false, true, false, false);
+            }
+        });
 
     }
 
