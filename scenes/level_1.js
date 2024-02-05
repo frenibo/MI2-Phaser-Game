@@ -89,7 +89,9 @@ class Level_1 extends Phaser.Scene
             image: 'enemy',
             name: 'enemy1',
             playable: false,
-			speed: 200
+            map: this.map,
+			speed: 30
+            //speed: 100
 		});
 
         //this.enemy1 = this.add.rectangle(330, 230, 24, 16, 0x013220);
@@ -99,10 +101,37 @@ class Level_1 extends Phaser.Scene
         this.physics.add.collider(this.enemy1, this.semiPlatform);
         this.physics.add.collider(this.enemy1, this.player);
 
+        window.enemy2 = this.enemy2 = this.add.character({
+			x: 330 + this.rPos.x,
+			y: 150 + this.rPos.y,
+            image: 'enemy',
+            name: 'enemy2',
+            playable: false,
+            map: this.map,
+			speed: 30
+            //speed: 100
+		});
+
+        //this.enemy1 = this.add.rectangle(330, 230, 24, 16, 0x013220);
+        this.physics.add.existing(this.enemy2);
+        this.enemy2.body.setCollideWorldBounds(true);
+        this.physics.add.collider(this.enemy2, this.solid);
+        this.physics.add.collider(this.enemy2, this.semiPlatform);
+        this.physics.add.collider(this.enemy2, this.player);
+
     }
 
     update ()
     {
+        this.enemy1.SetInstruction({action: 'patrol'});
+
+        this.enemy1.update();
+
+        this.enemy2.SetInstruction({action: 'patrol'});
+
+        this.enemy2.update();
+
+
         //*
         // Horizontal movement
 		if (this.cursors.left.isDown)
@@ -112,40 +141,14 @@ class Level_1 extends Phaser.Scene
 
         // Vertical movement
         if (this.cursors.up.isDown)
-            this.player.SetInstruction({action: 'jump', option: 'up'});
+            this.player.SetInstruction({action: 'jump'});
 
         this.player.update();
-        /*/
 
-        // ENEMY // 
-        /*
-        this.enemy.body.setVelocityX(0);
-        if(enemy.previousXPosition == enemy.body.position.x				
-            || (enemy.currentDirection == 'left' && enemy.checkForCliff('left'))				
-            || (enemy.currentDirection == 'right' && enemy.checkForCliff('right'))) 
-        {				
-            this.changeDirection(enemy);			
-        }
-        */
+        //console.log('mouse X: ', this.input.mousePointer.x);
+        //console.log('mouse Y: ', this.input.mousePointer.y);  
+
     }
-    /*
-    checkForCliff = function(side) {
-        var offsetX;    
-        if(side == 'left') {
-            offsetX = -3;     
-        } else if(side == 'right') {
-            offsetX = this.body.width + 2;    
-        }    
-        var tile = this.map.getTileWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height);
-        if(this.isTouchingGround() && tile && emptySpaceTiles.indexOf(tile.index) > -1) {        
-            console.log("You are at the cliff.");        
-            return true;    
-        } 
-        else {        
-            return false;    
-        }
-    };
-    */
 
     createCamera = function(player, map, zoom = 1, canvasWidth = this.canvasDimensions.width, canvasHeight = this.canvasDimensions.height) {
 

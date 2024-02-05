@@ -1,6 +1,6 @@
 export class Character extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable }){
+    constructor({ scene, x, y, image, name, path, speed, playable, map}){
         super(scene, x, y, image);
 
         this.path = path || false;
@@ -9,6 +9,9 @@ export class Character extends Phaser.GameObjects.Sprite {
         this.image = image;
         this.name = name || "anonymous";
         this.playable = playable || false;
+        this.previousXPosition;
+        this.previousXVelocity;
+        this.map = map || undefined;
 
         // Character movements are passed as instruction objects to
         // be evaluated on the next call to update
@@ -37,7 +40,6 @@ export class Character extends Phaser.GameObjects.Sprite {
         if(!instruction.action) return;
         // Walking requires a direction
         if(instruction.action == 'move' && !instruction.option) return;
-        if(instruction.action == 'jump' && !instruction.option) return;
 
         this.instructions.push(instruction);
     }
@@ -54,8 +56,11 @@ export class Character extends Phaser.GameObjects.Sprite {
                     this.DoMove(instruction.option);
                     break;
                 case 'jump':
-                    this.DoJump(instruction.option);
+                    this.DoJump();
                     break;
+                case 'patrol':
+                    this.DoPatrol();
+                    break
             }
         }
     }
@@ -77,15 +82,52 @@ export class Character extends Phaser.GameObjects.Sprite {
     /**
      * Process a jump instruction
      */
-    DoJump(direction){
-        switch(direction){
-            case 'up':
-                if (this.body.blocked.down) {
-                    this.body.setVelocityY(-this.speed*1.025);
-                }
-                break;
+    DoJump(){
+        if (this.body.blocked.down) {
+            this.body.setVelocityY(-this.speed*1.025);
         }
     }
+    DoPatrol(){
+        if(!this.body) return;
+        if(this.isHit >= 0) return;
+        //console.log(this.previousXVelocity);
+        if(
+            (this.previousXPosition == this.body.position.x)
+            || (this.previousXVelocity < 0 && this.checkForCliff('left'))				
+            || (this.previousXVelocity > 0 && this.checkForCliff('right'))
+           // || (enemy.currentDirection == 'left' && enemy.checkForCliff('left'))				
+           // || (enemy.currentDirection == 'right' && enemy.checkForCliff('right'))
+           ) 
+        {				
+            //this.changeDirection(enemy);
+            
+            this.speed = -this.speed;	
+        }
+
+        this.previousXPosition = this.body.position.x;
+
+        if(this.body.velocity.x == 0) this.body.setVelocityX(-this.speed);
+        this.previousXVelocity = this.body.velocity.x;
+    }
+
+    checkForCliff = function(side) {
+        var offsetX;    
+        if(side == 'left') {
+            offsetX = -3;     
+        } else if(side == 'right') {
+            offsetX = this.body.width + 2;    
+        }
+        
+        var tile = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Solid');
+        
+        //if(this.body.blocked.down && tile && tile.index < 0) {     
+        if(this.body.blocked.down && tile && tile.collides == false) { 
+            return true;    
+        } 
+        else {
+            return false;
+        }
+    };
 }
 
 export class CharacterPlugin extends Phaser.Plugins.BasePlugin {

@@ -16,7 +16,7 @@ class TitleScreen extends Phaser.Scene {
             this.scene.switch('level_1');
         });
 
-        this.add.text(280, 150, 'Click to Start.', { fontSize: '15px', fill: '#000' })
+        this.add.text(280, 150, 'Click to Start.', { fontSize: '15px', fill: '#fff' })
     
     }
     
