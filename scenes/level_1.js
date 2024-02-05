@@ -77,25 +77,7 @@ class Level_1 extends Phaser.Scene
         this.physics.add.collider(this.player, this.solid);
         this.physics.add.collider(this.player, this.semiPlatform);
 
-        
-
-        /*
-        this.cursors.up.on('down', () =>
-        {
-            if (this.player.body.blocked.down)
-            {
-                this.player.body.setVelocityY(-205);
-            }
-        }, this);
-        */
-
-        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-
-        this.cameras.main.setViewport(0,0,576,320);
-
-        //this.cameras.main.setZoom(1.5);
-
-        this.cameras.main.startFollow(this.player);
+        this.createCamera(this.player, this.map);
 
         // ENEMY //
         this.enemy = this.add.rectangle(330, 230, 24, 16, 0x013220);
@@ -109,18 +91,6 @@ class Level_1 extends Phaser.Scene
 
     update ()
     {
-        /*
-        this.player.body.setVelocityX(0);
-
-        if (this.cursors.left.isDown)
-        {
-            this.player.body.setVelocityX(-200);
-        }
-        else if (this.cursors.right.isDown)
-        {
-            this.player.body.setVelocityX(200);
-        }
-        */
         //*
         // Horizontal movement
 		if (this.cursors.left.isDown)
@@ -164,6 +134,18 @@ class Level_1 extends Phaser.Scene
         }
     };
     */
+
+    createCamera = function(player, map, zoom = 1, gameWidth = this.cameras.main.centerX*2, gameHeight = this.cameras.main.centerY*2) {
+
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        this.cameras.main.setViewport(0,0,gameWidth,gameHeight);
+
+        this.cameras.main.setZoom(zoom);
+
+        this.cameras.main.startFollow(player);
+
+    }
 
 }
 
