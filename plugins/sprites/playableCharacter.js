@@ -20,37 +20,16 @@ export class PlayableCharacter extends Phaser.GameObjects.Sprite {
 
     update(){
 
-        if(this.isHit > 0) {
-            // While a character is hit, count dowm on each update to allow for recovery time
-			this.isHit--;
-		} else if(this.isHit === 0) {
-            // Character has recovered, reset their hit state
-            this.tint = 0xffffff;
-            this.isHit = -1;
-        } else {
-            // Always reset the local velocity to maintain a constant acceleration
-            this.body.setVelocityX(0);
-            // this.body.setVelocityX(0);
+        
+        // Always reset the local velocity to maintain a constant acceleration
+        this.body.setVelocityX(0);
+        // this.body.setVelocityX(0);
 
-            // Pre-programmed characters push appropriate walk instructions to follow their path
-            //if(this.path) this.DoPatrol();
-
-            // Process the instructions array
-            this.DoInstructions();
-            // Stop animations when not moving
-            if(this.body && this.body.velocity.x == 0 && this.body.velocity.y == 0){ 
-                //this.anims.stop();
-            }
-        }
+        // Process the instructions array
+        this.DoInstructions();
         
     }
 /**
-     * Cancel local velocity and stop animation
-     */
-    DoHalt(){
-        this.body.setVelocity(0);
-        //this.anims.stopAfterRepeat();
-    }
 
     /**
      * Push a provided instruction object onto the stack
@@ -59,6 +38,7 @@ export class PlayableCharacter extends Phaser.GameObjects.Sprite {
         if(!instruction.action) return;
         // Walking requires a direction
         if(instruction.action == 'move' && !instruction.option) return;
+        if(instruction.action == 'jump' && !instruction.option) return;
 
         this.instructions.push(instruction);
     }
@@ -73,6 +53,9 @@ export class PlayableCharacter extends Phaser.GameObjects.Sprite {
             switch(instruction.action){
                 case 'move':
                     this.DoMove(instruction.option);
+                    break;
+                case 'jump':
+                    this.DoJump(instruction.option);
                     break;
             }
         }
@@ -89,16 +72,21 @@ export class PlayableCharacter extends Phaser.GameObjects.Sprite {
             case 'right':
                 this.body.setVelocityX(this.speed);
                 break;
+        }
+    }
+
+    /**
+     * Process a jump instruction
+     */
+    DoJump(direction){
+        switch(direction){
             case 'up':
-                this.body.setVelocityY(-this.speed*1.025);
-                break;
-            case 'down':
-                //this.body.setVelocityY(this.speed);
+                if (this.body.blocked.down) {
+                    this.body.setVelocityY(-this.speed*1.025);
+                }
                 break;
         }
-        
     }
-    
 }
 
 export class PlayableCharacterPlugin extends Phaser.Plugins.BasePlugin {

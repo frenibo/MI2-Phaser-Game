@@ -25,6 +25,7 @@ class Level_1 extends Phaser.Scene
         this.load.image('star', './assets/star.png');
         this.load.image('bomb', './assets/bomb.png');
         this.load.spritesheet('dude', './assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        this.load.image('player', './assets/player.png');
     }
 
     create ()
@@ -52,7 +53,21 @@ class Level_1 extends Phaser.Scene
               tile.setCollision(false, false, true, false, false);
         });
 
-        this.player = this.add.rectangle(200, 240, 16, 32, 0xffff00);
+        this.spawnPoint = {
+            x:200,
+            y:240,
+        }
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        window.player = this.player = this.add.playableCharacter({
+			x: this.spawnPoint.x,
+			y: this.spawnPoint.y,
+            image: 'player',
+			speed: 200
+		});
+
+        //this.player = this.add.rectangle(200, 240, 16, 32, 0xffff00);
 
         this.physics.add.existing(this.player);
 
@@ -62,9 +77,9 @@ class Level_1 extends Phaser.Scene
         this.physics.add.collider(this.player, this.solid);
         this.physics.add.collider(this.player, this.semiPlatform);
 
-        this.cursors = this.input.keyboard.createCursorKeys();
+        
 
-
+        /*
         this.cursors.up.on('down', () =>
         {
             if (this.player.body.blocked.down)
@@ -72,6 +87,7 @@ class Level_1 extends Phaser.Scene
                 this.player.body.setVelocityY(-205);
             }
         }, this);
+        */
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
@@ -93,8 +109,8 @@ class Level_1 extends Phaser.Scene
 
     update ()
     {
+        /*
         this.player.body.setVelocityX(0);
-        this.physics.world.collide(this.player, this.solid);
 
         if (this.cursors.left.isDown)
         {
@@ -104,6 +120,20 @@ class Level_1 extends Phaser.Scene
         {
             this.player.body.setVelocityX(200);
         }
+        */
+        //*
+        // Horizontal movement
+		if (this.cursors.left.isDown)
+            this.player.SetInstruction({action: 'move', option: 'left'});
+        else if (this.cursors.right.isDown)
+            this.player.SetInstruction({action: 'move', option: 'right'});
+
+        // Vertical movement
+        if (this.cursors.up.isDown)
+            this.player.SetInstruction({action: 'jump', option: 'up'});
+
+        this.player.update();
+        /*/
 
         // ENEMY // 
         /*
@@ -116,7 +146,7 @@ class Level_1 extends Phaser.Scene
         }
         */
     }
-
+    /*
     checkForCliff = function(side) {
         var offsetX;    
         if(side == 'left') {
@@ -133,6 +163,7 @@ class Level_1 extends Phaser.Scene
             return false;    
         }
     };
+    */
 
 }
 
