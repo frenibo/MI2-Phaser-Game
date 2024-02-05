@@ -11,7 +11,7 @@ class Level_1 extends Phaser.Scene
     semiPlatform;
     solid;
     background;
-    helptext;
+    enemy;
 
     constructor() {
         super({key:'level_1'});
@@ -42,7 +42,11 @@ class Level_1 extends Phaser.Scene
         this.solid = this.map.createLayer('Solid', this.tiles, 0, 0);
         this.semiPlatform = this.map.createLayer('SemiPlatform', this.tiles, 0, 0);
 
-        this.solid.setCollisionByProperty({ collides: true});
+        //this.solid.setCollisionByProperty({ collides: true});
+
+        this.solid.forEachTile(tile => {
+            tile.setCollision(true, true, true, true, false);
+        });
 
         this.semiPlatform.forEachTile(tile => {
               tile.setCollision(false, false, true, false, false);
@@ -77,6 +81,14 @@ class Level_1 extends Phaser.Scene
 
         this.cameras.main.startFollow(this.player);
 
+        // ENEMY //
+        this.enemy = this.add.rectangle(330, 230, 24, 16, 0x013220);
+        this.physics.add.existing(this.enemy);
+        this.enemy.body.setCollideWorldBounds(true);
+        this.physics.add.collider(this.enemy, this.solid);
+        this.physics.add.collider(this.enemy, this.semiPlatform);
+        this.physics.add.collider(this.enemy, this.player);
+
     }
 
     update ()
@@ -92,7 +104,34 @@ class Level_1 extends Phaser.Scene
         {
             this.player.body.setVelocityX(200);
         }
+
+        // ENEMY //
+        this.enemy.body.setVelocityX(0);
+        if(enemy.previousXPosition == enemy.body.position.x				
+            || (enemy.currentDirection == 'left' && enemy.checkForCliff('left'))				
+            || (enemy.currentDirection == 'right' && enemy.checkForCliff('right'))) 
+        {				
+            this.changeDirection(enemy);			
+        }
+
     }
+
+    checkForCliff = function(side) {
+        var offsetX;    
+        if(side == 'left') {
+            offsetX = -3;     
+        } else if(side == 'right') {
+            offsetX = this.body.width + 2;    
+        }    
+        var tile = this.map.getTileWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height);
+        if(this.isTouchingGround() && tile && emptySpaceTiles.indexOf(tile.index) > -1) {        
+            console.log("You are at the cliff.");        
+            return true;    
+        } 
+        else {        
+            return false;    
+        }
+    };
 
 }
 

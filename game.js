@@ -1,3 +1,7 @@
+//import Phaser from 'phaser';
+
+import { PlayableCharacterPlugin } from "./plugins/sprites/playableCharacter.js";
+
 import TitleScreen from "./scenes/titlescreen.js";
 import Example from "./scenes/example.js";
 import Level_1 from "./scenes/level_1.js";
@@ -24,6 +28,11 @@ const config = {
 			debug: false,
 		}
 	},
+	plugins: {
+        global: [
+            { key: 'PlayableCharacterPlugin', plugin: PlayableCharacterPlugin, start: true }
+		]
+    },
 	//pixelArt: true,
 	//scene: [ FirstScene ]
 	scene: [ Phaser.Scene ]
