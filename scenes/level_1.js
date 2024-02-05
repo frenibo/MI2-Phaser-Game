@@ -105,7 +105,8 @@ class Level_1 extends Phaser.Scene
             this.player.body.setVelocityX(200);
         }
 
-        // ENEMY //
+        // ENEMY // 
+        /*
         this.enemy.body.setVelocityX(0);
         if(enemy.previousXPosition == enemy.body.position.x				
             || (enemy.currentDirection == 'left' && enemy.checkForCliff('left'))				
@@ -113,7 +114,7 @@ class Level_1 extends Phaser.Scene
         {				
             this.changeDirection(enemy);			
         }
-
+        */
     }
 
     checkForCliff = function(side) {
