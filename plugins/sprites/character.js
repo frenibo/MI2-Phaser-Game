@@ -1,12 +1,14 @@
-export class PlayableCharacter extends Phaser.GameObjects.Sprite {
+export class Character extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, path, speed }){
+    constructor({ scene, x, y, image, name, path, speed, playable }){
         super(scene, x, y, image);
 
         this.path = path || false;
         this.isHit = -1;
         this.speed = speed;
         this.image = image;
+        this.name = name || "anonymous";
+        this.playable = playable || false;
 
         // Character movements are passed as instruction objects to
         // be evaluated on the next call to update
@@ -23,14 +25,11 @@ export class PlayableCharacter extends Phaser.GameObjects.Sprite {
         
         // Always reset the local velocity to maintain a constant acceleration
         this.body.setVelocityX(0);
-        // this.body.setVelocityX(0);
 
         // Process the instructions array
         this.DoInstructions();
         
     }
-/**
-
     /**
      * Push a provided instruction object onto the stack
      */
@@ -89,18 +88,18 @@ export class PlayableCharacter extends Phaser.GameObjects.Sprite {
     }
 }
 
-export class PlayableCharacterPlugin extends Phaser.Plugins.BasePlugin {
+export class CharacterPlugin extends Phaser.Plugins.BasePlugin {
 
     constructor(pluginManager){
         super(pluginManager);
 
         //  Register our new Game Object type
-        pluginManager.registerGameObject('playableCharacter', this.createPlayableCharacter);
+        pluginManager.registerGameObject('character', this.createCharacter);
     }
 
-    createPlayableCharacter(params){
+    createCharacter(params){
         //return this.displayList.add(new RpgCharacter({scene: this.scene, ...params}));
-        return new PlayableCharacter({scene: this.scene, ...params});
+        return new Character({scene: this.scene, ...params});
     }
 
 }

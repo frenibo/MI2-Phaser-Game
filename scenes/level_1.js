@@ -12,6 +12,10 @@ class Level_1 extends Phaser.Scene
     solid;
     background;
     enemy;
+    spawnPoint = {
+        x:200,
+        y:240,
+    }
 
     constructor() {
         super({key:'level_1'});
@@ -26,6 +30,7 @@ class Level_1 extends Phaser.Scene
         this.load.image('bomb', './assets/bomb.png');
         this.load.spritesheet('dude', './assets/dude.png', { frameWidth: 32, frameHeight: 48 });
         this.load.image('player', './assets/player.png');
+        this.load.image('enemy', './assets/enemy.png');
     }
 
     create ()
@@ -53,21 +58,16 @@ class Level_1 extends Phaser.Scene
               tile.setCollision(false, false, true, false, false);
         });
 
-        this.spawnPoint = {
-            x:200,
-            y:240,
-        }
-
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        window.player = this.player = this.add.playableCharacter({
+        window.player = this.player = this.add.character({
 			x: this.spawnPoint.x,
 			y: this.spawnPoint.y,
             image: 'player',
+            name: 'player',
+            playable: true,
 			speed: 200
 		});
-
-        //this.player = this.add.rectangle(200, 240, 16, 32, 0xffff00);
 
         this.physics.add.existing(this.player);
 
@@ -80,12 +80,22 @@ class Level_1 extends Phaser.Scene
         this.createCamera(this.player, this.map);
 
         // ENEMY //
-        this.enemy = this.add.rectangle(330, 230, 24, 16, 0x013220);
-        this.physics.add.existing(this.enemy);
-        this.enemy.body.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemy, this.solid);
-        this.physics.add.collider(this.enemy, this.semiPlatform);
-        this.physics.add.collider(this.enemy, this.player);
+
+        window.enemy1 = this.enemy1 = this.add.character({
+			x: 330,
+			y: 230,
+            image: 'enemy',
+            name: 'enemy1',
+            playable: false,
+			speed: 200
+		});
+
+        //this.enemy1 = this.add.rectangle(330, 230, 24, 16, 0x013220);
+        this.physics.add.existing(this.enemy1);
+        this.enemy1.body.setCollideWorldBounds(true);
+        this.physics.add.collider(this.enemy1, this.solid);
+        this.physics.add.collider(this.enemy1, this.semiPlatform);
+        this.physics.add.collider(this.enemy1, this.player);
 
     }
 

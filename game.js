@@ -1,6 +1,6 @@
 //import Phaser from 'phaser';
 
-import { PlayableCharacterPlugin } from "./plugins/sprites/playableCharacter.js";
+import { CharacterPlugin } from "./plugins/sprites/character.js";
 
 import TitleScreen from "./scenes/titlescreen.js";
 import Example from "./scenes/example.js";
@@ -12,10 +12,6 @@ var level_1 = new Level_1();
 
 const config = {
 	type: Phaser.AUTO,
-	//width: 640,
-	//height: 360,
-	//width: 800,
-	//height: 600,
 	width: 576,
 	height: 320,
 	backgroundColor: "b9eaff",
@@ -30,7 +26,7 @@ const config = {
 	},
 	plugins: {
         global: [
-            { key: 'PlayableCharacterPlugin', plugin: PlayableCharacterPlugin, start: true }
+            { key: 'CharacterPlugin', plugin: CharacterPlugin, start: true }
 		]
     },
 	//pixelArt: true,
