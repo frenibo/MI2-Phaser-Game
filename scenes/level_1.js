@@ -3,7 +3,7 @@ import { SceneParent } from '../SceneParent.js';
 export class Level_1 extends SceneParent
 {
     constructor(){
-		super('Level_1');
+		super('level_1');
         // super({key:'level_1'});
 
 		//this.portals.lab = 'Lab1';

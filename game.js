@@ -36,7 +36,7 @@ const config = {
 	//scene: [ FirstScene ]
 	scene: [ 
 		//Phaser.Scene
-		//titleScreen,
+		titleScreen,
 		level_1
 	]
 };
