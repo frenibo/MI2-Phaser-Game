@@ -10,15 +10,9 @@ export class Level_1 extends SceneParent
 	}
 
     cursors;
-    // keyboard keys are now globally defined in GameScene: window.key
-    //keyA;
-    //keyS;
-    //keyD;
-    //keyW;
     player;
     tileset;
     map;
-    enemy;
 
     init(data){
 
@@ -78,6 +72,17 @@ export class Level_1 extends SceneParent
                 simpleInstruction: {action: 'patrol', option: ''},
                 //speed: 100
             },
+            {
+                x: 330 + this.rPos.x,
+                y: 150 + this.rPos.y,
+                image: 'enemy',
+                name: 'enemy3',
+                playable: false,
+                //map: this.map,
+                speed: 30,
+                simpleInstruction: {action: 'patrol', option: ''},
+                //speed: 100
+            },
 
         ];
 
@@ -122,7 +127,6 @@ export class Level_1 extends SceneParent
 
 		}
         
-
         //console.log('mouse X: ', this.input.mousePointer.x);
         //console.log('mouse Y: ', this.input.mousePointer.y);  
 

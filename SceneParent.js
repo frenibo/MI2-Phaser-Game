@@ -126,6 +126,10 @@ export class SceneParent extends Phaser.Scene {
             }
         });
 
+		// Place the overhead layer above everything else
+		this.overheadLayer.setDepth(20);
+
+
 ////////// Create Player
 
 		if(this.playableScene == true) {
@@ -148,6 +152,9 @@ export class SceneParent extends Phaser.Scene {
 			this.physics.add.collider(this.player, this.interactiveLayer);
 
 			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions.width, this.canvasDimensions.height);
+
+			// Place the player above the tile layers
+			this.player.setDepth(10);
 		}
 
 ////////// Create Enemies
@@ -215,6 +222,7 @@ export class SceneParent extends Phaser.Scene {
         this.enemyGroupArray[index1][index2].body.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemyGroupArray[index1][index2], this.interactiveLayer);
         this.physics.add.collider(this.enemyGroupArray[index1][index2], this.player);
+		this.enemyGroupArray[index1][index2].setDepth(10);
 
     }
 
