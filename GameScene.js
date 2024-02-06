@@ -10,22 +10,29 @@ export class GameScene extends Phaser.Scene {
 			key: sceneName
 		});
 
-		// this.controls = null; // User controls
+////////// Game attributes
+
+		this.canvasDimensions = { width: 0, height: 0 };
 		this.cursors = null;
-		this.player = null;
+		// this.controls = null; // User controls
+		
+////////// Map attributes
+
 		this.map = null;
-
 		this.portals = {};
-
-		this.spawnPoint = { x: 0, y: 0, };
 		//relativePosition
 		this.rPos = { x: 0, y: 0 };
 		//mapDimensions
 		this.mapDimensions = { x: 0, y: 0 };
-		this.canvasDimensions = { width: 0, height: 0 };
-		this.tileDimensions = null;
+		this.tileDimensions = { width: 16, height: 16 };
 
+////////// Player attributes
+
+		this.player = null;
 		this.playerSpeed = 200;
+		this.spawnPoint = { x: 0, y: 0, };
+
+////////// Camera attributes
 
 		this.zoom = 1;
 
@@ -120,6 +127,7 @@ export class GameScene extends Phaser.Scene {
             }
         });
 
+		// Creates global Player object
 		window.player = this.player = this.add.character({
 			x: this.spawnPoint.x + this.rPos.x,
 			y: this.spawnPoint.y + this.rPos.y,

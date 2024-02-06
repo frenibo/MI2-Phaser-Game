@@ -28,8 +28,8 @@ export class Level_1 extends GameScene
 			width: 16,
 			height: 16
 		};
-        // Changes zoom of the camera. Default zoom = 1.
-        this.zoom = 1;
+        
+        this.zoom = 1; // Changes zoom of the camera. Default zoom = 1.
        
 ////////// Player data
 
