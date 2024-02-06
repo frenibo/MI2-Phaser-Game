@@ -1,6 +1,6 @@
-import { GameScene } from '../GameScene.js';
+import { SceneParent } from '../SceneParent.js';
 
-export class Level_1 extends GameScene
+export class Level_1 extends SceneParent
 {
     constructor(){
 		super('Level_1');
@@ -33,6 +33,7 @@ export class Level_1 extends GameScene
        
 ////////// Player data
 
+        this.playableScene = true;
         this.playerSpeed = 200;
         this.playerBounce = 0;
 
@@ -57,7 +58,6 @@ export class Level_1 extends GameScene
     {
         this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
         this.load.image('tiles', './assets/tilemaps/level1.png');
-        //this.load.image('player', './assets/player.png');
         this.load.image('enemy', './assets/enemy.png');
 
         super.preload();
@@ -80,7 +80,7 @@ export class Level_1 extends GameScene
 
 		});
 
-////////// ENEMIES //
+////////// Create ENEMIES //
 
         window.enemy1 = this.enemy1 = this.add.character({
 			x: 330 + this.rPos.x,

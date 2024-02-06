@@ -4,7 +4,7 @@
 /**
  * Parent class for all playable scenes
  */
-export class GameScene extends Phaser.Scene {
+export class SceneParent extends Phaser.Scene {
 	constructor(sceneName) {
 		super({
 			key: sceneName
@@ -28,6 +28,8 @@ export class GameScene extends Phaser.Scene {
 
 ////////// Player attributes
 
+		this.playable = false;
+		this.playerBounce = 0;
 		this.player = null;
 		this.playerSpeed = 200;
 		this.spawnPoint = { x: 0, y: 0, };
@@ -127,39 +129,47 @@ export class GameScene extends Phaser.Scene {
             }
         });
 
-		// Creates global Player object
-		window.player = this.player = this.add.character({
-			x: this.spawnPoint.x + this.rPos.x,
-			y: this.spawnPoint.y + this.rPos.y,
-            image: 'player',
-            name: 'player',
-            playable: true,
-			speed: this.playerSpeed
-		});
+		if(this.playableScene == true) {
+			// Creates global Player object
+			window.player = this.player = this.add.character({
+				x: this.spawnPoint.x + this.rPos.x,
+				y: this.spawnPoint.y + this.rPos.y,
+				image: 'player',
+				name: 'player',
+				playable: true,
+				speed: this.playerSpeed
+			});
 
-		// this.physics.add.existing(this.player); // Why is this not needed?
+			//this.physics.add.existing(this.player); // Why is this not needed?
 
-		this.player.body.setCollideWorldBounds(true);
+			this.player.body.setBounce(this.playerBounce);
 
-		this.physics.add.collider(this.player, this.interactiveLayer);
+			this.player.body.setCollideWorldBounds(true);
 
-		this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions.width, this.canvasDimensions.height);
+			this.physics.add.collider(this.player, this.interactiveLayer);
+
+			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions.width, this.canvasDimensions.height);
+		}
 		
 	}
 
 	update() { // update(time, delta) {
 
-		// Horizontal movement
-		if (this.cursors.left.isDown || this.keyA.isDown)
-            this.player.SetInstruction({action: 'move', option: 'left'});
-        else if (this.cursors.right.isDown || this.keyD.isDown)
-            this.player.SetInstruction({action: 'move', option: 'right'});
+////////// Player Update
 
-        // Vertical movement
-        if (this.cursors.up.isDown || this.keyW.isDown)
-            this.player.SetInstruction({action: 'jump'});
+		if(this.player) {
+			// Horizontal movement
+			if (this.cursors.left.isDown || this.keyA.isDown)
+				this.player.SetInstruction({action: 'move', option: 'left'});
+			else if (this.cursors.right.isDown || this.keyD.isDown)
+				this.player.SetInstruction({action: 'move', option: 'right'});
 
-        this.player.update();
+			// Vertical movement
+			if (this.cursors.up.isDown || this.keyW.isDown)
+				this.player.SetInstruction({action: 'jump'});
+
+			this.player.update();
+		}
 
 		return true;
 	}
