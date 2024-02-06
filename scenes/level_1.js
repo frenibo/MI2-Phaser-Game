@@ -52,6 +52,38 @@ export class Level_1 extends SceneParent
             }
 		}
         */
+
+////////// Enemy data
+
+        let enemyGroup = [
+            {
+                x: 330 + this.rPos.x,
+                y: 230 + this.rPos.y,
+                image: 'enemy',
+                name: 'enemy1',
+                playable: false,
+                //map: this.map,
+                speed: 30,
+                simpleInstruction: {action: 'patrol', option: ''},
+                //speed: 100
+            },
+            {
+                x: 130 + this.rPos.x,
+                y: 150 + this.rPos.y,
+                image: 'enemy',
+                name: 'enemy2',
+                playable: false,
+                //map: this.map,
+                speed: 30,
+                simpleInstruction: {action: 'patrol', option: ''},
+                //speed: 100
+            },
+
+        ];
+
+        this.enemyGroupArray.push(enemyGroup);
+
+
 	}
 
     preload ()
@@ -79,54 +111,15 @@ export class Level_1 extends SceneParent
             zoom: 1,
 
 		});
-
-////////// Create ENEMIES //
-
-        window.enemy1 = this.enemy1 = this.add.character({
-			x: 330 + this.rPos.x,
-			y: 230 + this.rPos.y,
-            image: 'enemy',
-            name: 'enemy1',
-            playable: false,
-            map: this.map,
-			speed: 30
-            //speed: 100
-		});
-
-        this.physics.add.existing(this.enemy1);
-        this.enemy1.body.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemy1, this.interactiveLayer);
-        this.physics.add.collider(this.enemy1, this.player);
-
-        window.enemy2 = this.enemy2 = this.add.character({
-			x: 130 + this.rPos.x,
-			y: 150 + this.rPos.y,
-            image: 'enemy',
-            name: 'enemy2',
-            playable: false,
-            map: this.map,
-			speed: 30
-            //speed: 100
-		});
-
-        this.physics.add.existing(this.enemy2);
-        this.enemy2.body.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemy2, this.interactiveLayer);
-        this.physics.add.collider(this.enemy2, this.player);
-
+        
     }
 
     update ()
     {
         if(super.update()){
-			this.enemy1.SetInstruction({action: 'patrol'});
-            this.enemy2.SetInstruction({action: 'patrol'});
 
-            this.enemy1.update();
-            this.enemy2.update();
 		}else{
-            this.enemy1.DoHalt();
-            this.enemy2.DoHalt();
+
 		}
         
 

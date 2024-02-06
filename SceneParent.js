@@ -34,6 +34,10 @@ export class SceneParent extends Phaser.Scene {
 		this.playerSpeed = 200;
 		this.spawnPoint = { x: 0, y: 0, };
 
+////////// Enemy attributes
+
+		this.enemyGroupArray = [];
+
 ////////// Camera attributes
 
 		this.zoom = 1;
@@ -145,6 +149,10 @@ export class SceneParent extends Phaser.Scene {
 
 			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions.width, this.canvasDimensions.height);
 		}
+
+////////// Create Enemies
+
+		this.enemyGroupArray.forEach((enemyGroup, index1) => enemyGroup.forEach((enemy, index2) => this.initEnemy(enemy, index1, index2)));
 		
 	}
 
@@ -166,6 +174,8 @@ export class SceneParent extends Phaser.Scene {
 			this.player.update();
 		}
 
+		this.enemyGroupArray.forEach((enemyGroup) => enemyGroup.forEach((enemy) => enemy.update()));
+
 		return true;
 	}
 
@@ -179,6 +189,32 @@ export class SceneParent extends Phaser.Scene {
         this.cameras.main.setZoom(zoom);
 
         this.cameras.main.startFollow(player);
+
+    }
+
+	initEnemy = function(enemy, index1, index2) {
+
+        // console.log(enemy.name, index1, index2);
+
+		this.enemyGroupArray[index1][index2] = this.add.character({
+			x: enemy.x + this.rPos.x,
+			y: enemy.y + this.rPos.y,
+            image: enemy.image,
+            name: enemy.name,
+            playable: enemy.playable,
+            //map: enemy.map,
+			map: this.map,
+			speed: enemy.speed,
+			index1: index1,
+			index2: index2,
+			simpleInstruction: enemy.simpleInstruction,
+            //speed: 100
+		});
+
+		this.physics.add.existing(this.enemyGroupArray[index1][index2]);
+        this.enemyGroupArray[index1][index2].body.setCollideWorldBounds(true);
+        this.physics.add.collider(this.enemyGroupArray[index1][index2], this.interactiveLayer);
+        this.physics.add.collider(this.enemyGroupArray[index1][index2], this.player);
 
     }
 

@@ -1,6 +1,6 @@
 export class Character extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable, map}){
+    constructor({ scene, x, y, image, name, path, speed, playable, map, index1, index2, simpleInstruction, type}){
         super(scene, x, y, image);
 
         this.path = path || false;
@@ -12,6 +12,10 @@ export class Character extends Phaser.GameObjects.Sprite {
         this.previousXPosition;
         this.previousXVelocity;
         this.map = map || undefined;
+        this.index1 = index1 || undefined;
+        this.index2 = index2 || undefined
+        this.simpleInstruction = simpleInstruction || {action: '', option: ''};
+        this.type = type || '';
 
         // Character movements are passed as instruction objects to
         // be evaluated on the next call to update
@@ -54,6 +58,19 @@ export class Character extends Phaser.GameObjects.Sprite {
             switch(instruction.action){
                 case 'move':
                     this.DoMove(instruction.option);
+                    break;
+                case 'jump':
+                    this.DoJump();
+                    break;
+                case 'patrol':
+                    this.DoPatrol();
+                    break
+            }
+        }
+        if(this.simpleInstruction.action !== '') {
+            switch(this.simpleInstruction.action){
+                case 'move':
+                    this.DoMove(this.simpleInstruction.option);
                     break;
                 case 'jump':
                     this.DoJump();
