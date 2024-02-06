@@ -50,10 +50,10 @@ export class GameScene extends Phaser.Scene {
 		// window.key defines the key globally. this.key defines them in the module scope /
 		// module-scope requires initialisation of each key variable in each scene.
 		// TODO: Defining keys in module scope might be preferred ???
-		window.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-		window.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-		window.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-		window.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+		this.keyA = window.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+		this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+		this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+		this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
 		// Gets canvas dimensions from camera.
 		// This probably has to happen before camera is configued.
@@ -142,26 +142,16 @@ export class GameScene extends Phaser.Scene {
 	update() { // update(time, delta) {
 
 		// Horizontal movement
-		if (this.cursors.left.isDown)
+		if (this.cursors.left.isDown || this.keyA.isDown)
             this.player.SetInstruction({action: 'move', option: 'left'});
-        else if (this.cursors.right.isDown)
+        else if (this.cursors.right.isDown || this.keyD.isDown)
             this.player.SetInstruction({action: 'move', option: 'right'});
 
         // Vertical movement
-        if (this.cursors.up.isDown)
+        if (this.cursors.up.isDown || this.keyW.isDown)
             this.player.SetInstruction({action: 'jump'});
 
         this.player.update();
-
-		if(keyA.isDown) {
-			console.log('A key pressed')
-		} else if(keyS.isDown) {
-			console.log('S key pressed')
-		} else if(keyD.isDown) {
-			console.log('D key pressed')
-		} else if(keyW.isDown) {
-			console.log('W key pressed')
-		}
 
 		return true;
 	}
@@ -188,18 +178,6 @@ export class GameScene extends Phaser.Scene {
 		//create(){};
 
 		//update(){};
-
-		if(keyA.isDown) {
-			console.log('A key pressed')
-		} else if(keyS.isDown) {
-			console.log('S key pressed')
-		} else if(keyD.isDown) {
-			console.log('D key pressed')
-		} else if(keyW.isDown) {
-			console.log('W key pressed')
-		}
-
-
 
 	}
 }
