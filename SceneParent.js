@@ -49,20 +49,18 @@ export class SceneParent extends Phaser.Scene {
 
 	create(settings) {
 
+////////// Create Controls
+
 		// Cursors has up, down, left, right, space and shift
 		this.cursors = this.input.keyboard.createCursorKeys();
 
-		// Lists all keyboard key codes:
-		// console.log(Phaser.Input.Keyboard.KeyCodes);
-
 		// Create keyboard key listener for any key.
-		// window.key defines the key globally. this.key defines them in the module scope /
-		// module-scope requires initialisation of each key variable in each scene.
-		// TODO: Defining keys in module scope might be preferred ???
-		this.keyA = window.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+		this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 		this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 		this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 		this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+
+////////// Create Map & Layers
 
 		// Gets canvas dimensions from camera.
 		// This probably has to happen before camera is configued.
@@ -95,7 +93,7 @@ export class SceneParent extends Phaser.Scene {
         }
 
 		// Creates coordinates to place the map in the middle of the canvas if the map is smaller than the canvas /
-		// The coordinates are then also used to place all other objects relative to th map position.
+		// The coordinates are then also used to place all other objects relative to the map position.
         if(this.mapDimensions.x < this.canvasDimensions.width && this.mapDimensions.y < this.canvasDimensions.height) {
             // relativePosition
             this.rPos = {
@@ -103,12 +101,7 @@ export class SceneParent extends Phaser.Scene {
                 y: (this.canvasDimensions.height - this.mapDimensions.y) / 2
             }
         }
-        else {
-            this.rPos = {
-                x: 0,
-                y: 0
-            }
-        }
+        else { this.rPos = { x: 0, y: 0 } }
 
 		// You can load a layer from the map using the layer name from Tiled, or by using the layer
         // index (0 in this case).
@@ -128,6 +121,8 @@ export class SceneParent extends Phaser.Scene {
                 tile.setCollision(false, false, true, false, false);
             }
         });
+
+////////// Create Player
 
 		if(this.playableScene == true) {
 			// Creates global Player object
@@ -187,7 +182,11 @@ export class SceneParent extends Phaser.Scene {
 
     }
 
+	// This method should never be called !
 	usefulCodeSnippets = function() {
+
+		// Lists all keyboard key codes:
+		console.log(Phaser.Input.Keyboard.KeyCodes);
 
 		//init(){};
 

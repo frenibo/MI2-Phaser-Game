@@ -25,7 +25,6 @@ export class Character extends Phaser.GameObjects.Sprite {
 
     update(){
 
-        
         // Always reset the local velocity to maintain a constant acceleration
         this.body.setVelocityX(0);
 
@@ -33,6 +32,7 @@ export class Character extends Phaser.GameObjects.Sprite {
         this.DoInstructions();
         
     }
+
     /**
      * Push a provided instruction object onto the stack
      */
@@ -65,9 +65,6 @@ export class Character extends Phaser.GameObjects.Sprite {
         }
     }
 
-    /**
-     * Process a walk instruction
-     */
     DoMove(direction){
         switch(direction){
             case 'left':
@@ -79,14 +76,13 @@ export class Character extends Phaser.GameObjects.Sprite {
         }
     }
 
-    /**
-     * Process a jump instruction
-     */
+    
     DoJump(){
         if (this.body.blocked.down) {
             this.body.setVelocityY(-this.speed*1.025);
         }
     }
+
     DoPatrol(){
         if(!this.body) return;
         if(this.isHit >= 0) return;
@@ -95,12 +91,9 @@ export class Character extends Phaser.GameObjects.Sprite {
             (this.previousXPosition == this.body.position.x)
             || (this.previousXVelocity < 0 && this.checkForCliff('left'))				
             || (this.previousXVelocity > 0 && this.checkForCliff('right'))
-           // || (enemy.currentDirection == 'left' && enemy.checkForCliff('left'))				
-           // || (enemy.currentDirection == 'right' && enemy.checkForCliff('right'))
            ) 
         {				
             //this.changeDirection(enemy);
-            
             this.speed = -this.speed;	
         }
 
@@ -121,9 +114,8 @@ export class Character extends Phaser.GameObjects.Sprite {
         var tile = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
         
         // TODO: bug: characters turn aroudn randomly.
-        //if(this.body.blocked.down && tile && tile.index < 0) {     
-        //if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) { 
-        if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) { 
+        //if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) {
+        if(this.body.blocked.down && tile && (!tile.properties['solid'] || tile.properties['solid'] == false )) {
             return true;    
         } 
         else {

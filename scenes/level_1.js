@@ -75,7 +75,7 @@ export class Level_1 extends SceneParent
             tilesetNameInTiled: 'level1', 
             // 'tilesetImageKey' is the key of the tileset image used when loading the file in preload.
             tilesetImageKey: 'tiles',
-
+            // Defines camera zoom on player. Default zoom = 1.
             zoom: 1,
 
 		});
