@@ -15,28 +15,14 @@ export class GameScene extends Phaser.Scene {
 		this.player = null;
 		this.map = null;
 
-		this.spawnPoint = null;
-
 		this.portals = {};
 
-		this.spawnPoint = {
-			x:200,
-			y:240,
-		}
+		this.spawnPoint = { x: 0, y: 0, };
 		//relativePosition
-		this.rPos = {
-			x: 0,
-			y: 0
-		}
+		this.rPos = { x: 0, y: 0 };
 		//mapDimensions
-		this.mapDimensions = {
-			x: 0,
-			y: 0
-		}
-		this.canvasDimensions = {
-			width: 0,
-			height: 0
-		}
+		this.mapDimensions = { x: 0, y: 0 };
+		this.canvasDimensions = { width: 0, height: 0 };
 		this.tileDimensions = null;
 
 		this.playerSpeed = 200;
@@ -203,9 +189,17 @@ export class GameScene extends Phaser.Scene {
 
 		//update(){};
 
+		if(keyA.isDown) {
+			console.log('A key pressed')
+		} else if(keyS.isDown) {
+			console.log('S key pressed')
+		} else if(keyD.isDown) {
+			console.log('D key pressed')
+		} else if(keyW.isDown) {
+			console.log('W key pressed')
+		}
+
 
 
 	}
-
-	
 }

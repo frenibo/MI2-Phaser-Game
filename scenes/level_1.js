@@ -9,50 +9,16 @@ export class Level_1 extends GameScene
 		//this.portals.lab = 'Lab1';
 	}
 
-    
-
-    scoreText;
-    score = 0;
     cursors;
     // keyboard keys are now globally defined in GameScene: window.key
     //keyA;
     //keyS;
     //keyD;
     //keyW;
-    platforms;
-    stars;
     player;
     tileset;
     map;
-    semiPlatform;
-    solid;
-    background;
     enemy;
-    spawnPoint = {
-        x:200,
-        y:240,
-    }
-    //relativePosition
-    rPos = {
-        x: 0,
-        y: 0
-    }
-    //mapDimensions
-    mapDimensions = {
-        x: 0,
-        y: 0
-    }
-    /*
-    canvasDimensions = {
-        width: 0,
-        height: 0
-    }
-    */
-    tileDimensions = {
-        width: 16,
-        height: 16
-    }
-    playerSpeed = 200;
 
     init(data){
 
@@ -127,7 +93,6 @@ export class Level_1 extends GameScene
             //speed: 100
 		});
 
-        //this.enemy1 = this.add.rectangle(330, 230, 24, 16, 0x013220);
         this.physics.add.existing(this.enemy1);
         this.enemy1.body.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy1, this.interactiveLayer);
@@ -144,7 +109,6 @@ export class Level_1 extends GameScene
             //speed: 100
 		});
 
-        //this.enemy1 = this.add.rectangle(330, 230, 24, 16, 0x013220);
         this.physics.add.existing(this.enemy2);
         this.enemy2.body.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy2, this.interactiveLayer);
