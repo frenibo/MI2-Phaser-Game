@@ -99,7 +99,7 @@ export class Level_1 extends SceneParent
         this.physics.add.collider(this.enemy1, this.player);
 
         window.enemy2 = this.enemy2 = this.add.character({
-			x: 330 + this.rPos.x,
+			x: 130 + this.rPos.x,
 			y: 150 + this.rPos.y,
             image: 'enemy',
             name: 'enemy2',
@@ -118,15 +118,17 @@ export class Level_1 extends SceneParent
 
     update ()
     {
-        this.enemy1.SetInstruction({action: 'patrol'});
+        if(super.update()){
+			this.enemy1.SetInstruction({action: 'patrol'});
+            this.enemy2.SetInstruction({action: 'patrol'});
 
-        this.enemy1.update();
-
-        this.enemy2.SetInstruction({action: 'patrol'});
-
-        this.enemy2.update();
-
-        super.update();
+            this.enemy1.update();
+            this.enemy2.update();
+		}else{
+            this.enemy1.DoHalt();
+            this.enemy2.DoHalt();
+		}
+        
 
         //console.log('mouse X: ', this.input.mousePointer.x);
         //console.log('mouse Y: ', this.input.mousePointer.y);  

@@ -65,6 +65,8 @@ export class Character extends Phaser.GameObjects.Sprite {
         }
     }
 
+//// Do-Instruction Methods
+
     DoMove(direction){
         switch(direction){
             case 'left':
@@ -83,10 +85,17 @@ export class Character extends Phaser.GameObjects.Sprite {
         }
     }
 
+    /**
+     * Cancel local velocity and stop animation
+     */
+    DoHalt(){
+        this.body.setVelocityX(0);
+        //this.anims.stopAfterRepeat();
+    }
+
     DoPatrol(){
         if(!this.body) return;
         if(this.isHit >= 0) return;
-        //console.log(this.previousXVelocity);
         if(
             (this.previousXPosition == this.body.position.x)
             || (this.previousXVelocity < 0 && this.checkForCliff('left'))				
@@ -99,23 +108,37 @@ export class Character extends Phaser.GameObjects.Sprite {
 
         this.previousXPosition = this.body.position.x;
 
-        if(this.body.velocity.x == 0) this.body.setVelocityX(-this.speed);
+        if(this.body.velocity.x == 0){ 
+            this.body.setVelocityX(-this.speed);
+        };
         this.previousXVelocity = this.body.velocity.x;
     }
 
+///// Helper Methods
+
     checkForCliff = function(side) {
-        var offsetX;    
+        var offsetX;
+        var offsetX2;   
         if(side == 'left') {
-            offsetX = -3;     
+            offsetX = -3;
+            offsetX2 = -4;     
         } else if(side == 'right') {
-            offsetX = this.body.width + 2;    
+            offsetX = this.body.width + 2;
+            offsetX2 = this.body.width + 3;  
         }
         
-        var tile = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
-        
+        var tile1 = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
+        var tile2 = this.map.getTileAtWorldXY(this.body.position.x + offsetX2, this.body.position.y + this.body.height, true, '', 'Interactive');
+
         // TODO: bug: characters turn aroudn randomly.
+        // Answer: Checking for two positions one pixel apart.
         //if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) {
-        if(this.body.blocked.down && tile && (!tile.properties['solid'] || tile.properties['solid'] == false )) {
+        if(this.body.blocked.down
+            && tile1
+            && (!tile1.properties['solid'] || tile1.properties['solid'] == false )
+            && tile2 
+            && (!tile2.properties['solid'] || tile2.properties['solid'] == false )
+            ) {
             return true;    
         } 
         else {

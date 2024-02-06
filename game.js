@@ -2,11 +2,11 @@
 
 import { CharacterPlugin } from "./plugins/sprites/character.js";
 
-// import { TitleScreen } from "./scenes/titlescreen.js";
+import { TitleScreen } from "./scenes/titlescreen.js";
 // import { Example } from "./scenes/example.js";
 import { Level_1 } from "./scenes/level_1.js";
 
-// var titleScreen = new TitleScreen();
+var titleScreen = new TitleScreen();
 // var exampleScene = new Example();
 var level_1 = new Level_1();
 
@@ -47,4 +47,4 @@ const game = new Phaser.Game(config);
 //game.scene.add('exampleScene', exampleScene);
 //game.scene.add('level_1', level_1);
 
-game.scene.start('titleScreen');
+//game.scene.start('titleScreen');

@@ -104,7 +104,7 @@ export class SceneParent extends Phaser.Scene {
         else { this.rPos = { x: 0, y: 0 } }
 
 		// You can load a layer from the map using the layer name from Tiled, or by using the layer
-        // index (0 in this case).
+        // index (0 for Overhead).
 		// TODO: Why do this.backgroundLayer etc. not have to be initialized ???
         this.backgroundLayer = this.map.createLayer('Background', this.tiles, this.rPos.x, this.rPos.y);
         this.interactiveLayer = this.map.createLayer('Interactive', this.tiles, this.rPos.x, this.rPos.y);
