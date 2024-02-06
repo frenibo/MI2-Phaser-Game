@@ -34,7 +34,9 @@ const config = {
     },
 	//pixelArt: true,
 	//scene: [ FirstScene ]
-	scene: [ Phaser.Scene ]
+	scene: [ 
+		Phaser.Scene 
+	]
 };
 
 const game = new Phaser.Game(config);

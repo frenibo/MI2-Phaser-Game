@@ -120,6 +120,7 @@ export class Character extends Phaser.GameObjects.Sprite {
         
         var tile = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
         
+        // TODO: bug: characters turn aroudn randomly.
         //if(this.body.blocked.down && tile && tile.index < 0) {     
         //if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) { 
         if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) { 

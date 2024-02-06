@@ -1,29 +1,5 @@
-import { GameScene } from '../GameScene';
-
 class Level_1 extends Phaser.Scene
 {
-    constructor(){
-		super('Level_1');
-        // super({key:'level_1'});
-
-		//this.portals.lab = 'Lab1';
-	}
-
-    init(data){
-		this.spawnPoint = {
-			x:200,
-			y:240
-		}
-		if(data.hasOwnProperty('origin')){
-			if(data.origin === 'Lab1') {
-                this.spawnPoint = {
-                    x:220,
-                    y:240
-                }
-            }
-		}
-	}
-
     scoreText;
     score = 0;
     cursors;
@@ -60,6 +36,10 @@ class Level_1 extends Phaser.Scene
     }
     playerSpeed = 200;
 
+    constructor() {
+        super({key:'level_1'});
+    };
+
     preload ()
     {
         this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
@@ -70,8 +50,6 @@ class Level_1 extends Phaser.Scene
         this.load.spritesheet('dude', './assets/dude.png', { frameWidth: 32, frameHeight: 48 });
         this.load.image('player', './assets/player.png');
         this.load.image('enemy', './assets/enemy.png');
-
-        super.preload();
     }
 
     create ()
@@ -81,12 +59,6 @@ class Level_1 extends Phaser.Scene
         // of the tileset image used when loading the file in preload.
         this.sceneCreateDefault('level1', 'tiles');
         //console.log(window.canvasDimensions.x);
-
-        super.create({
-			tileKey: 'tiles',
-			mapKey: 'map',
-			tiledKey: 'Area-51'
-		});
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -106,7 +78,7 @@ class Level_1 extends Phaser.Scene
 
         this.physics.add.collider(this.player, this.interactiveLayer);
 
-        this.createCamera(this.player, this.map, 1);
+        this.createCamera(this.player, this.map, 2);
 
         // ENEMY //
 
