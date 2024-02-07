@@ -264,13 +264,13 @@ export class Character extends Phaser.GameObjects.Sprite {
         if(player.isHit < 0) {
             player.isHit = 100;
             player.body.setVelocity(0);
-            player.body.setBounce(0.7);
+            player.body.setBounce(0.4);
             if(player.x <= enemy.x) {
-                player.body.setVelocityX(-50);
+                player.body.setVelocityX(-80);
                 player.body.setVelocityY(-150);
 
             } else {
-                player.body.setVelocityX(50);
+                player.body.setVelocityX(80);
                 player.body.setVelocityY(-150);
             }
             
