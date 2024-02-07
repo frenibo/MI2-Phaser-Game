@@ -110,8 +110,18 @@ export class Character extends Phaser.GameObjects.Sprite {
         
 
         if(this.constantHitbox) {
-            this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
-            this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+            //this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
+            //this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+            ///*
+            if(this.flipX == false) {
+                this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
+                this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+            }
+            else if(this.flipX == true) {
+                this.constantHitbox.x = this.body.position.x - this.constantHitboxOffset.x + this.bodySize.x;
+                this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+            }
+            //*/
         }
        
     }
@@ -200,7 +210,7 @@ export class Character extends Phaser.GameObjects.Sprite {
             || (this.previousXVelocity > 0 && this.checkForCliff('right'))
            ) 
         {
-            //this.changeDirection(enemy);
+            this.changeDirection();
             this.speed = -this.speed;	
         }
 
@@ -261,6 +271,22 @@ export class Character extends Phaser.GameObjects.Sprite {
         // get hit direction
 
 	}
+
+    changeDirection(character) {
+        if(this.flipX == false) {
+            this.flipX = true;
+            if(this.bodyOffset) {
+                this.body.setOffset((-this.bodySize.x + this.bodyOffset.x + this.bodyOffset.x), this.bodyOffset.y);
+            }
+        } 
+        else if(this.flipX == true) {
+            this.flipX = false
+            if(this.bodyOffset) {
+                this.body.setOffset(this.bodyOffset.x, this.bodyOffset.y);
+            }
+        }
+        
+    }
 
 }
 
