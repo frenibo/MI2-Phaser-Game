@@ -28,6 +28,7 @@ export class SceneParent extends Phaser.Scene {
 
 ////////// Player attributes
 
+		this.playerData = null;
 		this.playable = false;
 		this.playerBounce = 0;
 		this.player = null;
@@ -132,24 +133,20 @@ export class SceneParent extends Phaser.Scene {
 
 ////////// Create Player
 
-		if(this.playableScene == true) {
+		if(this.playerData) {
 			// Creates global Player object
 			window.player = this.player = this.add.character({
-				x: this.spawnPoint.x + this.rPos.x,
-				y: this.spawnPoint.y + this.rPos.y,
-				image: 'player',
-				name: 'player',
-				playable: true,
-				speed: this.playerSpeed
+				x: this.playerData.x + this.rPos.x,
+				y: this.playerData.y + this.rPos.y,
+				image: this.playerData.image,
+				name: this.playerData.name,
+				playable: this.playerData.playable,
+				speed: this.playerData.speed,
+				type: this.playerData.type,
+				bodyOffset: this.playerData.bodyOffset,
+				bodySize: this.playerData.bodySize,
+				bounce: this.playerData.bounce,
 			});
-
-			//this.physics.add.existing(this.player); // Why is this not needed?
-
-			this.player.body.setBounce(this.playerBounce);
-
-			this.player.body.setCollideWorldBounds(true);
-
-			this.physics.add.collider(this.player, this.interactiveLayer);
 
 			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions.width, this.canvasDimensions.height);
 
@@ -209,8 +206,6 @@ export class SceneParent extends Phaser.Scene {
             image: enemy.image,
             name: enemy.name,
             playable: enemy.playable,
-            //map: enemy.map,
-			map: this.map,
 			speed: enemy.speed,
 			index1: index1,
 			index2: index2,
@@ -224,37 +219,12 @@ export class SceneParent extends Phaser.Scene {
 				enemy.constantHitbox.alpha
 				),
 			constantHitboxOffset: {x: enemy.constantHitbox.offsetX, y: enemy.constantHitbox.offsetY},
+			bodyOffset: enemy.bodyOffset,
+			bodySize: enemy.bodySize,
+			type: 'enemy',
             //speed: 100
 		});
-
-		this.physics.add.existing(this.enemyGroupArray[index1][index2]);
-        this.enemyGroupArray[index1][index2].body.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemyGroupArray[index1][index2], this.interactiveLayer);
-        this.physics.add.collider(this.enemyGroupArray[index1][index2], this.player);
-		this.enemyGroupArray[index1][index2].setDepth(10);
-
-		// configures hurtbox area
-		if(enemy.bodySize) {
-			if(enemy.bodyOffset) {
-				this.enemyGroupArray[index1][index2].body.setOffset(enemy.bodyOffset.x, enemy.bodyOffset.y);
-			}
-			this.enemyGroupArray[index1][index2].body.setSize(enemy.bodySize.x, enemy.bodySize.y, false);
-		}
-
-		// configure constant hitbox
-		this.physics.add.existing(this.enemyGroupArray[index1][index2].constantHitbox);
-		console.log(this.enemyGroupArray[index1][index2].constantHitbox.body);
-		console.log(this.player.body);
-		this.enemyGroupArray[index1][index2].constantHitbox.body.setAllowGravity(false);
-		// TODO: overlap/collider not working
-		this.physics.add.collider(this.enemyGroupArray[index1][index2].constantHitbox.body, this.player.body, this.handlePlayerHit(), undefined);
-		this.enemyGroupArray[index1][index2].constantHitbox.setDepth(10);
-
     }
-
-	handlePlayerHit(player, enemy) {
-		console.log('Hit!');
-	}
 
 	// This method should never be called !
 	usefulCodeSnippets = function() {

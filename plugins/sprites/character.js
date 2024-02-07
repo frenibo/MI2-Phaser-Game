@@ -1,33 +1,90 @@
 export class Character extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable, map, index1, index2, simpleInstruction, type, 
-        constantHitbox, constantHitboxOffset}){
+    constructor({ scene, x, y, image, name, path, speed, playable, index1, index2, simpleInstruction, type, 
+        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce}){
+
         super(scene, x, y, image);
 
-        this.path = path || false;
+////////// Non-Init attributes
         this.isHit = -1;
-        this.speed = speed;
-        this.image = image;
-        this.name = name || "anonymous";
-        this.playable = playable || false;
         this.previousXPosition;
         this.previousXVelocity;
-        this.map = map || undefined;
-        this.index1 = index1 || undefined;
-        this.index2 = index2 || undefined
-        this.simpleInstruction = simpleInstruction || {action: '', option: ''};
-        this.type = type || '';
-        this.constantHitbox = constantHitbox || null;
-        this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
-
         // Character movements are passed as instruction objects to
         // be evaluated on the next call to update
         this.instructions = [];
+
+////////// General-Init attributes
+        this.type = type || '';
+        this.name = name || "anonymous";
+        this.image = image;
+        this.path = path || false;
+        this.speed = speed;
+        this.bounce = bounce || 0;
+        this.bodyOffset = bodyOffset || null; // {x: 0, y: 0},
+        this.bodySize = bodySize || null; // {x: 16, y: 16},
+        
+////////// Player-Init attributes
+        this.playable = playable || false;
+        
+////////// Enemy-Init attributes
+        this.index1 = index1 || undefined;
+        this.index2 = index2 || undefined
+        this.simpleInstruction = simpleInstruction || {action: '', option: ''};
+        this.constantHitbox = constantHitbox || null;
+        this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
+        
+        
+////////// Physics Initialization
 
         // Attach this sprite to the loaded physics engine
         scene.physics.world.enable(this, 0);
         // Add this sprite to the scene
         scene.add.existing(this);
+        scene.physics.add.existing(this);
+
+        if(this.bodySize) {
+			if(this.bodyOffset) {
+				this.body.setOffset(this.bodyOffset.x, this.bodyOffset.y);
+			}
+			this.body.setSize(this.bodySize.x, this.bodySize.y, false);
+		}
+
+        this.body.setBounce(this.bounce);
+
+
+        this.body.setCollideWorldBounds(true);
+
+        scene.physics.add.collider(this, scene.interactiveLayer);
+
+        this.setDepth(10);
+
+        if(this.type === 'enemy') {
+
+            scene.physics.add.collider(this, scene.player);
+
+        }
+
+        
+////////// constantHitbox Physics Initialization
+
+        if(this.constantHitbox) {
+            // Attach this sprite to the loaded physics engine
+            scene.physics.world.enable(this.constantHitbox, 0);
+            // Add this sprite to the scene
+            scene.add.existing(this.constantHitbox);
+
+            scene.physics.add.existing(this.constantHitbox);
+            //this.enemyGroupArray[index1][index2].constantHitbox.setSize(6,14,true);
+            this.constantHitbox.body.setCollideWorldBounds = true;
+                console.log(this.constantHitbox);
+                console.log(scene.player);
+            this.constantHitbox.body.setAllowGravity(false);
+            // TODO: overlap/collider not working
+            //scene.physics.add.overlap(this.constantHitbox, scene.player, this.handlePlayerHit(), undefined);
+            scene.physics.add.collider(this.constantHitbox, scene.player, this.handlePlayerHit());
+            //this.constantHitbox.setDepth(10);
+        }
+
     }
 
     update(){
@@ -152,8 +209,8 @@ export class Character extends Phaser.GameObjects.Sprite {
             offsetX2 = this.body.width + 3;  
         }
         
-        var tile1 = this.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
-        var tile2 = this.map.getTileAtWorldXY(this.body.position.x + offsetX2, this.body.position.y + this.body.height, true, '', 'Interactive');
+        var tile1 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
+        var tile2 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX2, this.body.position.y + this.body.height, true, '', 'Interactive');
 
         // TODO: bug: characters turn aroudn randomly.
         // Answer: Checking for two positions one pixel apart.
@@ -170,6 +227,10 @@ export class Character extends Phaser.GameObjects.Sprite {
             return false;
         }
     };
+
+    handlePlayerHit(player, enemy) {
+		console.log('Hit!');
+	}
 }
 
 export class CharacterPlugin extends Phaser.Plugins.BasePlugin {

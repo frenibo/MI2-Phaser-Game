@@ -27,6 +27,27 @@ export class Level_1 extends SceneParent
        
 ////////// Player data
 
+
+        this.playerData = {
+            x: 200, // + this.rPos.x,
+            y: 240, // + this.rPos.y,
+            image: 'player',
+            name: 'player',
+            playable: true,
+            //map: this.map,
+            speed: 200,
+            simpleInstruction: {action: '', option: ''},
+            bodySize: {x: 16, y: 32},
+            type: 'player',
+            bounce: 0,
+            bodyOffset: {x: 0, y: 0},
+            bodySize:  {x: 16, y: 32},
+
+            //speed: 100
+
+
+        }
+
         this.playableScene = true;
         this.playerSpeed = 200;
         this.playerBounce = 0;
@@ -51,8 +72,8 @@ export class Level_1 extends SceneParent
 
         let enemyGroup = [
             {
-                x: 330 + this.rPos.x,
-                y: 230 + this.rPos.y,
+                x: 330, // + this.rPos.x,
+                y: 230, // + this.rPos.y,
                 image: 'piker',
                 name: 'piker1',
                 playable: false,
@@ -62,11 +83,12 @@ export class Level_1 extends SceneParent
                 constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 14, color: 0xff0000, alpha: 0.5},
                 bodyOffset: {x: 8, y: 0},
                 bodySize: {x: 16, y: 16},
+                type: 'enemy',
                 //speed: 100
             },
             {
-                x: 130 + this.rPos.x,
-                y: 150 + this.rPos.y,
+                x: 130, // + this.rPos.x,
+                y: 150, // + this.rPos.y,
                 image: 'piker',
                 name: 'piker2',
                 playable: false,
@@ -76,11 +98,12 @@ export class Level_1 extends SceneParent
                 constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 14, color: 0xff0000, alpha: 0.5},
                 bodyOffset: {x: 8, y: 0},
                 bodySize: {x: 16, y: 16},
+                type: 'enemy',
                 //speed: 100
             },
             {
-                x: 330 + this.rPos.x,
-                y: 150 + this.rPos.y,
+                x: 330, // + this.rPos.x,
+                y: 150, // + this.rPos.y,
                 image: 'piker',
                 name: 'piker3',
                 playable: false,
@@ -90,6 +113,7 @@ export class Level_1 extends SceneParent
                 constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 14, color: 0xff0000, alpha: 0.5},
                 bodyOffset: {x: 8, y: 0},
                 bodySize: {x: 16, y: 16},
+                type: 'enemy',
                 //speed: 100
             },
 
