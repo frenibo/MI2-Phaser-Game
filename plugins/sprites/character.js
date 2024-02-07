@@ -9,6 +9,9 @@ export class Character extends Phaser.GameObjects.Sprite {
         this.isHit = -1;
         this.previousXPosition;
         this.previousXVelocity;
+        this.solidLayerCollider;
+        this.oneWayLayerCollider;
+
         // Character movements are passed as instruction objects to
         // be evaluated on the next call to update
         this.instructions = [];
@@ -25,6 +28,7 @@ export class Character extends Phaser.GameObjects.Sprite {
         
 ////////// Player-Init attributes
         this.playable = playable || false;
+        
         
 ////////// Enemy-Init attributes
         this.index1 = index1 || undefined;
@@ -53,7 +57,8 @@ export class Character extends Phaser.GameObjects.Sprite {
 
         this.body.setCollideWorldBounds(true);
 
-        scene.physics.add.collider(this, scene.interactiveLayer);
+        this.solidLayerCollider = scene.physics.add.collider(this, scene.solidLayer);
+        this.oneWayLayerCollider = scene.physics.add.collider(this, scene.oneWayLayer);
 
         this.setDepth(10);
 
@@ -65,7 +70,7 @@ export class Character extends Phaser.GameObjects.Sprite {
 
         
 ////////// constantHitbox Physics Initialization
-
+        // TODO: hitbox plugin/parent
         if(this.constantHitbox) {
             // Attach this sprite to the loaded physics engine
             scene.physics.world.enable(this.constantHitbox, 0);
@@ -73,24 +78,36 @@ export class Character extends Phaser.GameObjects.Sprite {
             scene.add.existing(this.constantHitbox);
 
             scene.physics.add.existing(this.constantHitbox);
-            //this.enemyGroupArray[index1][index2].constantHitbox.setSize(6,14,true);
-            this.constantHitbox.body.setCollideWorldBounds = true;
-                console.log(this.constantHitbox);
-                console.log(scene.player);
+            //this.constantHitbox.body.setCollideWorldBounds = true;
             this.constantHitbox.body.setAllowGravity(false);
-            scene.physics.add.collider(scene.player, this.constantHitbox, () => this.handlePlayerHit(scene.player, this), null, this);
+            // '() =>' necessary for some reason ?
+            scene.physics.add.overlap(scene.player, this.constantHitbox, () => this.handlePlayerHit(scene.player, this), null, this);
             this.constantHitbox.setDepth(10);
         }
 
     }
 
     update(){
+        if(this.isHit > 0){
+            // While a character is hit, count dowm on each update to allow for recovery time
+			this.isHit--;
+            this.tint = 0x000000;
+            this.oneWayLayerCollider.active = false;
+		}else if(this.isHit === 0){
+            // Character has recovered, reset their hit state
+            this.tint = 0xffffff;
+            this.isHit = -1;
+            this.instructions = [];
+            this.body.setBounce(this.bounce);
+            this.oneWayLayerCollider.active = true;
+        }else{
+            // Always reset the local velocity to maintain a constant acceleration
+            this.body.setVelocityX(0);
 
-        // Always reset the local velocity to maintain a constant acceleration
-        this.body.setVelocityX(0);
-
-        // Process the instructions array
-        this.DoInstructions();
+            // Process the instructions array
+            this.DoInstructions();
+        }
+        
 
         if(this.constantHitbox) {
             this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
@@ -175,15 +192,23 @@ export class Character extends Phaser.GameObjects.Sprite {
     DoPatrol(){
         if(!this.body) return;
         if(this.isHit >= 0) return;
+        
+        
         if(
-            (this.previousXPosition == this.body.position.x)
+            (this.previousXPosition == this.body.position.x && this.body.position.x == this.prepreXPosition)
             || (this.previousXVelocity < 0 && this.checkForCliff('left'))				
             || (this.previousXVelocity > 0 && this.checkForCliff('right'))
            ) 
-        {				
+        {
             //this.changeDirection(enemy);
             this.speed = -this.speed;	
         }
+
+        // This attempts to prevent characters turning around randomly during frame "hickups"
+        if(this.previousXPosition == this.body.position.x) {
+            this.prepreXPosition = this.previousXPosition;
+            // console.log(this.name);
+        } else {this.prepreXPosition = -1}
 
         this.previousXPosition = this.body.position.x;
 
@@ -206,8 +231,8 @@ export class Character extends Phaser.GameObjects.Sprite {
             offsetX2 = this.body.width + 3;  
         }
         
-        var tile1 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Interactive');
-        var tile2 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX2, this.body.position.y + this.body.height, true, '', 'Interactive');
+        var tile1 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Solid');
+        var tile2 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX2, this.body.position.y + this.body.height, true, '', 'Solid');
 
         // TODO: bug: characters turn aroudn randomly.
         // Answer: Checking for two positions one pixel apart.
@@ -226,8 +251,17 @@ export class Character extends Phaser.GameObjects.Sprite {
     };
 
     handlePlayerHit(player, enemy) {
-		console.log('Hit!');
+        if(player.isHit < 0) {
+            player.isHit = 100;
+            player.body.setVelocity(0);
+            player.body.setVelocityX(-50);
+            player.body.setVelocityY(-150);
+            player.body.setBounce(0.7);
+        };
+        // get hit direction
+
 	}
+
 }
 
 export class CharacterPlugin extends Phaser.Plugins.BasePlugin {

@@ -112,15 +112,19 @@ export class SceneParent extends Phaser.Scene {
         // index (0 for Overhead).
 		// TODO: Why do this.backgroundLayer etc. not have to be initialized ???
         this.backgroundLayer = this.map.createLayer('Background', this.tiles, this.rPos.x, this.rPos.y);
-        this.interactiveLayer = this.map.createLayer('Interactive', this.tiles, this.rPos.x, this.rPos.y);
+		this.oneWayLayer = this.map.createLayer('OneWay', this.tiles, this.rPos.x, this.rPos.y);
+        this.solidLayer = this.map.createLayer('Solid', this.tiles, this.rPos.x, this.rPos.y);
         this.overheadLayer = this.map.createLayer('Overhead', this.tiles, this.rPos.x, this.rPos.y);
         this.scriptLayer = this.map.createLayer('Script', this.tiles, this.rPos.x, this.rPos.y);
 
 		// Itterates through all tiles in a given layer and sets collision based on Custom Properties set in Tiled.
-		this.interactiveLayer.forEachTile(tile => {
+		this.solidLayer.forEachTile(tile => {
             if(tile.properties['collides']) {
                 tile.setCollision(true, true, true, true, false);
             }
+        });
+
+		this.oneWayLayer.forEachTile(tile => {
             if(tile.properties['oneWay']) {
 				// collides only from bottom
                 tile.setCollision(false, false, true, false, false);
@@ -178,6 +182,8 @@ export class SceneParent extends Phaser.Scene {
 			this.player.update();
 		}
 
+////////// Enemy Update
+
 		this.enemyGroupArray.forEach((enemyGroup) => enemyGroup.forEach((enemy) => enemy.update()));
 
 		return true;
@@ -198,7 +204,7 @@ export class SceneParent extends Phaser.Scene {
 
 	initEnemy = function(enemy, index1, index2) {
 
-        // console.log(enemy.name, index1, index2);
+        //console.log(enemy.name);
 
 		this.enemyGroupArray[index1][index2] = this.add.character({
 			x: enemy.x + this.rPos.x,
@@ -210,6 +216,7 @@ export class SceneParent extends Phaser.Scene {
 			index1: index1,
 			index2: index2,
 			simpleInstruction: enemy.simpleInstruction,
+			// TODO: hitbox plugin/parent
 			constantHitbox: this.add.rectangle(
 				enemy.x + this.rPos.x + enemy.constantHitbox.offsetX, 
 				enemy.y + this.rPos.y + enemy.constantHitbox.offsetY, 
