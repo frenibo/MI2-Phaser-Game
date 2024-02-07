@@ -1,6 +1,7 @@
 export class Character extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable, map, index1, index2, simpleInstruction, type}){
+    constructor({ scene, x, y, image, name, path, speed, playable, map, index1, index2, simpleInstruction, type, 
+        constantHitbox, constantHitboxOffset}){
         super(scene, x, y, image);
 
         this.path = path || false;
@@ -16,6 +17,8 @@ export class Character extends Phaser.GameObjects.Sprite {
         this.index2 = index2 || undefined
         this.simpleInstruction = simpleInstruction || {action: '', option: ''};
         this.type = type || '';
+        this.constantHitbox = constantHitbox || null;
+        this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
 
         // Character movements are passed as instruction objects to
         // be evaluated on the next call to update
@@ -34,6 +37,11 @@ export class Character extends Phaser.GameObjects.Sprite {
 
         // Process the instructions array
         this.DoInstructions();
+
+        if(this.constantHitbox) {
+            this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
+            this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+        }
         
     }
 

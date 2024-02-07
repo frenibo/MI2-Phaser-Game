@@ -215,6 +215,15 @@ export class SceneParent extends Phaser.Scene {
 			index1: index1,
 			index2: index2,
 			simpleInstruction: enemy.simpleInstruction,
+			constantHitbox: this.add.rectangle(
+				enemy.x + this.rPos.x + enemy.constantHitbox.offsetX, 
+				enemy.y + this.rPos.y + enemy.constantHitbox.offsetY, 
+				enemy.constantHitbox.width, 
+				enemy.constantHitbox.height, 
+				enemy.constantHitbox.color, 
+				enemy.constantHitbox.alpha
+				),
+			constantHitboxOffset: {x: enemy.constantHitbox.offsetX, y: enemy.constantHitbox.offsetY},
             //speed: 100
 		});
 
@@ -224,7 +233,28 @@ export class SceneParent extends Phaser.Scene {
         this.physics.add.collider(this.enemyGroupArray[index1][index2], this.player);
 		this.enemyGroupArray[index1][index2].setDepth(10);
 
+		// configures hurtbox area
+		if(enemy.bodySize) {
+			if(enemy.bodyOffset) {
+				this.enemyGroupArray[index1][index2].body.setOffset(enemy.bodyOffset.x, enemy.bodyOffset.y);
+			}
+			this.enemyGroupArray[index1][index2].body.setSize(enemy.bodySize.x, enemy.bodySize.y, false);
+		}
+
+		// configure constant hitbox
+		this.physics.add.existing(this.enemyGroupArray[index1][index2].constantHitbox);
+		console.log(this.enemyGroupArray[index1][index2].constantHitbox.body);
+		console.log(this.player.body);
+		this.enemyGroupArray[index1][index2].constantHitbox.body.setAllowGravity(false);
+		// TODO: overlap/collider not working
+		this.physics.add.collider(this.enemyGroupArray[index1][index2].constantHitbox.body, this.player.body, this.handlePlayerHit(), undefined);
+		this.enemyGroupArray[index1][index2].constantHitbox.setDepth(10);
+
     }
+
+	handlePlayerHit(player, enemy) {
+		console.log('Hit!');
+	}
 
 	// This method should never be called !
 	usefulCodeSnippets = function() {

@@ -53,34 +53,43 @@ export class Level_1 extends SceneParent
             {
                 x: 330 + this.rPos.x,
                 y: 230 + this.rPos.y,
-                image: 'enemy',
-                name: 'enemy1',
+                image: 'piker',
+                name: 'piker1',
                 playable: false,
                 //map: this.map,
                 speed: 30,
                 simpleInstruction: {action: 'patrol', option: ''},
+                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 14, color: 0xff0000, alpha: 0.5},
+                bodyOffset: {x: 8, y: 0},
+                bodySize: {x: 16, y: 16},
                 //speed: 100
             },
             {
                 x: 130 + this.rPos.x,
                 y: 150 + this.rPos.y,
-                image: 'enemy',
-                name: 'enemy2',
+                image: 'piker',
+                name: 'piker2',
                 playable: false,
                 //map: this.map,
                 speed: 30,
                 simpleInstruction: {action: 'patrol', option: ''},
+                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 14, color: 0xff0000, alpha: 0.5},
+                bodyOffset: {x: 8, y: 0},
+                bodySize: {x: 16, y: 16},
                 //speed: 100
             },
             {
                 x: 330 + this.rPos.x,
                 y: 150 + this.rPos.y,
-                image: 'enemy',
-                name: 'enemy3',
+                image: 'piker',
+                name: 'piker3',
                 playable: false,
                 //map: this.map,
                 speed: 30,
                 simpleInstruction: {action: 'patrol', option: ''},
+                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 14, color: 0xff0000, alpha: 0.5},
+                bodyOffset: {x: 8, y: 0},
+                bodySize: {x: 16, y: 16},
                 //speed: 100
             },
 
@@ -95,7 +104,7 @@ export class Level_1 extends SceneParent
     {
         this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
         this.load.image('tiles', './assets/tilemaps/level1.png');
-        this.load.image('enemy', './assets/enemy.png');
+        this.load.image('piker', './assets/piker.png');
 
         super.preload();
     }
