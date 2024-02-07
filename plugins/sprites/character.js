@@ -51,7 +51,6 @@ export class Character extends Phaser.GameObjects.Sprite {
 
         this.body.setBounce(this.bounce);
 
-
         this.body.setCollideWorldBounds(true);
 
         scene.physics.add.collider(this, scene.interactiveLayer);
@@ -79,10 +78,8 @@ export class Character extends Phaser.GameObjects.Sprite {
                 console.log(this.constantHitbox);
                 console.log(scene.player);
             this.constantHitbox.body.setAllowGravity(false);
-            // TODO: overlap/collider not working
-            //scene.physics.add.overlap(this.constantHitbox, scene.player, this.handlePlayerHit(), undefined);
-            scene.physics.add.collider(this.constantHitbox, scene.player, this.handlePlayerHit());
-            //this.constantHitbox.setDepth(10);
+            scene.physics.add.collider(scene.player, this.constantHitbox, () => this.handlePlayerHit(scene.player, this), null, this);
+            this.constantHitbox.setDepth(10);
         }
 
     }
@@ -99,7 +96,7 @@ export class Character extends Phaser.GameObjects.Sprite {
             this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
             this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
         }
-        
+       
     }
 
     /**
