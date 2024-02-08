@@ -111,11 +111,14 @@ export class SceneParent extends Phaser.Scene {
 		// You can load a layer from the map using the layer name from Tiled, or by using the layer
         // index (0 for Overhead).
 		// TODO: Why do this.backgroundLayer etc. not have to be initialized ???
+		this.scriptLayer = this.map.createLayer('Script', this.tiles, this.rPos.x, this.rPos.y);
         this.backgroundLayer = this.map.createLayer('Background', this.tiles, this.rPos.x, this.rPos.y);
+		this.portalLayer = this.map.createLayer('Portal', this.tiles, this.rPos.x, this.rPos.y);
+		this.solidLayer = this.map.createLayer('Solid', this.tiles, this.rPos.x, this.rPos.y);
 		this.oneWayLayer = this.map.createLayer('OneWay', this.tiles, this.rPos.x, this.rPos.y);
-        this.solidLayer = this.map.createLayer('Solid', this.tiles, this.rPos.x, this.rPos.y);
         this.overheadLayer = this.map.createLayer('Overhead', this.tiles, this.rPos.x, this.rPos.y);
-        this.scriptLayer = this.map.createLayer('Script', this.tiles, this.rPos.x, this.rPos.y);
+        
+		
 
 		// Itterates through all tiles in a given layer and sets collision based on Custom Properties set in Tiled.
 		this.solidLayer.forEachTile(tile => {

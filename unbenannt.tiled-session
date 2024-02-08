@@ -3,14 +3,14 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "C:/Users/fboro/Desktop/Tiled/level1.tmx",
+    "activeFile": "assets/tilemaps/level2.tmx",
     "expandedProjectPaths": [
+        "assets/tilesets",
         "assets/tilemaps",
         "assets",
-        "assets/tilesets",
         "."
     ],
-    "file.lastUsedOpenFilter": "Alle Dateien (*)",
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
             "scaleInDock": 1,
@@ -18,10 +18,10 @@
         },
         "C:/Users/fboro/Desktop/Tiled/level1.tmx": {
             "scale": 1,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 291,
-                "y": 119.5
+                "x": 285,
+                "y": 117.5
             }
         },
         "C:/Users/fboro/Desktop/Tiled/level1.tmx#level1": {
@@ -51,6 +51,43 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "assets/tilemaps/level1.tmj": {
+            "scale": 0.628076171875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 257.13441654357456,
+                "y": 128.16916737930495
+            }
+        },
+        "assets/tilemaps/level1.tmj#Terrain + background (16x16)": {
+            "scaleInDock": 1
+        },
+        "assets/tilemaps/level1.tmj#sky": {
+            "scaleInDock": 1
+        },
+        "assets/tilemaps/level1.tmx": {
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 308.5,
+                "y": 115.5
+            }
+        },
+        "assets/tilemaps/level1.tmx#level1": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "assets/tilemaps/level2.tmx": {
+            "scale": 1,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 454.5,
+                "y": -22
+            }
+        },
+        "assets/tilemaps/level2.tmx#standard1": {
+            "scaleInDock": 1
+        },
         "assets/tilemaps/pa1-terrain.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -78,19 +115,24 @@
     "last.imagePath": "C:/Users/fboro/Desktop/MI2 Phaser Game/assets/tilemaps",
     "map.fixedSize": false,
     "map.height": 30,
-    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
+    "map.renderOrder": null,
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 200,
     "openFiles": [
-        "C:/Users/fboro/Desktop/Tiled/level1.tmx"
+        "assets/tilemaps/level1.tmx",
+        "assets/tilemaps/level2.tmx"
     ],
     "project": "unbenannt.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "C:/Users/fboro/Desktop/Tiled/level1.tmx",
+        "assets/tilemaps/level1.tmx",
+        "assets/tilemaps/level2.tmx",
+        "assets/tilemaps/level1.tmj",
         "assets/tilemaps/pa1-terrain.tsx",
+        "C:/Users/fboro/Desktop/Tiled/level1.tmx",
         "C:/Users/fboro/Desktop/Tiled/tilesets/pa1-terrain.tsx",
         "assets/tilemaps/sky.tsx",
         "assets/tilemaps/blue_sky1.tsx",
