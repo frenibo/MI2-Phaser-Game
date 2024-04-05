@@ -23,7 +23,7 @@ export class Level_1 extends SceneParent
 			height: 16
 		};
         
-        this.zoom = 1; // Changes zoom of the camera. Default zoom = 1.
+        this.zoom = 2; // Changes zoom of the camera. Default zoom = 1.
        
 ////////// Player data
 
@@ -39,7 +39,7 @@ export class Level_1 extends SceneParent
             simpleInstruction: {action: '', option: ''},
             bodySize: {x: 16, y: 32},
             type: 'player',
-            bounce: 0,
+            bounce: 0.2,
             bodyOffset: {x: 0, y: 0},
             bodySize:  {x: 16, y: 32},
 
@@ -50,7 +50,7 @@ export class Level_1 extends SceneParent
 
         this.playableScene = true;
         this.playerSpeed = 200;
-        this.playerBounce = 0;
+        this.playerBounce = 0.5;
 
          // The coordinates the player spawns at
 		this.spawnPoint = {

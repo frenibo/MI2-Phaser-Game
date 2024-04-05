@@ -6,9 +6,9 @@
     "activeFile": "assets/tilemaps/level2.tmx",
     "expandedProjectPaths": [
         "assets/tilesets",
-        "assets/tilemaps",
+        ".",
         "assets",
-        "."
+        "assets/tilemaps"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -69,8 +69,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 308.5,
-                "y": 115.5
+                "x": 307.5,
+                "y": 115
             }
         },
         "assets/tilemaps/level1.tmx#level1": {
@@ -79,10 +79,10 @@
         },
         "assets/tilemaps/level2.tmx": {
             "scale": 1,
-            "selectedLayer": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 454.5,
-                "y": -22
+                "x": 453.5,
+                "y": -24
             }
         },
         "assets/tilemaps/level2.tmx#standard1": {

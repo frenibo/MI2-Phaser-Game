@@ -1,5 +1,5 @@
 //import Phaser from 'phaser';
-//import { Anims } from './anims';
+//import { Animationss } from './Animations';
 
 /**
  * Parent class for all playable scenes
