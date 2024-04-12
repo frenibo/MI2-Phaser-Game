@@ -46,13 +46,7 @@ export class SceneParent extends Phaser.Scene {
 	}
 	
 	init(data){
-		console.log(data);
-		if(data) {
-			if(data.type === 'portal') {
-				this.spawnPoint.x = data.spawnPoint.x;
-				this.spawnPoint.y = data.spawnPoint.y;
-			}
-		}
+		
 	}
 
 	preload() {
@@ -208,8 +202,9 @@ export class SceneParent extends Phaser.Scene {
 				this.player.SetInstruction({action: 'move', option: 'right'});
 
 			// Vertical movement
-			if (this.cursors.up.isDown || this.keyW.isDown)
+			if (this.cursors.up.isDown || this.keyW.isDown) {
 				this.player.SetInstruction({action: 'jump'});
+			}
 
 			this.player.update();
 		}
@@ -280,11 +275,23 @@ export class SceneParent extends Phaser.Scene {
 			bodyOffset: portal.bodyOffset,
 			bodySize: portal.bodySize,
 			active: portal.active,
-			nextScene: portal.nextScene,
+			originScene: portal.originScene,
+			destinationScene: portal.destinationScene,
 			spawnPoint: portal.spawnPoint,
             //speed: 100
 		});
     }
+
+	destroyAllGameObjects = function() {
+		this.enemyGroupArray = [];
+		this.portals = [];
+	}
+
+	switchScene = function(destinationScene, data) {
+		this.scene.start(destinationScene, data);
+		this.destroyAllGameObjects();
+
+	}
 
 	// This method should never be called !
 	usefulCodeSnippets = function() {

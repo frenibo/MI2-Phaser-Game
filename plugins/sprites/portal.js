@@ -1,6 +1,6 @@
 export class Portal extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, bodyOffset, bodySize, active, index, nextScene, spawnPoint}){
+    constructor({ scene, x, y, image, name, bodyOffset, bodySize, active, index, originScene, destinationScene, spawnPoint}){
 
         super(scene, x, y, image);
 
@@ -15,7 +15,8 @@ export class Portal extends Phaser.GameObjects.Sprite {
         this.bodySize = bodySize || null; // {x: 16, y: 32},
         this.active = active || false;
         this.index = index || undefined;
-        this.nextScene = nextScene || undefined;
+        this.originScene = originScene || undefined;
+        this.destinationScene = destinationScene || undefined;
         this.spawnPoint = spawnPoint || {x: 0, y: 0};
         this.type = 'portal';
         
@@ -53,6 +54,7 @@ export class Portal extends Phaser.GameObjects.Sprite {
         if(this.playerOverlap == true && this.scene.player.portalCooldown == 0) {
             this.tint = 0xff0000; //TODO: replace tint with animation
             if(this.scene.cursors.down.isDown || this.scene.keyS.isDown) {
+                this.scene.input.stopPropagation();
                 this.enterPortal(this);
             }
         }
@@ -72,18 +74,17 @@ export class Portal extends Phaser.GameObjects.Sprite {
 
     enterPortal(portal) {
         console.log(portal.name);
-        if(portal.nextScene){
-            if(portal.nextScene == this.scene.scene.key) {
-                this.scene.input.stopPropagation();
+        if(portal.destinationScene){
+            // When destination is in same scene
+            if(portal.destinationScene == this.scene.scene.key) {
                 this.scene.player.body.setVelocityX(0); 
                 this.scene.player.body.setVelocityY(0);
                 this.scene.player.body.x = portal.spawnPoint.x + this.scene.scene.scene.rPos.x -8;
                 this.scene.player.body.y = portal.spawnPoint.y + this.scene.scene.scene.rPos.y -16;
             }
-            else if(portal.nextScene != this.scene.scene.key) {
-                this.scene.input.stopPropagation();
-                
-                this.scene.scene.start(portal.nextScene, portal);
+            // When destination is in another scene
+            else if(portal.destinationScene != this.scene.scene.key) {
+                this.scene.switchScene(portal.destinationScene, portal);
             }
             this.scene.player.portalCooldown = 30;
         }

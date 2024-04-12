@@ -75,56 +75,62 @@ export class Level_1 extends SceneParent
 
 ////////// Enemy data
 
-        let enemyGroup = [
-            {
-                x: 330, // + this.rPos.x,
-                y: 230, // + this.rPos.y,
-                image: 'piker',
-                name: 'piker1',
-                playable: false,
-                //map: this.map,
-                speed: 30,
-                simpleInstruction: {action: 'patrol', option: ''},
-                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                bodyOffset: {x: 8, y: 0},
-                bodySize: {x: 16, y: 16},
-                type: 'enemy',
-                //speed: 100
-            },
-            {
-                x: 130, // + this.rPos.x,
-                y: 150, // + this.rPos.y,
-                image: 'piker',
-                name: 'piker2',
-                playable: false,
-                //map: this.map,
-                speed: 30,
-                simpleInstruction: {action: 'patrol', option: ''},
-                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                bodyOffset: {x: 8, y: 0},
-                bodySize: {x: 16, y: 16},
-                type: 'enemy',
-                //speed: 100
-            },
-            {
-                x: 330, // + this.rPos.x,
-                y: 150, // + this.rPos.y,
-                image: 'piker',
-                name: 'piker3',
-                playable: false,
-                //map: this.map,
-                speed: 30,
-                simpleInstruction: {action: 'patrol', option: ''},
-                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                bodyOffset: {x: 8, y: 0},
-                bodySize: {x: 16, y: 16},
-                type: 'enemy',
-                //speed: 100
-            },
+        if(!this.enemyGroupArray.length) {
+            let pikerGroup = [
+                {
+                    x: 330, // + this.rPos.x,
+                    y: 230, // + this.rPos.y,
+                    image: 'piker',
+                    name: 'piker1',
+                    playable: false,
+                    //map: this.map,
+                    speed: 30,
+                    simpleInstruction: {action: 'patrol', option: ''},
+                    constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
+                    bodyOffset: {x: 8, y: 0},
+                    bodySize: {x: 16, y: 16},
+                    type: 'enemy',
+                    //speed: 100
+                },
+                {
+                    x: 130, // + this.rPos.x,
+                    y: 150, // + this.rPos.y,
+                    image: 'piker',
+                    name: 'piker2',
+                    playable: false,
+                    //map: this.map,
+                    speed: 30,
+                    simpleInstruction: {action: 'patrol', option: ''},
+                    constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
+                    bodyOffset: {x: 8, y: 0},
+                    bodySize: {x: 16, y: 16},
+                    type: 'enemy',
+                    //speed: 100
+                },
+                {
+                    x: 330, // + this.rPos.x,
+                    y: 150, // + this.rPos.y,
+                    image: 'piker',
+                    name: 'piker3',
+                    playable: false,
+                    //map: this.map,
+                    speed: 30,
+                    simpleInstruction: {action: 'patrol', option: ''},
+                    constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
+                    bodyOffset: {x: 8, y: 0},
+                    bodySize: {x: 16, y: 16},
+                    type: 'enemy',
+                    //speed: 100
+                },
+    
+            ];
+    
+            this.enemyGroupArray.push(pikerGroup);
+            //this.enemyGroupArray[0] = enemyGroup;
 
-        ];
+        }
 
-        this.enemyGroupArray.push(enemyGroup);
+        
 
         this.portals = [
             {
@@ -135,7 +141,8 @@ export class Level_1 extends SceneParent
                 bodyOffset: {x: 4, y: 16},
                 bodySize: {x: 8, y: 16},
                 active: true,
-                nextScene: 'level_1',
+                originScene: 'level_1',
+                destinationScene: 'level_1',
                 spawnPoint: {x: 170, y: 256},
             },
             {
@@ -146,7 +153,8 @@ export class Level_1 extends SceneParent
                 bodyOffset: {x: 4, y: 16},
                 bodySize: {x: 8, y: 16},
                 active: true,
-                nextScene: 'level_2',
+                originScene: 'level_1',
+                destinationScene: 'level_2',
                 spawnPoint: {x: 72, y: 256},
             },
 

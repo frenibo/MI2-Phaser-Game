@@ -75,7 +75,7 @@ export class Level_2 extends SceneParent
         */
 
 ////////// Enemy data
-
+        /*
         let enemyGroup = [
             {
                 x: 330, // + this.rPos.x,
@@ -126,6 +126,7 @@ export class Level_2 extends SceneParent
         ];
 
         this.enemyGroupArray.push(enemyGroup);
+        */
 
         this.portals = [
             {
@@ -136,7 +137,8 @@ export class Level_2 extends SceneParent
                 bodyOffset: {x: 4, y: 16},
                 bodySize: {x: 8, y: 16},
                 active: true,
-                nextScene: 'level_1',
+                originScene: 'level_2',
+                destinationScene: 'level_1',
                 spawnPoint: {x: 170 , y: 256 },
             },
             {
@@ -147,7 +149,8 @@ export class Level_2 extends SceneParent
                 bodyOffset: {x: 4, y: 16},
                 bodySize: {x: 8, y: 16},
                 active: true,
-                nextScene: 'level_2',
+                originScene: 'level_2',
+                destinationScene: 'level_2',
                 spawnPoint: {x: 72, y: 256},
             },
 
