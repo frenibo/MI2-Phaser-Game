@@ -1,0 +1,2 @@
+- too many enemies spawn when changing scenes.
+- understand scene changing
