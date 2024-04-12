@@ -6,10 +6,12 @@ import { PortalPlugin } from "./plugins/sprites/portal.js";
 import { TitleScreen } from "./scenes/titlescreen.js";
 // import { Example } from "./scenes/example.js";
 import { Level_1 } from "./scenes/level_1.js";
+import { Level_2 } from "./scenes/level_2.js";
 
 var titleScreen = new TitleScreen();
 // var exampleScene = new Example();
 var level_1 = new Level_1();
+var level_2 = new Level_2();
 
 const config = {
 	type: Phaser.AUTO,
@@ -39,7 +41,8 @@ const config = {
 	scene: [ 
 		//Phaser.Scene
 		titleScreen,
-		level_1
+		level_1,
+		level_2,
 	]
 };
 

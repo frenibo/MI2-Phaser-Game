@@ -17,6 +17,7 @@ export class Portal extends Phaser.GameObjects.Sprite {
         this.index = index || undefined;
         this.nextScene = nextScene || undefined;
         this.spawnPoint = spawnPoint || {x: 0, y: 0};
+        this.type = 'portal';
         
 ////////// Player-Init attributes
         
@@ -76,14 +77,15 @@ export class Portal extends Phaser.GameObjects.Sprite {
                 this.scene.input.stopPropagation();
                 this.scene.player.body.setVelocityX(0); 
                 this.scene.player.body.setVelocityY(0);
-                this.scene.player.body.x = portal.spawnPoint.x + this.scene.scene.scene.rPos.x;
-                this.scene.player.body.y = portal.spawnPoint.y + this.scene.scene.scene.rPos.y;
+                this.scene.player.body.x = portal.spawnPoint.x + this.scene.scene.scene.rPos.x -8;
+                this.scene.player.body.y = portal.spawnPoint.y + this.scene.scene.scene.rPos.y -16;
             }
             else if(portal.nextScene != this.scene.scene.key) {
                 this.scene.input.stopPropagation();
-                this.scene.scene.start(portal.nextScene);
+                
+                this.scene.scene.start(portal.nextScene, portal);
             }
-            this.scene.player.portalCooldown = 60;
+            this.scene.player.portalCooldown = 30;
         }
     }
 

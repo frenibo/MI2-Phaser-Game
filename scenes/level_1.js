@@ -14,7 +14,17 @@ export class Level_1 extends SceneParent
     tileset;
     map;
 
+    spawnPoint = {x: 200, y: 240};
+
     init(data){
+
+        console.log(data);
+		if(data) {
+			if(data.type === 'portal') {
+				this.spawnPoint.x = data.spawnPoint.x;
+				this.spawnPoint.y = data.spawnPoint.y;
+			}
+		}
 
 ////////// World data
 
@@ -29,8 +39,8 @@ export class Level_1 extends SceneParent
 
 
         this.playerData = {
-            x: 200, // + this.rPos.x,
-            y: 240, // + this.rPos.y,
+            x: this.spawnPoint.x, // + this.rPos.x,
+            y: this.spawnPoint.y, // + this.rPos.y,
             image: 'player',
             name: 'player',
             playable: true,
@@ -51,11 +61,7 @@ export class Level_1 extends SceneParent
         this.playerSpeed = 200;
         this.playerBounce = 0.5;
 
-         // The coordinates the player spawns at
-		this.spawnPoint = {
-			x:200,
-			y:240
-		}
+        
         /*
 		if(data.hasOwnProperty('origin')){
 			if(data.origin === 'Lab1') {
@@ -130,7 +136,7 @@ export class Level_1 extends SceneParent
                 bodySize: {x: 8, y: 16},
                 active: true,
                 nextScene: 'level_1',
-                spawnPoint: {x: 170 -8, y: 256 -16},
+                spawnPoint: {x: 170, y: 256},
             },
             {
                 x: 170,
@@ -140,8 +146,8 @@ export class Level_1 extends SceneParent
                 bodyOffset: {x: 4, y: 16},
                 bodySize: {x: 8, y: 16},
                 active: true,
-                nextScene: 'level_1',
-                spawnPoint: {x: 72 -8, y: 256 -16},
+                nextScene: 'level_2',
+                spawnPoint: {x: 72, y: 256},
             },
 
         ];

@@ -4,7 +4,7 @@ export class Level_2 extends SceneParent
 {
     constructor(){
 		super('level_2');
-        // super({key:'level_1'});
+        //super({key:'level_1'});
 
 		//this.portals.lab = 'Lab1';
 	}
@@ -14,7 +14,17 @@ export class Level_2 extends SceneParent
     tileset;
     map;
 
+    spawnPoint = {x: 200, y: 240};
+
     init(data){
+
+        console.log(data);
+		if(data) {
+			if(data.type === 'portal') {
+				this.spawnPoint.x = data.spawnPoint.x;
+				this.spawnPoint.y = data.spawnPoint.y;
+			}
+		}
 
 ////////// World data
 
@@ -29,15 +39,14 @@ export class Level_2 extends SceneParent
 
 
         this.playerData = {
-            x: 200, // + this.rPos.x,
-            y: 240, // + this.rPos.y,
+            x: this.spawnPoint.x, // + this.rPos.x,
+            y: this.spawnPoint.y, // + this.rPos.y,
             image: 'player',
             name: 'player',
             playable: true,
             //map: this.map,
             speed: 200,
             simpleInstruction: {action: '', option: ''},
-            bodySize: {x: 16, y: 32},
             type: 'player',
             bounce: 0.2,
             bodyOffset: {x: 0, y: 0},
@@ -53,10 +62,7 @@ export class Level_2 extends SceneParent
         this.playerBounce = 0.5;
 
          // The coordinates the player spawns at
-		this.spawnPoint = {
-			x:200,
-			y:240
-		}
+
         /*
 		if(data.hasOwnProperty('origin')){
 			if(data.origin === 'Lab1') {
@@ -121,6 +127,32 @@ export class Level_2 extends SceneParent
 
         this.enemyGroupArray.push(enemyGroup);
 
+        this.portals = [
+            {
+                x: 72,
+                y: 256, 
+                image: 'portal', 
+                name: 'portal3', 
+                bodyOffset: {x: 4, y: 16},
+                bodySize: {x: 8, y: 16},
+                active: true,
+                nextScene: 'level_1',
+                spawnPoint: {x: 170 , y: 256 },
+            },
+            {
+                x: 170,
+                y: 256, 
+                image: 'portal', 
+                name: 'portal4', 
+                bodyOffset: {x: 4, y: 16},
+                bodySize: {x: 8, y: 16},
+                active: true,
+                nextScene: 'level_2',
+                spawnPoint: {x: 72, y: 256},
+            },
+
+        ];
+
 
 	}
 
@@ -129,6 +161,7 @@ export class Level_2 extends SceneParent
         this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
         this.load.image('tiles', './assets/tilemaps/level1.png');
         this.load.image('piker', './assets/piker.png');
+        this.load.image('portal', './assets/portal.png');
 
         super.preload();
     }

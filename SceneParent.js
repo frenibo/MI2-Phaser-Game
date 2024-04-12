@@ -33,7 +33,7 @@ export class SceneParent extends Phaser.Scene {
 		this.playerBounce = 0;
 		this.player = null;
 		this.playerSpeed = 200;
-		this.spawnPoint = { x: 0, y: 0, };
+		this.spawnPoint = { x: undefined, y: undefined, };
 
 ////////// Enemy attributes
 
@@ -45,7 +45,15 @@ export class SceneParent extends Phaser.Scene {
 
 	}
 	
-	init(data){ }
+	init(data){
+		console.log(data);
+		if(data) {
+			if(data.type === 'portal') {
+				this.spawnPoint.x = data.spawnPoint.x;
+				this.spawnPoint.y = data.spawnPoint.y;
+			}
+		}
+	}
 
 	preload() {
 		this.load.image('player', './assets/player.png');
@@ -142,18 +150,35 @@ export class SceneParent extends Phaser.Scene {
 
 		if(this.playerData) {
 			// Creates global Player object
-			window.player = this.player = this.add.character({
-				x: this.playerData.x + this.rPos.x,
-				y: this.playerData.y + this.rPos.y,
-				image: this.playerData.image,
-				name: this.playerData.name,
-				playable: this.playerData.playable,
-				speed: this.playerData.speed,
-				type: this.playerData.type,
-				bodyOffset: this.playerData.bodyOffset,
-				bodySize: this.playerData.bodySize,
-				bounce: this.playerData.bounce,
-			});
+			if(this.spawnPoint.x && this.spawnPoint.y) {
+				window.player = this.player = this.add.character({
+					x: this.spawnPoint.x + this.rPos.x,
+					y: this.spawnPoint.y + this.rPos.y,
+					image: this.playerData.image,
+					name: this.playerData.name,
+					playable: this.playerData.playable,
+					speed: this.playerData.speed,
+					type: this.playerData.type,
+					bodyOffset: this.playerData.bodyOffset,
+					bodySize: this.playerData.bodySize,
+					bounce: this.playerData.bounce,
+				});
+			}
+			else {
+				window.player = this.player = this.add.character({
+					x: this.playerData.x + this.rPos.x,
+					y: this.playerData.y + this.rPos.y,
+					image: this.playerData.image,
+					name: this.playerData.name,
+					playable: this.playerData.playable,
+					speed: this.playerData.speed,
+					type: this.playerData.type,
+					bodyOffset: this.playerData.bodyOffset,
+					bodySize: this.playerData.bodySize,
+					bounce: this.playerData.bounce,
+				});
+			}
+			
 
 			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions.width, this.canvasDimensions.height);
 
