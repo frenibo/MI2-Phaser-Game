@@ -1,10 +1,10 @@
 import { SceneParent } from '../SceneParent.js';
 
-export class Level_1 extends SceneParent
+export class Level_2 extends SceneParent
 {
     constructor(){
-		super('level_1');
-        //super({key:'level_1'});
+		super('level_2');
+        // super({key:'level_1'});
 
 		//this.portals.lab = 'Lab1';
 	}
@@ -37,6 +37,7 @@ export class Level_1 extends SceneParent
             //map: this.map,
             speed: 200,
             simpleInstruction: {action: '', option: ''},
+            bodySize: {x: 16, y: 32},
             type: 'player',
             bounce: 0.2,
             bodyOffset: {x: 0, y: 0},
@@ -120,32 +121,6 @@ export class Level_1 extends SceneParent
 
         this.enemyGroupArray.push(enemyGroup);
 
-        this.portals = [
-            {
-                x: 72,
-                y: 256, 
-                image: 'portal', 
-                name: 'portal1', 
-                bodyOffset: {x: 4, y: 16},
-                bodySize: {x: 8, y: 16},
-                active: true,
-                nextScene: 'level_1',
-                spawnPoint: {x: 170 -8, y: 256 -16},
-            },
-            {
-                x: 170,
-                y: 256, 
-                image: 'portal', 
-                name: 'portal2', 
-                bodyOffset: {x: 4, y: 16},
-                bodySize: {x: 8, y: 16},
-                active: true,
-                nextScene: 'level_1',
-                spawnPoint: {x: 72 -8, y: 256 -16},
-            },
-
-        ];
-
 
 	}
 
@@ -154,7 +129,6 @@ export class Level_1 extends SceneParent
         this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
         this.load.image('tiles', './assets/tilemaps/level1.png');
         this.load.image('piker', './assets/piker.png');
-        this.load.image('portal', './assets/portal.png');
 
         super.preload();
     }

@@ -7,6 +7,7 @@ export class Character extends Phaser.GameObjects.Sprite {
 
 ////////// Non-Init attributes
         this.isHit = -1;
+        this.portalCooldown = 0;
         this.previousXPosition;
         this.previousXVelocity;
         this.solidLayerCollider;
@@ -32,7 +33,7 @@ export class Character extends Phaser.GameObjects.Sprite {
         
 ////////// Enemy-Init attributes
         this.index1 = index1 || undefined;
-        this.index2 = index2 || undefined
+        this.index2 = index2 || undefined;
         this.simpleInstruction = simpleInstruction || {action: '', option: ''};
         this.constantHitbox = constantHitbox || null;
         this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
@@ -122,6 +123,11 @@ export class Character extends Phaser.GameObjects.Sprite {
                 this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
             }
             //*/
+        }
+
+        if(this.portalCooldown > 0) {
+            this.portalCooldown = this.portalCooldown -1;
+            //console.log(this.portalCooldown);
         }
        
     }

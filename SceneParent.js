@@ -19,7 +19,7 @@ export class SceneParent extends Phaser.Scene {
 ////////// Map attributes
 
 		this.map = null;
-		this.portals = {};
+		this.portals = [];
 		//relativePosition
 		this.rPos = { x: 0, y: 0 };
 		//mapDimensions
@@ -164,6 +164,10 @@ export class SceneParent extends Phaser.Scene {
 ////////// Create Enemies
 
 		this.enemyGroupArray.forEach((enemyGroup, index1) => enemyGroup.forEach((enemy, index2) => this.initEnemy(enemy, index1, index2)));
+
+////////// Create Portals
+
+		this.portals.forEach((portal, index) => this.initPortal(portal, index));
 		
 	}
 
@@ -188,6 +192,8 @@ export class SceneParent extends Phaser.Scene {
 ////////// Enemy Update
 
 		this.enemyGroupArray.forEach((enemyGroup) => enemyGroup.forEach((enemy) => enemy.update()));
+
+		this.portals.forEach((portal) => portal.update());
 
 		return true;
 	}
@@ -232,6 +238,25 @@ export class SceneParent extends Phaser.Scene {
 			bodyOffset: enemy.bodyOffset,
 			bodySize: enemy.bodySize,
 			type: 'enemy',
+            //speed: 100
+		});
+    }
+
+	initPortal = function(portal, index) {
+
+        //console.log(enemy.name);
+
+		this.portals[index] = this.add.portal({
+			x: portal.x + this.rPos.x,
+			y: portal.y + this.rPos.y,
+            image: portal.image,
+            name: portal.name,
+			index: index,
+			bodyOffset: portal.bodyOffset,
+			bodySize: portal.bodySize,
+			active: portal.active,
+			nextScene: portal.nextScene,
+			spawnPoint: portal.spawnPoint,
             //speed: 100
 		});
     }

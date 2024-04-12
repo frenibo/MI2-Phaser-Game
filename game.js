@@ -1,6 +1,7 @@
 //import Phaser from 'phaser';
 
 import { CharacterPlugin } from "./plugins/sprites/character.js";
+import { PortalPlugin } from "./plugins/sprites/portal.js";
 
 import { TitleScreen } from "./scenes/titlescreen.js";
 // import { Example } from "./scenes/example.js";
@@ -29,7 +30,8 @@ const config = {
 	},
 	plugins: {
         global: [
-            { key: 'CharacterPlugin', plugin: CharacterPlugin, start: true }
+            { key: 'CharacterPlugin', plugin: CharacterPlugin, start: true },
+			{ key: 'PortalPlugin', plugin: PortalPlugin, start: true }
 		]
     },
 	//pixelArt: true,
