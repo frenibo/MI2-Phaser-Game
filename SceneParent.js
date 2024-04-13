@@ -13,6 +13,7 @@ export class SceneParent extends Phaser.Scene {
 ////////// Game attributes
 
 		this.canvasDimensions = { width: 0, height: 0 };
+		//this.canvasDimensions = { width: 800, height: 600 };
 		this.cursors = null;
 		// this.controls = null; // User controls
 		
@@ -25,6 +26,8 @@ export class SceneParent extends Phaser.Scene {
 		//mapDimensions
 		this.mapDimensions = { x: 0, y: 0 };
 		this.tileDimensions = { width: 16, height: 16 };
+		this.tiles_solid_collides = [];
+		this.tiles_solid_oneWay = [];
 
 ////////// Player attributes
 
@@ -98,24 +101,33 @@ export class SceneParent extends Phaser.Scene {
             x: this.map.widthInPixels,
             y: this.map.heightInPixels
         }
-
+		
 		// Creates coordinates to place the map in the middle of the canvas if the map is smaller than the canvas /
 		// The coordinates are then also used to place all other objects relative to the map position.
-        if(this.mapDimensions.x < this.canvasDimensions.width && this.mapDimensions.y < this.canvasDimensions.height) {
-            // relativePosition
-            this.rPos = {
-                x: (this.canvasDimensions.width - this.mapDimensions.x) / 2,
-                y: (this.canvasDimensions.height - this.mapDimensions.y) / 2
-            }
-        }
-        else { this.rPos = { x: 0, y: 0 } }
+		if(this.mapDimensions.x < this.canvasDimensions.width) {
+			//if(true) {
+			// relativePosition
+			this.rPos.x = (this.canvasDimensions.width - this.mapDimensions.x) / 2;
+		}
+		else { this.rPos.x = 0; }
+
+		if(this.mapDimensions.y < this.canvasDimensions.height) {
+			//if(true) {
+			// relativePosition
+			this.rPos.y = (this.canvasDimensions.height - this.mapDimensions.y) / 2;
+		}
+		else { this.rPos.y = 0; }
+
+		// Player will collide with world bounds
+		this.physics.world.setBounds(this.rPos.x, this.rPos.y, this.mapDimensions.x + this.rPos.x, this.mapDimensions.y + this.rPos.y, true, true, true, true);
+		
 
 		// You can load a layer from the map using the layer name from Tiled, or by using the layer
         // index (0 for Overhead).
 		// TODO: Why do this.backgroundLayer etc. not have to be initialized ???
 		this.scriptLayer = this.map.createLayer('Script', this.tiles, this.rPos.x, this.rPos.y);
         this.backgroundLayer = this.map.createLayer('Background', this.tiles, this.rPos.x, this.rPos.y);
-		this.portalLayer = this.map.createLayer('Portal', this.tiles, this.rPos.x, this.rPos.y);
+		//this.portalLayer = this.map.createLayer('Portal', this.tiles, this.rPos.x, this.rPos.y);
 		this.solidLayer = this.map.createLayer('Solid', this.tiles, this.rPos.x, this.rPos.y);
 		this.oneWayLayer = this.map.createLayer('OneWay', this.tiles, this.rPos.x, this.rPos.y);
         this.overheadLayer = this.map.createLayer('Overhead', this.tiles, this.rPos.x, this.rPos.y);
@@ -174,7 +186,7 @@ export class SceneParent extends Phaser.Scene {
 			}
 			
 
-			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions.width, this.canvasDimensions.height);
+			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
 
 			// Place the player above the tile layers
 			this.player.setDepth(10);
@@ -218,12 +230,28 @@ export class SceneParent extends Phaser.Scene {
 		return true;
 	}
 
-	createCamera = function(player, map, zoom = 1, canvasWidth, canvasHeight) {
+	createCamera = function(player, map, zoom = 1, canvasDimensions, mapDimensions, relativePosition) {
+		/*
+		if(relativePosition.x == 0 && relativePosition.y == 0) {
+			this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+		}
+		else {
+			this.cameras.main.setBounds(0, 0, canvasDimensions.width, canvasDimensions.height);
+		}
+		*/
+		//this.cameras.main.setBounds(0, 0, map.widthInPixels + relativePosition.x, map.heightInPixels + relativePosition.y);
+		//this.cameras.main.setBounds(0, 0, map.widthInPixels + relativePosition.x, map.heightInPixels + relativePosition.y);
 
-        //this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, canvasWidth, canvasHeight);
+		//this.physics.world.setBounds(this.rPos.x, this.rPos.y, this.mapDimensions.x + this.rPos.x, this.mapDimensions.y + this.rPos.y, true, true, true, true);
 
-        this.cameras.main.setViewport(0, 0, canvasWidth, canvasHeight);
+		// original configuration
+		//this.cameras.main.setBounds(0, 0, canvasDimensions.width, canvasDimensions.height);
+
+		// this way the camera bounds will likely never be noticable.
+		//this.cameras.main.setBounds(this.rPos.x - canvasDimensions.width/2, this.rPos.y - canvasDimensions.height/2, this.mapDimensions.x + this.rPos.x + canvasDimensions.width/2, this.mapDimensions.y + this.rPos.y + canvasDimensions.height/2);
+		
+
+        this.cameras.main.setViewport(0, 0, canvasDimensions.width, canvasDimensions.height);
 
         this.cameras.main.setZoom(zoom);
 

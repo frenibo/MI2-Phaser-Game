@@ -9,6 +9,10 @@ export class Level_2 extends SceneParent
 		//this.portals.lab = 'Lab1';
 	}
 
+    levelName = 'level_2';
+    tilesetNameInTiled = 'level1';
+    tilesetImageKey = 'tiles';
+
     cursors;
     player;
     tileset;
@@ -61,8 +65,7 @@ export class Level_2 extends SceneParent
         this.playerSpeed = 200;
         this.playerBounce = 0.5;
 
-         // The coordinates the player spawns at
-
+        
         /*
 		if(data.hasOwnProperty('origin')){
 			if(data.origin === 'Lab1') {
@@ -75,82 +78,90 @@ export class Level_2 extends SceneParent
         */
 
 ////////// Enemy data
-        /*
-        let enemyGroup = [
-            {
-                x: 330, // + this.rPos.x,
-                y: 230, // + this.rPos.y,
-                image: 'piker',
-                name: 'piker1',
-                playable: false,
-                //map: this.map,
-                speed: 30,
-                simpleInstruction: {action: 'patrol', option: ''},
-                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                bodyOffset: {x: 8, y: 0},
-                bodySize: {x: 16, y: 16},
-                type: 'enemy',
-                //speed: 100
-            },
-            {
-                x: 130, // + this.rPos.x,
-                y: 150, // + this.rPos.y,
-                image: 'piker',
-                name: 'piker2',
-                playable: false,
-                //map: this.map,
-                speed: 30,
-                simpleInstruction: {action: 'patrol', option: ''},
-                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                bodyOffset: {x: 8, y: 0},
-                bodySize: {x: 16, y: 16},
-                type: 'enemy',
-                //speed: 100
-            },
-            {
-                x: 330, // + this.rPos.x,
-                y: 150, // + this.rPos.y,
-                image: 'piker',
-                name: 'piker3',
-                playable: false,
-                //map: this.map,
-                speed: 30,
-                simpleInstruction: {action: 'patrol', option: ''},
-                constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                bodyOffset: {x: 8, y: 0},
-                bodySize: {x: 16, y: 16},
-                type: 'enemy',
-                //speed: 100
-            },
+        
+        if(!this.enemyGroupArray.length) {
+            let pikerGroup = [
+                {
+                    x: 330, // + this.rPos.x,
+                    y: 430, // + this.rPos.y,
+                    image: 'piker',
+                    name: 'piker1',
+                    playable: false,
+                    //map: this.map,
+                    speed: 30,
+                    simpleInstruction: {action: 'patrol', option: ''},
+                    constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
+                    bodyOffset: {x: 8, y: 0},
+                    bodySize: {x: 16, y: 16},
+                    type: 'enemy',
+                    //speed: 100
+                },
+                
+                {
+                    x: 500, // + this.rPos.x,
+                    y: 420, // + this.rPos.y,
+                    image: 'piker',
+                    name: 'piker2',
+                    playable: false,
+                    //map: this.map,
+                    speed: 30,
+                    simpleInstruction: {action: 'patrol', option: ''},
+                    constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
+                    bodyOffset: {x: 8, y: 0},
+                    bodySize: {x: 16, y: 16},
+                    type: 'enemy',
+                    //speed: 100
+                },
+                /*
+                {
+                    x: 330, // + this.rPos.x,
+                    y: 150, // + this.rPos.y,
+                    image: 'piker',
+                    name: 'piker3',
+                    playable: false,
+                    //map: this.map,
+                    speed: 30,
+                    simpleInstruction: {action: 'patrol', option: ''},
+                    constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
+                    bodyOffset: {x: 8, y: 0},
+                    bodySize: {x: 16, y: 16},
+                    type: 'enemy',
+                    //speed: 100
+                },
+                */
+            ];
+    
+            this.enemyGroupArray.push(pikerGroup);
+            //this.enemyGroupArray[0] = enemyGroup;
 
-        ];
+        }
+        
 
-        this.enemyGroupArray.push(enemyGroup);
-        */
+        
 
         this.portals = [
             {
-                x: 72,
-                y: 256, 
+                x: 120,
+                y: 544, 
                 image: 'portal', 
-                name: 'portal3', 
+                name: 'portal1', 
                 bodyOffset: {x: 4, y: 16},
                 bodySize: {x: 8, y: 16},
                 active: true,
                 originScene: 'level_2',
                 destinationScene: 'level_1',
-                spawnPoint: {x: 170 , y: 256 },
+                spawnPoint: {x: 232, y: 256},
             },
             {
-                x: 170,
-                y: 256, 
+                x: 232,
+                y: 544, 
                 image: 'portal', 
-                name: 'portal4', 
+                name: 'portal2', 
                 bodyOffset: {x: 4, y: 16},
                 bodySize: {x: 8, y: 16},
                 active: true,
                 originScene: 'level_2',
-                destinationScene: 'level_2',
+                destinationScene: 'level_1',
                 spawnPoint: {x: 72, y: 256},
             },
 
@@ -161,8 +172,8 @@ export class Level_2 extends SceneParent
 
     preload ()
     {
-        this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
-        this.load.image('tiles', './assets/tilemaps/level1.png');
+        this.load.tilemapTiledJSON('level_2', './assets/tilemaps/level_2.json');
+        this.load.image('tileset_level_2', './assets/tilemaps/small_tileset_1.png');
         this.load.image('piker', './assets/piker.png');
         this.load.image('portal', './assets/portal.png');
 
@@ -176,11 +187,11 @@ export class Level_2 extends SceneParent
             // This populates the 'settings' object used in GameScene create(settings){}.
             // TODO: Difference between settings and init(data){} ???
             // Answer: This happens after preload() has loaded all assets ?!?!
-            mapKey: 'map',
+            mapKey: 'level_2',
             // 'tilesetNameInTiled' is the name of the tileset in Tiled.
-            tilesetNameInTiled: 'level1', 
+            tilesetNameInTiled: 'small_tileset_1', 
             // 'tilesetImageKey' is the key of the tileset image used when loading the file in preload.
-            tilesetImageKey: 'tiles',
+            tilesetImageKey: 'tileset_level_2',
             // Defines camera zoom on player. Default zoom = 1.
             zoom: 1,
 

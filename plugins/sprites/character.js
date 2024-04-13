@@ -58,6 +58,7 @@ export class Character extends Phaser.GameObjects.Sprite {
 
         this.body.setCollideWorldBounds(true);
 
+        
         this.solidLayerCollider = scene.physics.add.collider(this, scene.solidLayer);
         this.oneWayLayerCollider = scene.physics.add.collider(this, scene.oneWayLayer);
 
@@ -94,6 +95,7 @@ export class Character extends Phaser.GameObjects.Sprite {
 			this.isHit--;
             this.tint = 0x000000;
             this.oneWayLayerCollider.active = false;
+
 		}else if(this.isHit === 0){
             // Character has recovered, reset their hit state
             this.tint = 0xffffff;

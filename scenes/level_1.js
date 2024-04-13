@@ -142,11 +142,11 @@ export class Level_1 extends SceneParent
                 bodySize: {x: 8, y: 16},
                 active: true,
                 originScene: 'level_1',
-                destinationScene: 'level_1',
-                spawnPoint: {x: 170, y: 256},
+                destinationScene: 'level_2',
+                spawnPoint: {x: 232, y: 544},
             },
             {
-                x: 170,
+                x: 232,
                 y: 256, 
                 image: 'portal', 
                 name: 'portal2', 
@@ -155,7 +155,7 @@ export class Level_1 extends SceneParent
                 active: true,
                 originScene: 'level_1',
                 destinationScene: 'level_2',
-                spawnPoint: {x: 72, y: 256},
+                spawnPoint: {x: 120, y: 544},
             },
 
         ];
@@ -165,8 +165,8 @@ export class Level_1 extends SceneParent
 
     preload ()
     {
-        this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
-        this.load.image('tiles', './assets/tilemaps/level1.png');
+        this.load.tilemapTiledJSON('level_1', './assets/tilemaps/level_1.json');
+        this.load.image('tileset_level_1', './assets/tilemaps/small_tileset_1.png');
         this.load.image('piker', './assets/piker.png');
         this.load.image('portal', './assets/portal.png');
 
@@ -180,11 +180,11 @@ export class Level_1 extends SceneParent
             // This populates the 'settings' object used in GameScene create(settings){}.
             // TODO: Difference between settings and init(data){} ???
             // Answer: This happens after preload() has loaded all assets ?!?!
-            mapKey: 'map',
+            mapKey: 'level_1',
             // 'tilesetNameInTiled' is the name of the tileset in Tiled.
-            tilesetNameInTiled: 'level1', 
+            tilesetNameInTiled: 'small_tileset_1', 
             // 'tilesetImageKey' is the key of the tileset image used when loading the file in preload.
-            tilesetImageKey: 'tiles',
+            tilesetImageKey: 'tileset_level_1',
             // Defines camera zoom on player. Default zoom = 1.
             zoom: 1,
 

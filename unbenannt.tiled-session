@@ -4,6 +4,7 @@
         "width": 2
     },
     "activeFile": "assets/tilemaps/level2.tmx",
+    "automapping.whileDrawing": true,
     "expandedProjectPaths": [
         "assets/tilesets",
         ".",
@@ -15,6 +16,12 @@
         "": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "#level1": {
+            "scaleInDock": 1.5
+        },
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
         },
         "C:/Users/fboro/Desktop/Tiled/level1.tmx": {
             "scale": 1,
@@ -69,30 +76,75 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 307.5,
-                "y": 115
+                "x": 305.5,
+                "y": 112.5
             }
         },
         "assets/tilemaps/level1.tmx#level1": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "assets/tilemaps/level1.tmx#small_tileset_1": {
+            "scaleInDock": 1
+        },
+        "assets/tilemaps/level1.tsx": {
+            "scaleInDock": 1
+        },
         "assets/tilemaps/level2.tmx": {
             "scale": 1,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 453.5,
-                "y": -24
+                "x": 451.5,
+                "y": -26.5
             }
         },
         "assets/tilemaps/level2.tmx#standard1": {
             "scaleInDock": 1
+        },
+        "assets/tilemaps/level_1.tmx": {
+            "scale": 1,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 303,
+                "y": 197.5
+            }
+        },
+        "assets/tilemaps/level_1.tmx#small_tileset_1": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "assets/tilemaps/level_2.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 523.9999999999999,
+                "y": 374
+            }
+        },
+        "assets/tilemaps/level_2.tmx#small_tileset_1": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "assets/tilemaps/pa1-terrain.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "assets/tilemaps/sky.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "assets/tilemaps/small_tileset1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 532.6666666666666,
+                "y": 378
+            }
+        },
+        "assets/tilemaps/small_tileset1.tmx#level1": {
+            "scaleInEditor": 1
+        },
+        "assets/tilemaps/small_tileset_1.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -111,7 +163,7 @@
         }
     },
     "last.exportedFilePath": "C:/Users/fboro/Desktop/MI2 Phaser Game/assets/tilemaps",
-    "last.externalTilesetPath": "C:/Users/fboro/Desktop/Tiled/tilesets",
+    "last.externalTilesetPath": "C:/Users/fboro/Desktop/MI2 Phaser Game/assets/tilemaps",
     "last.imagePath": "C:/Users/fboro/Desktop/MI2 Phaser Game/assets/tilemaps",
     "map.fixedSize": false,
     "map.height": 30,
@@ -128,8 +180,10 @@
     "project": "unbenannt.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "assets/tilemaps/level1.tmx",
+        "assets/tilemaps/small_tileset1.tmx",
         "assets/tilemaps/level2.tmx",
+        "assets/tilemaps/level1.tmx",
+        "assets/tilemaps/small_tileset_1.tsx",
         "assets/tilemaps/level1.tmj",
         "assets/tilemaps/pa1-terrain.tsx",
         "C:/Users/fboro/Desktop/Tiled/level1.tmx",
@@ -137,17 +191,17 @@
         "assets/tilemaps/sky.tsx",
         "assets/tilemaps/blue_sky1.tsx",
         "C:/Users/fboro/Desktop/Tiled/unbenannt.tmx",
-        "assets/tilesets/blue_sky1.tsx",
-        "assets/tilesets/pa1-terrain.tsx",
-        "assets/tilesets/wl3-north.tsx"
+        "assets/tilesets/blue_sky1.tsx"
     ],
+    "resizeMap.removeObjects": true,
     "tileset.embedInMap": true,
-    "tileset.lastUsedFilter": "Tiled-Kachelsatzdateien (*.tsx *.xml)",
+    "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "tsx",
+    "tileset.spacing": 0,
     "tileset.tileSize": {
         "height": 16,
         "width": 16
     },
     "tileset.transparentColor": "#000000",
-    "tileset.useTransparentColor": false
+    "tileset.useTransparentColor": true
 }
