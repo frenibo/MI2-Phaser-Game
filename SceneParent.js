@@ -263,65 +263,9 @@ export class SceneParent extends Phaser.Scene {
 
     }
 
-	/*
-
-	initEnemy = function(enemy, index1, index2) {
-
-        //console.log(enemy.name);
-		if(enemy.type === 'piker') {
-			this.enemyGroupArray[index1][index2] = this.add.piker({
-				x: enemy.x + this.rPos.x,
-				y: enemy.y + this.rPos.y,
-				image: enemy.image,
-				name: enemy.name,
-				playable: enemy.playable,
-				speed: enemy.speed,
-				index1: index1,
-				index2: index2,
-				simpleInstruction: enemy.simpleInstruction,
-				// TODO: hitbox plugin/parent
-				constantHitbox: this.add.rectangle(
-					enemy.x + this.rPos.x + enemy.constantHitbox.offsetX, 
-					enemy.y + this.rPos.y + enemy.constantHitbox.offsetY, 
-					enemy.constantHitbox.width, 
-					enemy.constantHitbox.height, 
-					enemy.constantHitbox.color, 
-					enemy.constantHitbox.alpha
-					),
-				constantHitboxOffset: {x: enemy.constantHitbox.offsetX, y: enemy.constantHitbox.offsetY},
-				bodyOffset: enemy.bodyOffset,
-				bodySize: enemy.bodySize,
-				type: 'enemy',
-				//speed: 100
-			});
-		}
-    }
-
-	initPortal = function(portal, index) {
-
-        //console.log(enemy.name);
-		if(portal.type === 'portal') {
-			this.portals[index] = this.add.portal({
-				x: portal.x + this.rPos.x,
-				y: portal.y + this.rPos.y,
-				image: portal.image,
-				name: portal.name,
-				index: index,
-				bodyOffset: portal.bodyOffset,
-				bodySize: portal.bodySize,
-				active: portal.active,
-				originScene: portal.originScene,
-				destinationScene: portal.destinationScene,
-				spawnPoint: portal.spawnPoint,
-				//speed: 100
-			});
-		}
-    }
-	*/
-
 	initSprite = function(sprite, indexArray, indexGroup) {
 
-        console.log(sprite.name);
+        //console.log(sprite.name);
 		if(sprite.type === 'piker') {
 			this.spriteGroupArray[indexArray][indexGroup] = this.add.piker({
 				x: sprite.x + this.rPos.x,
@@ -330,8 +274,8 @@ export class SceneParent extends Phaser.Scene {
 				name: sprite.name,
 				playable: sprite.playable,
 				speed: sprite.speed,
-				index1: indexArray,
-				index2: indexGroup,
+				indexArray: indexArray,
+				indexGroup: indexGroup,
 				simpleInstruction: sprite.simpleInstruction,
 				// TODO: hitbox plugin/parent
 				constantHitbox: this.add.rectangle(

@@ -78,65 +78,49 @@ export class Level_1 extends SceneParent
         if(!this.spriteGroupArray.length) {
             let pikerGroup = [
                 {
+                    type: 'piker',
+                    name: 'piker1',
                     x: 330, // + this.rPos.x,
                     y: 230, // + this.rPos.y,
-                    image: 'piker',
-                    name: 'piker1',
-                    playable: false,
-                    //map: this.map,
-                    speed: 30,
                     simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                    bodyOffset: {x: 8, y: 0},
-                    bodySize: {x: 16, y: 16},
-                    type: 'piker',
-                    //speed: 100
+                    //image: 'piker',
+                    //playable: false,
+                    //map: this.map,
+                    //speed: 30,
+                    //bodyOffset: {x: 8, y: 0},
+                    //bodySize: {x: 16, y: 16},
                 },
                 {
+                    type: 'piker',
+                    name: 'piker2',
                     x: 130, // + this.rPos.x,
                     y: 150, // + this.rPos.y,
-                    image: 'piker',
-                    name: 'piker2',
-                    playable: false,
-                    //map: this.map,
-                    speed: 30,
                     simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                    bodyOffset: {x: 8, y: 0},
-                    bodySize: {x: 16, y: 16},
-                    type: 'piker',
-                    //speed: 100
                 },
                 {
+                    type: 'piker',
+                    name: 'piker3',
                     x: 330, // + this.rPos.x,
                     y: 150, // + this.rPos.y,
-                    image: 'piker',
-                    name: 'piker3',
-                    playable: false,
-                    //map: this.map,
-                    speed: 30,
                     simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                    bodyOffset: {x: 8, y: 0},
-                    bodySize: {x: 16, y: 16},
-                    type: 'piker',
-                    //speed: 100
                 },
     
             ];
     
             this.spriteGroupArray.push(pikerGroup);
-            //this.enemyGroupArray[0] = enemyGroup;
 
             let portalGroup = [
                 {
                     x: 72,
                     y: 256, 
-                    image: 'portal', 
+                    //image: 'portal', 
                     name: 'portal1', 
-                    bodyOffset: {x: 4, y: 16},
-                    bodySize: {x: 8, y: 16},
-                    active: true,
+                    //bodyOffset: {x: 4, y: 16},
+                    //bodySize: {x: 8, y: 16},
+                    //active: true,
                     originScene: 'level_1',
                     destinationScene: 'level_2',
                     spawnPoint: {x: 232, y: 544},
@@ -145,11 +129,7 @@ export class Level_1 extends SceneParent
                 {
                     x: 232,
                     y: 256, 
-                    image: 'portal', 
-                    name: 'portal2', 
-                    bodyOffset: {x: 4, y: 16},
-                    bodySize: {x: 8, y: 16},
-                    active: true,
+                    name: 'portal2',
                     originScene: 'level_1',
                     destinationScene: 'level_2',
                     spawnPoint: {x: 120, y: 544},

@@ -1,6 +1,6 @@
 export class Player extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable, index1, index2, simpleInstruction, type, 
+    constructor({ scene, x, y, image, name, path, speed, playable, simpleInstruction, type, 
         constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce}){
 
         super(scene, x, y, image);
@@ -32,8 +32,6 @@ export class Player extends Phaser.GameObjects.Sprite {
         
         
 ////////// Enemy-Init attributes
-        this.index1 = index1 || undefined;
-        this.index2 = index2 || undefined;
         this.simpleInstruction = simpleInstruction || {action: '', option: ''};
         this.constantHitbox = constantHitbox || null;
         this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
@@ -63,12 +61,6 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.oneWayLayerCollider = scene.physics.add.collider(this, scene.oneWayLayer);
 
         this.setDepth(10);
-
-        if(this.type === 'enemy') {
-
-            scene.physics.add.collider(this, scene.player);
-
-        }
 
         
 ////////// constantHitbox Physics Initialization
@@ -205,104 +197,6 @@ export class Player extends Phaser.GameObjects.Sprite {
     DoHalt(){
         this.body.setVelocityX(0);
         //this.anims.stopAfterRepeat();
-    }
-
-    DoPatrol(){
-        if(!this.body) return;
-        if(this.isHit >= 0) return;
-        
-        
-        if(
-            (this.previousXPosition == this.body.position.x && this.body.position.x == this.prepreXPosition)
-            || (this.previousXVelocity < 0 && this.checkForCliff('left'))				
-            || (this.previousXVelocity > 0 && this.checkForCliff('right'))
-           ) 
-        {
-            this.changeDirection();
-            this.speed = -this.speed;	
-        }
-
-        // This attempts to prevent characters turning around randomly during frame "hickups"
-        if(this.previousXPosition == this.body.position.x) {
-            this.prepreXPosition = this.previousXPosition;
-            // console.log(this.name);
-        } else {this.prepreXPosition = -1}
-
-        this.previousXPosition = this.body.position.x;
-
-        if(this.body.velocity.x == 0){ 
-            this.body.setVelocityX(-this.speed);
-        };
-        this.previousXVelocity = this.body.velocity.x;
-    }
-
-///// Helper Methods
-
-    checkForCliff = function(side) {
-        var offsetX;
-        var offsetX2;   
-        if(side == 'left') {
-            offsetX = -3;
-            offsetX2 = -4;     
-        } else if(side == 'right') {
-            offsetX = this.body.width + 2;
-            offsetX2 = this.body.width + 3;  
-        }
-        
-        var tile1 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height, true, '', 'Solid');
-        var tile2 = this.scene.map.getTileAtWorldXY(this.body.position.x + offsetX2, this.body.position.y + this.body.height, true, '', 'Solid');
-
-        // TODO: bug: characters turn aroudn randomly.
-        // Answer: Checking for two positions one pixel apart.
-        //if(this.body.blocked.down && tile && (tile.collides == false || tile.oneWay == false)) {
-        if(this.body.blocked.down
-            && tile1
-            && (!tile1.properties['solid'] || tile1.properties['solid'] == false )
-            && tile2 
-            && (!tile2.properties['solid'] || tile2.properties['solid'] == false )
-            ) {
-            return true;    
-        } 
-        else {
-            return false;
-        }
-    };
-
-    handlePlayerHit(player, enemy) {
-        if(player.isHit < 0) {
-            player.isHit = 100;
-            player.body.setVelocity(0);
-            player.body.setBounce(0.4);
-            if(player.x <= enemy.x) {
-                player.body.setVelocityX(-80);
-                player.body.setVelocityY(-150);
-
-            } else {
-                player.body.setVelocityX(80);
-                player.body.setVelocityY(-150);
-            }
-            
-            
-            
-        };
-        // get hit direction
-
-	}
-
-    changeDirection(character) {
-        if(this.flipX == false) {
-            this.flipX = true;
-            if(this.bodyOffset) {
-                this.body.setOffset((-this.bodySize.x + this.bodyOffset.x + this.bodyOffset.x), this.bodyOffset.y);
-            }
-        } 
-        else if(this.flipX == true) {
-            this.flipX = false
-            if(this.bodyOffset) {
-                this.body.setOffset(this.bodyOffset.x, this.bodyOffset.y);
-            }
-        }
-        
     }
 
 }

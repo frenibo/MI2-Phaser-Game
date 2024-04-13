@@ -1,6 +1,6 @@
 export class Portal extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, bodyOffset, bodySize, active, indexArray, indexGroup, originScene, destinationScene, spawnPoint}){
+    constructor({ scene, x = 0, y = 0, image = 'portal', name, bodyOffset, bodySize, active, indexArray, indexGroup, originScene, destinationScene, type, spawnPoint}){
 
         super(scene, x, y, image);
 
@@ -9,17 +9,17 @@ export class Portal extends Phaser.GameObjects.Sprite {
         this.playerOverlap = false;
 
 ////////// General-Init attributes
-        this.name = name || "anonymous";
-        this.image = image;
-        this.bodyOffset = bodyOffset || null;
-        this.bodySize = bodySize || null; // {x: 16, y: 32},
-        this.active = active || false;
+        this.name = name || `portal_${indexArray}_${indexGroup}_${scene.scene.key}`;
+        this.image = image || 'portal';
+        this.bodyOffset = bodyOffset || {x: 4, y: 16};
+        this.bodySize = bodySize || {x: 8, y: 16};
+        this.active = active || true;
         this.indexArray = indexArray || undefined;
         this.indexGroup = indexGroup || undefined;
-        this.originScene = originScene || undefined;
-        this.destinationScene = destinationScene || undefined;
+        this.originScene = originScene || 'titlescreen';
+        this.destinationScene = destinationScene || 'level_1';
         this.spawnPoint = spawnPoint || {x: 0, y: 0};
-        this.type = 'portal';
+        this.type = type || 'portal';
         
 ////////// Player-Init attributes
         

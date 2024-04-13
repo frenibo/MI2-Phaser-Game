@@ -84,51 +84,20 @@ export class Level_2 extends SceneParent
                 {
                     x: 330, // + this.rPos.x,
                     y: 430, // + this.rPos.y,
-                    image: 'piker',
                     name: 'piker4',
-                    playable: false,
-                    //map: this.map,
-                    speed: 30,
                     simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                    bodyOffset: {x: 8, y: 0},
-                    bodySize: {x: 16, y: 16},
                     type: 'piker',
-                    //speed: 100
                 },
                 
                 {
                     x: 500, // + this.rPos.x,
                     y: 420, // + this.rPos.y,
-                    image: 'piker',
                     name: 'piker5',
-                    playable: false,
-                    //map: this.map,
-                    speed: 30,
                     simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                    bodyOffset: {x: 8, y: 0},
-                    bodySize: {x: 16, y: 16},
                     type: 'piker',
-                    //speed: 100
                 },
-                /*
-                {
-                    x: 330, // + this.rPos.x,
-                    y: 150, // + this.rPos.y,
-                    image: 'piker',
-                    name: 'piker6',
-                    playable: false,
-                    //map: this.map,
-                    speed: 30,
-                    simpleInstruction: {action: 'patrol', option: ''},
-                    constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                    bodyOffset: {x: 8, y: 0},
-                    bodySize: {x: 16, y: 16},
-                    type: 'piker',
-                    //speed: 100
-                },
-                */
             ];
     
             this.spriteGroupArray.push(pikerGroup);
@@ -137,11 +106,7 @@ export class Level_2 extends SceneParent
                 {
                     x: 120,
                     y: 544, 
-                    image: 'portal', 
-                    name: 'portal3', 
-                    bodyOffset: {x: 4, y: 16},
-                    bodySize: {x: 8, y: 16},
-                    active: true,
+                    name: 'portal3',
                     originScene: 'level_2',
                     destinationScene: 'level_1',
                     spawnPoint: {x: 232, y: 256},
@@ -149,12 +114,8 @@ export class Level_2 extends SceneParent
                 },
                 {
                     x: 232,
-                    y: 544, 
-                    image: 'portal', 
-                    name: 'portal4', 
-                    bodyOffset: {x: 4, y: 16},
-                    bodySize: {x: 8, y: 16},
-                    active: true,
+                    y: 544,
+                    name: 'portal4',
                     originScene: 'level_2',
                     destinationScene: 'level_1',
                     spawnPoint: {x: 72, y: 256},

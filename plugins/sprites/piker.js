@@ -1,13 +1,12 @@
 export class Piker extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable, index1, index2, simpleInstruction,
+    constructor({ scene, x = 0, y = 0, image = 'piker', name, path, speed, playable, indexArray, indexGroup, simpleInstruction,
         constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce}){
 
         super(scene, x, y, image);
 
 ////////// Non-Init attributes
         this.isHit = -1;
-        this.portalCooldown = 0;
         this.previousXPosition;
         this.previousXVelocity;
         this.solidLayerCollider;
@@ -19,22 +18,22 @@ export class Piker extends Phaser.GameObjects.Sprite {
 
 ////////// General-Init attributes
         this.type = 'piker';
-        this.name = name || "anonymous";
-        this.image = image;
+        this.name = name || `piker_${indexArray}_${indexGroup}_${scene.scene.key}`;
+        this.image = image || 'piker';
         this.path = path || false;
-        this.speed = speed;
+        this.speed = speed || 30;
         this.bounce = bounce || 0;
-        this.bodyOffset = bodyOffset || null; // {x: 0, y: 0},
-        this.bodySize = bodySize || null; // {x: 16, y: 16},
+        this.bodyOffset = bodyOffset || {x: 8, y: 0},
+        this.bodySize = bodySize || {x: 16, y: 16},
         
 ////////// Player-Init attributes
         this.playable = playable || false;
         
         
 ////////// Enemy-Init attributes
-        this.index1 = index1 || undefined;
-        this.index2 = index2 || undefined;
-        this.simpleInstruction = simpleInstruction || {action: '', option: ''};
+        this.indexArray = indexArray || 0;
+        this.indexGroup = indexGroup || 0;
+        this.simpleInstruction = simpleInstruction || {action: 'patrol', option: ''};
         this.constantHitbox = constantHitbox || null;
         this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
         
@@ -125,11 +124,6 @@ export class Piker extends Phaser.GameObjects.Sprite {
                 this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
             }
             //*/
-        }
-
-        if(this.portalCooldown > 0) {
-            this.portalCooldown = this.portalCooldown -1;
-            //console.log(this.portalCooldown);
         }
        
     }
@@ -289,7 +283,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
 
 	}
 
-    changeDirection(character) {
+    changeDirection() {
         if(this.flipX == false) {
             this.flipX = true;
             if(this.bodyOffset) {
