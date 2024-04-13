@@ -1,6 +1,6 @@
-export class Player extends Phaser.GameObjects.Sprite {
+export class Piker extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable, index1, index2, simpleInstruction, type, 
+    constructor({ scene, x, y, image, name, path, speed, playable, index1, index2, simpleInstruction,
         constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce}){
 
         super(scene, x, y, image);
@@ -18,7 +18,7 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.instructions = [];
 
 ////////// General-Init attributes
-        this.type = type || '';
+        this.type = 'piker';
         this.name = name || "anonymous";
         this.image = image;
         this.path = path || false;
@@ -64,7 +64,7 @@ export class Player extends Phaser.GameObjects.Sprite {
 
         this.setDepth(10);
 
-        if(this.type === 'enemy') {
+        if(this.type === 'piker') {
 
             scene.physics.add.collider(this, scene.player);
 
@@ -307,18 +307,18 @@ export class Player extends Phaser.GameObjects.Sprite {
 
 }
 
-export class PlayerPlugin extends Phaser.Plugins.BasePlugin {
+export class PikerPlugin extends Phaser.Plugins.BasePlugin {
 
     constructor(pluginManager){
         super(pluginManager);
 
         //  Register our new Game Object type
-        pluginManager.registerGameObject('player', this.createPlayer);
+        pluginManager.registerGameObject('piker', this.createPiker);
     }
 
-    createPlayer(params){
+    createPiker(params){
         //return this.displayList.add(new RpgCharacter({scene: this.scene, ...params}));
-        return new Player({scene: this.scene, ...params});
+        return new Piker({scene: this.scene, ...params});
     }
 
 }

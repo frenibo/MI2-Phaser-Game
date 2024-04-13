@@ -79,13 +79,13 @@ export class Level_2 extends SceneParent
 
 ////////// Enemy data
         
-        if(!this.enemyGroupArray.length) {
+        if(!this.spriteGroupArray.length) {
             let pikerGroup = [
                 {
                     x: 330, // + this.rPos.x,
                     y: 430, // + this.rPos.y,
                     image: 'piker',
-                    name: 'piker1',
+                    name: 'piker4',
                     playable: false,
                     //map: this.map,
                     speed: 30,
@@ -93,7 +93,7 @@ export class Level_2 extends SceneParent
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                     bodyOffset: {x: 8, y: 0},
                     bodySize: {x: 16, y: 16},
-                    type: 'enemy',
+                    type: 'piker',
                     //speed: 100
                 },
                 
@@ -101,7 +101,7 @@ export class Level_2 extends SceneParent
                     x: 500, // + this.rPos.x,
                     y: 420, // + this.rPos.y,
                     image: 'piker',
-                    name: 'piker2',
+                    name: 'piker5',
                     playable: false,
                     //map: this.map,
                     speed: 30,
@@ -109,7 +109,7 @@ export class Level_2 extends SceneParent
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                     bodyOffset: {x: 8, y: 0},
                     bodySize: {x: 16, y: 16},
-                    type: 'enemy',
+                    type: 'piker',
                     //speed: 100
                 },
                 /*
@@ -117,7 +117,7 @@ export class Level_2 extends SceneParent
                     x: 330, // + this.rPos.x,
                     y: 150, // + this.rPos.y,
                     image: 'piker',
-                    name: 'piker3',
+                    name: 'piker6',
                     playable: false,
                     //map: this.map,
                     speed: 30,
@@ -125,48 +125,46 @@ export class Level_2 extends SceneParent
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                     bodyOffset: {x: 8, y: 0},
                     bodySize: {x: 16, y: 16},
-                    type: 'enemy',
+                    type: 'piker',
                     //speed: 100
                 },
                 */
             ];
     
-            this.enemyGroupArray.push(pikerGroup);
-            //this.enemyGroupArray[0] = enemyGroup;
+            this.spriteGroupArray.push(pikerGroup);
 
+            let portalGroup = [
+                {
+                    x: 120,
+                    y: 544, 
+                    image: 'portal', 
+                    name: 'portal3', 
+                    bodyOffset: {x: 4, y: 16},
+                    bodySize: {x: 8, y: 16},
+                    active: true,
+                    originScene: 'level_2',
+                    destinationScene: 'level_1',
+                    spawnPoint: {x: 232, y: 256},
+                    type: 'portal',
+                },
+                {
+                    x: 232,
+                    y: 544, 
+                    image: 'portal', 
+                    name: 'portal4', 
+                    bodyOffset: {x: 4, y: 16},
+                    bodySize: {x: 8, y: 16},
+                    active: true,
+                    originScene: 'level_2',
+                    destinationScene: 'level_1',
+                    spawnPoint: {x: 72, y: 256},
+                    type: 'portal',
+                },
+
+            ];
+
+            this.spriteGroupArray.push(portalGroup);
         }
-        
-
-        
-
-        this.portals = [
-            {
-                x: 120,
-                y: 544, 
-                image: 'portal', 
-                name: 'portal1', 
-                bodyOffset: {x: 4, y: 16},
-                bodySize: {x: 8, y: 16},
-                active: true,
-                originScene: 'level_2',
-                destinationScene: 'level_1',
-                spawnPoint: {x: 232, y: 256},
-            },
-            {
-                x: 232,
-                y: 544, 
-                image: 'portal', 
-                name: 'portal2', 
-                bodyOffset: {x: 4, y: 16},
-                bodySize: {x: 8, y: 16},
-                active: true,
-                originScene: 'level_2',
-                destinationScene: 'level_1',
-                spawnPoint: {x: 72, y: 256},
-            },
-
-        ];
-
 
 	}
 

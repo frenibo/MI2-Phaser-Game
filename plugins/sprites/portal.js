@@ -1,6 +1,6 @@
 export class Portal extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, bodyOffset, bodySize, active, index, originScene, destinationScene, spawnPoint}){
+    constructor({ scene, x, y, image, name, bodyOffset, bodySize, active, indexArray, indexGroup, originScene, destinationScene, spawnPoint}){
 
         super(scene, x, y, image);
 
@@ -14,7 +14,8 @@ export class Portal extends Phaser.GameObjects.Sprite {
         this.bodyOffset = bodyOffset || null;
         this.bodySize = bodySize || null; // {x: 16, y: 32},
         this.active = active || false;
-        this.index = index || undefined;
+        this.indexArray = indexArray || undefined;
+        this.indexGroup = indexGroup || undefined;
         this.originScene = originScene || undefined;
         this.destinationScene = destinationScene || undefined;
         this.spawnPoint = spawnPoint || {x: 0, y: 0};

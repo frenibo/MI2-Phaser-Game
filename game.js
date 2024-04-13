@@ -1,6 +1,8 @@
 //import Phaser from 'phaser';
 
 import { CharacterPlugin } from "./plugins/sprites/character.js";
+import { PlayerPlugin } from "./plugins/sprites/player.js";
+import { PikerPlugin } from "./plugins/sprites/piker.js";
 import { PortalPlugin } from "./plugins/sprites/portal.js";
 
 import { TitleScreen } from "./scenes/titlescreen.js";
@@ -33,6 +35,8 @@ const config = {
 	plugins: {
         global: [
             { key: 'CharacterPlugin', plugin: CharacterPlugin, start: true },
+			{ key: 'PlayerPlugin', plugin: PlayerPlugin, start: true },
+			{ key: 'PikerPlugin', plugin: PikerPlugin, start: true },
 			{ key: 'PortalPlugin', plugin: PortalPlugin, start: true }
 		]
     },

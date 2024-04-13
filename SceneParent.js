@@ -40,7 +40,9 @@ export class SceneParent extends Phaser.Scene {
 
 ////////// Enemy attributes
 
-		this.enemyGroupArray = [];
+		//this.enemyGroupArray = [];
+
+		this.spriteGroupArray = [];
 
 ////////// Camera attributes
 
@@ -157,7 +159,7 @@ export class SceneParent extends Phaser.Scene {
 		if(this.playerData) {
 			// Creates global Player object
 			if(this.spawnPoint.x && this.spawnPoint.y) {
-				window.player = this.player = this.add.character({
+				window.player = this.player = this.add.player({
 					x: this.spawnPoint.x + this.rPos.x,
 					y: this.spawnPoint.y + this.rPos.y,
 					image: this.playerData.image,
@@ -171,7 +173,7 @@ export class SceneParent extends Phaser.Scene {
 				});
 			}
 			else {
-				window.player = this.player = this.add.character({
+				window.player = this.player = this.add.player({
 					x: this.playerData.x + this.rPos.x,
 					y: this.playerData.y + this.rPos.y,
 					image: this.playerData.image,
@@ -194,11 +196,13 @@ export class SceneParent extends Phaser.Scene {
 
 ////////// Create Enemies
 
-		this.enemyGroupArray.forEach((enemyGroup, index1) => enemyGroup.forEach((enemy, index2) => this.initEnemy(enemy, index1, index2)));
+		//this.enemyGroupArray.forEach((enemyGroup, index1) => enemyGroup.forEach((enemy, index2) => this.initEnemy(enemy, index1, index2)));
 
 ////////// Create Portals
 
-		this.portals.forEach((portal, index) => this.initPortal(portal, index));
+		//this.portals.forEach((portal, index) => this.initPortal(portal, index));
+
+		this.spriteGroupArray.forEach((spriteGroup, indexArray) => spriteGroup.forEach((sprite, indexGroup) => this.initSprite(sprite, indexArray, indexGroup)));
 		
 	}
 
@@ -223,9 +227,9 @@ export class SceneParent extends Phaser.Scene {
 
 ////////// Enemy Update
 
-		this.enemyGroupArray.forEach((enemyGroup) => enemyGroup.forEach((enemy) => enemy.update()));
+		this.spriteGroupArray.forEach((spriteGroup) => spriteGroup.forEach((sprite) => sprite.update()));
 
-		this.portals.forEach((portal) => portal.update());
+		//this.portals.forEach((portal) => portal.update());
 
 		return true;
 	}
@@ -259,60 +263,115 @@ export class SceneParent extends Phaser.Scene {
 
     }
 
+	/*
+
 	initEnemy = function(enemy, index1, index2) {
 
         //console.log(enemy.name);
-
-		this.enemyGroupArray[index1][index2] = this.add.character({
-			x: enemy.x + this.rPos.x,
-			y: enemy.y + this.rPos.y,
-            image: enemy.image,
-            name: enemy.name,
-            playable: enemy.playable,
-			speed: enemy.speed,
-			index1: index1,
-			index2: index2,
-			simpleInstruction: enemy.simpleInstruction,
-			// TODO: hitbox plugin/parent
-			constantHitbox: this.add.rectangle(
-				enemy.x + this.rPos.x + enemy.constantHitbox.offsetX, 
-				enemy.y + this.rPos.y + enemy.constantHitbox.offsetY, 
-				enemy.constantHitbox.width, 
-				enemy.constantHitbox.height, 
-				enemy.constantHitbox.color, 
-				enemy.constantHitbox.alpha
-				),
-			constantHitboxOffset: {x: enemy.constantHitbox.offsetX, y: enemy.constantHitbox.offsetY},
-			bodyOffset: enemy.bodyOffset,
-			bodySize: enemy.bodySize,
-			type: 'enemy',
-            //speed: 100
-		});
+		if(enemy.type === 'piker') {
+			this.enemyGroupArray[index1][index2] = this.add.piker({
+				x: enemy.x + this.rPos.x,
+				y: enemy.y + this.rPos.y,
+				image: enemy.image,
+				name: enemy.name,
+				playable: enemy.playable,
+				speed: enemy.speed,
+				index1: index1,
+				index2: index2,
+				simpleInstruction: enemy.simpleInstruction,
+				// TODO: hitbox plugin/parent
+				constantHitbox: this.add.rectangle(
+					enemy.x + this.rPos.x + enemy.constantHitbox.offsetX, 
+					enemy.y + this.rPos.y + enemy.constantHitbox.offsetY, 
+					enemy.constantHitbox.width, 
+					enemy.constantHitbox.height, 
+					enemy.constantHitbox.color, 
+					enemy.constantHitbox.alpha
+					),
+				constantHitboxOffset: {x: enemy.constantHitbox.offsetX, y: enemy.constantHitbox.offsetY},
+				bodyOffset: enemy.bodyOffset,
+				bodySize: enemy.bodySize,
+				type: 'enemy',
+				//speed: 100
+			});
+		}
     }
 
 	initPortal = function(portal, index) {
 
         //console.log(enemy.name);
+		if(portal.type === 'portal') {
+			this.portals[index] = this.add.portal({
+				x: portal.x + this.rPos.x,
+				y: portal.y + this.rPos.y,
+				image: portal.image,
+				name: portal.name,
+				index: index,
+				bodyOffset: portal.bodyOffset,
+				bodySize: portal.bodySize,
+				active: portal.active,
+				originScene: portal.originScene,
+				destinationScene: portal.destinationScene,
+				spawnPoint: portal.spawnPoint,
+				//speed: 100
+			});
+		}
+    }
+	*/
 
-		this.portals[index] = this.add.portal({
-			x: portal.x + this.rPos.x,
-			y: portal.y + this.rPos.y,
-            image: portal.image,
-            name: portal.name,
-			index: index,
-			bodyOffset: portal.bodyOffset,
-			bodySize: portal.bodySize,
-			active: portal.active,
-			originScene: portal.originScene,
-			destinationScene: portal.destinationScene,
-			spawnPoint: portal.spawnPoint,
-            //speed: 100
-		});
+	initSprite = function(sprite, indexArray, indexGroup) {
+
+        console.log(sprite.name);
+		if(sprite.type === 'piker') {
+			this.spriteGroupArray[indexArray][indexGroup] = this.add.piker({
+				x: sprite.x + this.rPos.x,
+				y: sprite.y + this.rPos.y,
+				image: sprite.image,
+				name: sprite.name,
+				playable: sprite.playable,
+				speed: sprite.speed,
+				index1: indexArray,
+				index2: indexGroup,
+				simpleInstruction: sprite.simpleInstruction,
+				// TODO: hitbox plugin/parent
+				constantHitbox: this.add.rectangle(
+					sprite.x + this.rPos.x + sprite.constantHitbox.offsetX, 
+					sprite.y + this.rPos.y + sprite.constantHitbox.offsetY, 
+					sprite.constantHitbox.width, 
+					sprite.constantHitbox.height, 
+					sprite.constantHitbox.color, 
+					sprite.constantHitbox.alpha
+					),
+				constantHitboxOffset: {x: sprite.constantHitbox.offsetX, y: sprite.constantHitbox.offsetY},
+				bodyOffset: sprite.bodyOffset,
+				bodySize: sprite.bodySize,
+				//speed: 100
+			});
+		}
+
+		if(sprite.type === 'portal') {
+			this.spriteGroupArray[indexArray][indexGroup] = this.add.portal({
+				x: sprite.x + this.rPos.x,
+				y: sprite.y + this.rPos.y,
+				image: sprite.image,
+				name: sprite.name,
+				indexArray: indexArray,
+				indexGroup: indexGroup,
+				bodyOffset: sprite.bodyOffset,
+				bodySize: sprite.bodySize,
+				active: sprite.active,
+				originScene: sprite.originScene,
+				destinationScene: sprite.destinationScene,
+				spawnPoint: sprite.spawnPoint,
+				//speed: 100
+			});
+		}
     }
 
 	destroyAllGameObjects = function() {
-		this.enemyGroupArray = [];
-		this.portals = [];
+		//this.enemyGroupArray = [];
+		//this.portals = [];
+		this.spriteGroupArray = [];
 	}
 
 	switchScene = function(destinationScene, data) {
