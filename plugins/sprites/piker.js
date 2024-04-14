@@ -11,6 +11,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
         this.previousXVelocity;
         this.solidLayerCollider;
         this.oneWayLayerCollider;
+        this.hitboxCollider;
 
         // Character movements are passed as instruction objects to
         // be evaluated on the next call to update
@@ -63,11 +64,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
 
         this.setDepth(10);
 
-        if(this.type === 'piker') {
-
-            scene.physics.add.collider(this, window.player);
-
-        }
+        scene.physics.add.collider(this, window.player, () => this.pikerHit(window.player, this), null, this);
 
         
 ////////// constantHitbox Physics Initialization
@@ -82,7 +79,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
             //this.constantHitbox.body.setCollideWorldBounds = true;
             this.constantHitbox.body.setAllowGravity(false);
             // '() =>' necessary for some reason ?
-            scene.physics.add.overlap(window.player, this.constantHitbox, () => this.handlePlayerHit(window.player, this), null, this);
+            this.hitboxCollider = scene.physics.add.overlap(window.player, this.constantHitbox, () => this.handlePlayerHit(window.player, this), null, this);
             this.constantHitbox.setDepth(10);
         }
 
@@ -105,23 +102,22 @@ export class Piker extends Phaser.GameObjects.Sprite {
             //*/
         }
 
+        // Always reset the local velocity to maintain a constant acceleration
+        this.body.setVelocityX(0);
+
         if(this.isHit > 0){
             // While a character is hit, count dowm on each update to allow for recovery time
 			this.isHit--;
             this.tint = 0x000000;
-            this.oneWayLayerCollider.active = false;
+            this.hitboxCollider.active = false;
 
 		}else if(this.isHit === 0){
             // Character has recovered, reset their hit state
             this.tint = 0xffffff;
             this.isHit = -1;
             this.instructions = [];
-            this.body.setBounce(this.bounce);
-            this.oneWayLayerCollider.active = true;
+            this.hitboxCollider.active = true;
         }else{
-            // Always reset the local velocity to maintain a constant acceleration
-            this.body.setVelocityX(0);
-
             // Process the instructions array
             this.DoInstructions();
         }
@@ -261,27 +257,6 @@ export class Piker extends Phaser.GameObjects.Sprite {
         }
     };
 
-    handlePlayerHit(player, enemy) {
-        if(player.isHit < 0) {
-            player.isHit = 100;
-            player.body.setVelocity(0);
-            player.body.setBounce(0.4);
-            if(player.x <= enemy.x) {
-                player.body.setVelocityX(-80);
-                player.body.setVelocityY(-150);
-
-            } else {
-                player.body.setVelocityX(80);
-                player.body.setVelocityY(-150);
-            }
-            
-            
-            
-        };
-        // get hit direction
-
-	}
-
     changeDirection() {
         if(this.flipX == false) {
             this.flipX = true;
@@ -296,6 +271,32 @@ export class Piker extends Phaser.GameObjects.Sprite {
             }
         }
         this.speed = -this.speed;        
+    }
+
+    handlePlayerHit(player, enemy) {
+        if(player.isHit < 0) {
+            player.isHit = 100;
+            player.body.setVelocity(0);
+            player.body.setBounce(0.4);
+            if(player.x <= enemy.x) {
+                player.body.setVelocityX(-80);
+                player.body.setVelocityY(-150);
+
+            } else {
+                player.body.setVelocityX(80);
+                player.body.setVelocityY(-150);
+            }
+            
+        };
+	}
+
+    pikerHit(player, piker) {
+        if(player.y <= piker.y -15) {
+            piker.isHit = 150;
+            //piker.body.setVelocity(0);
+            player.body.setVelocityY(-150);;
+        }
+
     }
 
 }
