@@ -16,7 +16,7 @@ export class Portal extends Phaser.GameObjects.Sprite {
         this.active = active || true;
         this.indexArray = indexArray || undefined;
         this.indexGroup = indexGroup || undefined;
-        this.originScene = originScene || 'titlescreen';
+        this.originScene = originScene || this.scene.scene.key;
         this.destinationScene = destinationScene || 'level_1';
         this.spawnPoint = spawnPoint || {x: 0, y: 0};
         this.type = type || 'portal';
@@ -46,13 +46,13 @@ export class Portal extends Phaser.GameObjects.Sprite {
 
         this.setDepth(9);
 
-        scene.physics.add.overlap(scene.player.body, this.body, () => this.handlePlayerPortalOverlap(scene.player, this), null, this);
+        scene.physics.add.overlap(window.player.body, this.body, () => this.handlePlayerPortalOverlap(window.player, this), null, this);
     }
 
     update(){
         this.tint = 0xffffff;
 
-        if(this.playerOverlap == true && this.scene.player.portalCooldown == 0) {
+        if(this.playerOverlap == true && window.player.portalCooldown == 0) {
             this.tint = 0xff0000; //TODO: replace tint with animation
             if(this.scene.cursors.down.isDown || this.scene.keyS.isDown) {
                 this.scene.input.stopPropagation();
@@ -78,16 +78,16 @@ export class Portal extends Phaser.GameObjects.Sprite {
         if(portal.destinationScene){
             // When destination is in same scene
             if(portal.destinationScene == this.scene.scene.key) {
-                this.scene.player.body.setVelocityX(0); 
-                this.scene.player.body.setVelocityY(0);
-                this.scene.player.body.x = portal.spawnPoint.x + this.scene.scene.scene.rPos.x -8;
-                this.scene.player.body.y = portal.spawnPoint.y + this.scene.scene.scene.rPos.y -16;
+                window.player.body.setVelocityX(0); 
+                window.player.body.setVelocityY(0);
+                window.player.body.x = portal.spawnPoint.x + this.scene.scene.scene.rPos.x -8;
+                window.player.body.y = portal.spawnPoint.y + this.scene.scene.scene.rPos.y -16;
             }
             // When destination is in another scene
             else if(portal.destinationScene != this.scene.scene.key) {
                 this.scene.switchScene(portal.destinationScene, portal);
             }
-            this.scene.player.portalCooldown = 30;
+            window.player.portalCooldown = 30;
         }
     }
 

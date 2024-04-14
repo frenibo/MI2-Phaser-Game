@@ -1,7 +1,7 @@
 export class Player extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x, y, image, name, path, speed, playable, simpleInstruction, type, 
-        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce}){
+    constructor({ scene, x, y, image = 'player', name, path, speed, playable, simpleInstruction, type, 
+        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce, progressData}){
 
         super(scene, x, y, image);
 
@@ -18,17 +18,18 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.instructions = [];
 
 ////////// General-Init attributes
-        this.type = type || '';
-        this.name = name || "anonymous";
-        this.image = image;
+        this.type = type || 'player';
+        this.name = name || 'player';
+        this.image = image || 'player';
         this.path = path || false;
-        this.speed = speed;
-        this.bounce = bounce || 0;
-        this.bodyOffset = bodyOffset || null; // {x: 0, y: 0},
-        this.bodySize = bodySize || null; // {x: 16, y: 16},
+        this.speed = speed || 200;
+        this.bounce = bounce || 0.2;
+        this.bodyOffset = bodyOffset || {x: 0, y: 0},
+        this.bodySize = bodySize || {x: 16, y: 32},
+        this.progressData = progressData || null;
         
 ////////// Player-Init attributes
-        this.playable = playable || false;
+        this.playable = playable || true;
         
         
 ////////// Enemy-Init attributes

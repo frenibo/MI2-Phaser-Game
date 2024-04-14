@@ -33,9 +33,9 @@ export class SceneParent extends Phaser.Scene {
 
 		this.playerData = null;
 		this.playable = false;
-		this.playerBounce = 0;
+		//this.playerBounce = 0;
 		this.player = null;
-		this.playerSpeed = 200;
+		//this.playerSpeed = 200;
 		this.spawnPoint = { x: undefined, y: undefined, };
 
 ////////// Enemy attributes
@@ -156,51 +156,44 @@ export class SceneParent extends Phaser.Scene {
 
 ////////// Create Player
 
-		if(this.playerData) {
+		if(!window.player && this.playerData) {
 			// Creates global Player object
-			if(this.spawnPoint.x && this.spawnPoint.y) {
-				window.player = this.player = this.add.player({
-					x: this.spawnPoint.x + this.rPos.x,
-					y: this.spawnPoint.y + this.rPos.y,
-					image: this.playerData.image,
-					name: this.playerData.name,
-					playable: this.playerData.playable,
-					speed: this.playerData.speed,
-					type: this.playerData.type,
-					bodyOffset: this.playerData.bodyOffset,
-					bodySize: this.playerData.bodySize,
-					bounce: this.playerData.bounce,
-				});
-			}
-			else {
-				window.player = this.player = this.add.player({
-					x: this.playerData.x + this.rPos.x,
-					y: this.playerData.y + this.rPos.y,
-					image: this.playerData.image,
-					name: this.playerData.name,
-					playable: this.playerData.playable,
-					speed: this.playerData.speed,
-					type: this.playerData.type,
-					bodyOffset: this.playerData.bodyOffset,
-					bodySize: this.playerData.bodySize,
-					bounce: this.playerData.bounce,
-				});
-			}
+			window.player = this.add.player({
+				x: this.spawnPoint.x + this.rPos.x,
+				y: this.spawnPoint.y + this.rPos.y,
+				image: this.playerData.image,
+				name: this.playerData.name,
+				playable: this.playerData.playable,
+				speed: this.playerData.speed,
+				type: this.playerData.type,
+				bodyOffset: this.playerData.bodyOffset,
+				bodySize: this.playerData.bodySize,
+				bounce: this.playerData.bounce,
+				progressData: this.playerData.progressData,
+			});
+
+			this.createCamera(window.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
+		}
+		else if(window.player) {
 			
-
-			this.createCamera(this.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
-
-			// Place the player above the tile layers
-			this.player.setDepth(10);
+			window.player = this.add.player({
+				x: this.spawnPoint.x + this.rPos.x,
+				y: this.spawnPoint.y + this.rPos.y,
+				image: window.player.image,
+				name: window.player.name,
+				playable: window.player.playable,
+				speed: window.player.speed,
+				type: window.player.type,
+				bodyOffset: window.player.bodyOffset,
+				bodySize: window.player.bodySize,
+				bounce: window.player.bounce,
+				progressData: window.player.progressData,
+			});
+			
+			this.createCamera(window.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
 		}
 
-////////// Create Enemies
-
-		//this.enemyGroupArray.forEach((enemyGroup, index1) => enemyGroup.forEach((enemy, index2) => this.initEnemy(enemy, index1, index2)));
-
-////////// Create Portals
-
-		//this.portals.forEach((portal, index) => this.initPortal(portal, index));
+////////// Create Sprites
 
 		this.spriteGroupArray.forEach((spriteGroup, indexArray) => spriteGroup.forEach((sprite, indexGroup) => this.initSprite(sprite, indexArray, indexGroup)));
 		
@@ -210,26 +203,24 @@ export class SceneParent extends Phaser.Scene {
 
 ////////// Player Update
 
-		if(this.player) {
+		if(window.player) {
 			// Horizontal movement
 			if (this.cursors.left.isDown || this.keyA.isDown)
-				this.player.SetInstruction({action: 'move', option: 'left'});
+				window.player.SetInstruction({action: 'move', option: 'left'});
 			else if (this.cursors.right.isDown || this.keyD.isDown)
-				this.player.SetInstruction({action: 'move', option: 'right'});
+				window.player.SetInstruction({action: 'move', option: 'right'});
 
 			// Vertical movement
 			if (this.cursors.up.isDown || this.keyW.isDown) {
-				this.player.SetInstruction({action: 'jump'});
+				window.player.SetInstruction({action: 'jump'});
 			}
 
-			this.player.update();
+			window.player.update();
 		}
 
-////////// Enemy Update
+////////// Sprite Update
 
 		this.spriteGroupArray.forEach((spriteGroup) => spriteGroup.forEach((sprite) => sprite.update()));
-
-		//this.portals.forEach((portal) => portal.update());
 
 		return true;
 	}
@@ -289,7 +280,6 @@ export class SceneParent extends Phaser.Scene {
 				constantHitboxOffset: {x: sprite.constantHitbox.offsetX, y: sprite.constantHitbox.offsetY},
 				bodyOffset: sprite.bodyOffset,
 				bodySize: sprite.bodySize,
-				//speed: 100
 			});
 		}
 
@@ -307,14 +297,12 @@ export class SceneParent extends Phaser.Scene {
 				originScene: sprite.originScene,
 				destinationScene: sprite.destinationScene,
 				spawnPoint: sprite.spawnPoint,
-				//speed: 100
 			});
 		}
     }
 
+	// Really just destroys all non-player sprites
 	destroyAllGameObjects = function() {
-		//this.enemyGroupArray = [];
-		//this.portals = [];
 		this.spriteGroupArray = [];
 	}
 

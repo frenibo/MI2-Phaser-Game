@@ -37,29 +37,15 @@ export class Level_1 extends SceneParent
        
 ////////// Player data
 
-
         this.playerData = {
-            x: this.spawnPoint.x, // + this.rPos.x,
-            y: this.spawnPoint.y, // + this.rPos.y,
-            image: 'player',
-            name: 'player',
-            playable: true,
-            //map: this.map,
-            speed: 200,
-            simpleInstruction: {action: '', option: ''},
+            //x: this.spawnPoint.x, // + this.rPos.x,
+            //y: this.spawnPoint.y, // + this.rPos.y,
             type: 'player',
-            bounce: 0.2,
-            bodyOffset: {x: 0, y: 0},
-            bodySize:  {x: 16, y: 32},
-
-            //speed: 100
-
-
         }
 
         this.playableScene = true;
-        this.playerSpeed = 200;
-        this.playerBounce = 0.5;
+        //this.playerSpeed = 200;
+        //this.playerBounce = 0.5;
 
         
         /*
@@ -82,21 +68,13 @@ export class Level_1 extends SceneParent
                     name: 'piker1',
                     x: 330, // + this.rPos.x,
                     y: 230, // + this.rPos.y,
-                    simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
-                    //image: 'piker',
-                    //playable: false,
-                    //map: this.map,
-                    //speed: 30,
-                    //bodyOffset: {x: 8, y: 0},
-                    //bodySize: {x: 16, y: 16},
                 },
                 {
                     type: 'piker',
                     name: 'piker2',
                     x: 130, // + this.rPos.x,
                     y: 150, // + this.rPos.y,
-                    simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                 },
                 {
@@ -104,7 +82,6 @@ export class Level_1 extends SceneParent
                     name: 'piker3',
                     x: 330, // + this.rPos.x,
                     y: 150, // + this.rPos.y,
-                    simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                 },
     
@@ -115,12 +92,8 @@ export class Level_1 extends SceneParent
             let portalGroup = [
                 {
                     x: 72,
-                    y: 256, 
-                    //image: 'portal', 
-                    name: 'portal1', 
-                    //bodyOffset: {x: 4, y: 16},
-                    //bodySize: {x: 8, y: 16},
-                    //active: true,
+                    y: 256,
+                    name: 'portal1',
                     originScene: 'level_1',
                     destinationScene: 'level_2',
                     spawnPoint: {x: 232, y: 544},
@@ -172,7 +145,7 @@ export class Level_1 extends SceneParent
             // 'tilesetImageKey' is the key of the tileset image used when loading the file in preload.
             tilesetImageKey: 'tileset_level_1',
             // Defines camera zoom on player. Default zoom = 1.
-            zoom: 1,
+            //zoom: 1,
 
 		});
         

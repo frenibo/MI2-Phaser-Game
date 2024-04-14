@@ -34,7 +34,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
         this.indexArray = indexArray || 0;
         this.indexGroup = indexGroup || 0;
         this.simpleInstruction = simpleInstruction || {action: 'patrol', option: ''};
-        this.constantHitbox = constantHitbox || null;
+        this.constantHitbox = constantHitbox || {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5};
         this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
         
         
@@ -65,7 +65,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
 
         if(this.type === 'piker') {
 
-            scene.physics.add.collider(this, scene.player);
+            scene.physics.add.collider(this, window.player);
 
         }
 
@@ -82,13 +82,29 @@ export class Piker extends Phaser.GameObjects.Sprite {
             //this.constantHitbox.body.setCollideWorldBounds = true;
             this.constantHitbox.body.setAllowGravity(false);
             // '() =>' necessary for some reason ?
-            scene.physics.add.overlap(scene.player, this.constantHitbox, () => this.handlePlayerHit(scene.player, this), null, this);
+            scene.physics.add.overlap(window.player, this.constantHitbox, () => this.handlePlayerHit(window.player, this), null, this);
             this.constantHitbox.setDepth(10);
         }
 
     }
 
     update(){
+
+        if(this.constantHitbox) {
+            //this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
+            //this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+            ///*
+            if(this.flipX == false) {
+                this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
+                this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+            }
+            else if(this.flipX == true) {
+                this.constantHitbox.x = this.body.position.x - this.constantHitboxOffset.x + this.bodySize.x;
+                this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
+            }
+            //*/
+        }
+
         if(this.isHit > 0){
             // While a character is hit, count dowm on each update to allow for recovery time
 			this.isHit--;
@@ -109,23 +125,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
             // Process the instructions array
             this.DoInstructions();
         }
-        
-
-        if(this.constantHitbox) {
-            //this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
-            //this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
-            ///*
-            if(this.flipX == false) {
-                this.constantHitbox.x = this.body.position.x + this.constantHitboxOffset.x;
-                this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
-            }
-            else if(this.flipX == true) {
-                this.constantHitbox.x = this.body.position.x - this.constantHitboxOffset.x + this.bodySize.x;
-                this.constantHitbox.y = this.body.position.y + this.constantHitboxOffset.y;
-            }
-            //*/
-        }
-       
+               
     }
 
     /**
@@ -212,8 +212,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
             || (this.previousXVelocity > 0 && this.checkForCliff('right'))
            ) 
         {
-            this.changeDirection();
-            this.speed = -this.speed;	
+            this.changeDirection();	
         }
 
         // This attempts to prevent characters turning around randomly during frame "hickups"
@@ -296,7 +295,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
                 this.body.setOffset(this.bodyOffset.x, this.bodyOffset.y);
             }
         }
-        
+        this.speed = -this.speed;        
     }
 
 }

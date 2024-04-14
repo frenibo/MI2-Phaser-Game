@@ -18,7 +18,7 @@ export class Level_2 extends SceneParent
     tileset;
     map;
 
-    spawnPoint = {x: 200, y: 240};
+    spawnPoint = {x: 232, y: 544};
 
     init(data){
 
@@ -43,22 +43,9 @@ export class Level_2 extends SceneParent
 
 
         this.playerData = {
-            x: this.spawnPoint.x, // + this.rPos.x,
-            y: this.spawnPoint.y, // + this.rPos.y,
-            image: 'player',
-            name: 'player',
-            playable: true,
-            //map: this.map,
-            speed: 200,
-            simpleInstruction: {action: '', option: ''},
+            //x: this.spawnPoint.x, // + this.rPos.x,
+            //y: this.spawnPoint.y, // + this.rPos.y,
             type: 'player',
-            bounce: 0.2,
-            bodyOffset: {x: 0, y: 0},
-            bodySize:  {x: 16, y: 32},
-
-            //speed: 100
-
-
         }
 
         this.playableScene = true;
@@ -85,7 +72,6 @@ export class Level_2 extends SceneParent
                     x: 330, // + this.rPos.x,
                     y: 430, // + this.rPos.y,
                     name: 'piker4',
-                    simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                     type: 'piker',
                 },
@@ -94,7 +80,6 @@ export class Level_2 extends SceneParent
                     x: 500, // + this.rPos.x,
                     y: 420, // + this.rPos.y,
                     name: 'piker5',
-                    simpleInstruction: {action: 'patrol', option: ''},
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                     type: 'piker',
                 },
