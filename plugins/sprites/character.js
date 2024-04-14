@@ -7,6 +7,7 @@ export class Character extends Phaser.GameObjects.Sprite {
 
 ////////// Non-Init attributes
         this.isHit = -1;
+        this.collided = false;
         this.portalCooldown = 0;
         this.previousXPosition;
         this.previousXVelocity;

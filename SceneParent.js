@@ -13,6 +13,7 @@ export class SceneParent extends Phaser.Scene {
 ////////// Game attributes
 
 		this.canvasDimensions = { width: 0, height: 0 };
+		
 		//this.canvasDimensions = { width: 800, height: 600 };
 		this.cursors = null;
 		// this.controls = null; // User controls
@@ -21,6 +22,7 @@ export class SceneParent extends Phaser.Scene {
 
 		this.map = null;
 		this.portals = [];
+		this.gravity = null;
 		//relativePosition
 		this.rPos = { x: 0, y: 0 };
 		//mapDimensions
@@ -60,6 +62,14 @@ export class SceneParent extends Phaser.Scene {
 	}
 
 	create(settings) {
+
+////////// Set Gravity
+
+		if(this.gravity) {
+			this.game.config.physics.arcade.gravity.y = this.gravity;
+			console.log(this.game.config.physics.arcade.gravity.y);
+		}
+		this.gravity = this.game.config.physics.arcade.gravity.y;
 
 ////////// Create Controls
 

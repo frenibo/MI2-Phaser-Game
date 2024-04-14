@@ -34,6 +34,8 @@ export class Level_1 extends SceneParent
 		};
         
         this.zoom = 2; // Changes zoom of the camera. Default zoom = 1.
+
+        this.gravity = 600;
        
 ////////// Player data
 

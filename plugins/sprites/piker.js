@@ -7,6 +7,8 @@ export class Piker extends Phaser.GameObjects.Sprite {
 
 ////////// Non-Init attributes
         this.isHit = -1;
+        this.inAnimationLoop = 0;
+        this.instructionsLength = 0;
         this.previousXPosition;
         this.previousXVelocity;
         this.solidLayerCollider;
@@ -64,7 +66,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
 
         this.setDepth(10);
 
-        scene.physics.add.collider(this, window.player, () => this.pikerHit(window.player, this), null, this);
+        scene.physics.add.collider(this, window.player, () => this.pikerBounce(window.player, this), null, this);
 
         
 ////////// constantHitbox Physics Initialization
@@ -103,7 +105,15 @@ export class Piker extends Phaser.GameObjects.Sprite {
         }
 
         // Always reset the local velocity to maintain a constant acceleration
-        this.body.setVelocityX(0);
+        //this.body.setVelocityX(0);
+        if(this.inAnimationLoop == 0) {
+                
+            this.body.setVelocityX(0);
+            this.hitboxCollider.active = true;
+        } else {
+            this.inAnimationLoop = this.inAnimationLoop -1;
+        }
+        
 
         if(this.isHit > 0){
             // While a character is hit, count dowm on each update to allow for recovery time
@@ -139,22 +149,9 @@ export class Piker extends Phaser.GameObjects.Sprite {
      * Process the current instruction stack
      */
     DoInstructions(){
-        while(this.instructions.length > 0){
-            // Unload the first instruction from the stack
-            let instruction = this.instructions.pop();
-            switch(instruction.action){
-                case 'move':
-                    this.DoMove(instruction.option);
-                    break;
-                case 'jump':
-                    this.DoJump();
-                    break;
-                case 'patrol':
-                    this.DoPatrol();
-                    break
-            }
-        }
-        if(this.simpleInstruction.action !== '') {
+        this.instructions.reverse();
+        this.instructionsLength = this.instructions.length;
+        if(this.instructionsLength == 0 && this.simpleInstruction.action !== '') {
             switch(this.simpleInstruction.action){
                 case 'move':
                     this.DoMove(this.simpleInstruction.option);
@@ -167,6 +164,32 @@ export class Piker extends Phaser.GameObjects.Sprite {
                     break
             }
         }
+        while(this.instructionsLength > 0){
+            // Unload the first instruction from the stack
+            let instruction = this.instructions.pop();
+            this.instructionsLength = this.instructionsLength -1;
+            switch(instruction.action){
+                case 'move':
+                    this.DoMove(instruction.option);
+                    break;
+                case 'jump':
+                    this.DoJump();
+                    break;
+                case 'patrol':
+                    this.DoPatrol();
+                    break
+                case 'bounce':
+                    this.DoBounce(instruction.option);
+                    break
+                case 'disabled':
+                    this.DoDisabled(instruction.option);
+                    break
+                case 'blockI':
+                    this.blockInstructions(instruction.option);
+                    break
+            }
+        }
+        
     }
 
 //// Do-Instruction Methods
@@ -182,6 +205,47 @@ export class Piker extends Phaser.GameObjects.Sprite {
         }
     }
 
+    DoBounce(direction){
+        console.log('DoBounce');
+        switch(direction){
+            case 'left':
+                this.hitboxCollider.active = false;
+                this.body.setVelocityX(-150);
+                this.body.setVelocityY(-this.scene.gravity/12);
+                this.instructions = [];
+                this.blockInstructions(150);
+                break;
+            case 'right':
+                this.hitboxCollider.active = false;
+                this.body.setVelocityX(150);
+                this.body.setVelocityY(-this.scene.gravity/12);
+                this.instructions = [];
+                this.blockInstructions(150);
+                break;
+            case 'up':
+                this.hitboxCollider.active = false;
+                this.body.setVelocityY(-this.scene.gravity/12); // -50
+                this.instructions = [];
+                this.blockInstructions(150);
+                //this.body.setVelocityX(0);
+                //this.isHit = 150;
+                break;
+        }
+    }
+
+    blockInstructions(frames){
+        console.log('piker: blockI');
+        this.instructions = [];
+        this.instructionsLength = 0;
+        this.body.setVelocityX(this.body.velocity.x/1.1);
+        if(frames > 1) {
+            this.SetInstruction({action: 'blockI', option: (frames -1)});
+            this.tint = 0x000000;
+        } else {
+            this.tint = 0xFFFFFF;
+        }
+        this.inAnimationLoop = frames -1;
+    }
     
     DoJump(){
         if (this.body.blocked.down) {
@@ -289,14 +353,74 @@ export class Piker extends Phaser.GameObjects.Sprite {
             
         };
 	}
-
+    /*
     pikerHit(player, piker) {
+        player.collided = 1;
+        piker.collided = 1;
+        //jump on head
         if(player.y <= piker.y -15) {
             piker.isHit = 150;
-            //piker.body.setVelocity(0);
-            player.body.setVelocityY(-150);;
+            //piker.body.setVelocityX(50);
+            piker.body.setVelocityY(-50);
+            player.body.setVelocityY(-150);
         }
+        //push from side
+        else if(player.y >= piker.y -15) {
+            player.isHit = 5;
+            if(piker.isHit > -1) {
+                piker.isHit = 150;
+            }
+            else {
+                piker.isHit = 15;
+            }
+            if(player.x < piker.x) {
+                piker.body.setVelocityX(300);
+                player.body.setVelocityX(-100);
+                player.body.setVelocityY(-30);
+                if(piker.body.velocity.y == 0) {
+                    piker.body.setVelocityY(-30);
+                }
+            }
+            else if (player.x > piker.x) {
+                piker.body.setVelocityX(-300);
+                player.body.setVelocityX(100);
+                player.body.setVelocityY(-30);
+                if(piker.body.velocity.y == 0) {
+                    piker.body.setVelocityY(-30);
+                }
+            }
+        }
+    }
+    */
 
+    pikerBounce(player, piker) {
+        player.instructions = [];
+        piker.instructions = [];
+        //jump on head
+        if(player.y <= piker.y -15) {
+            player.SetInstruction({action: 'rebound', option: 'top'});
+            piker.SetInstruction({action: 'bounce', option: 'up'});
+            //piker.SetInstruction({action: 'disabled', option: 150});
+        }
+        //push from side
+        else if(player.y >= piker.y -15) {
+            if(player.x < piker.x) {
+                
+                player.SetInstruction({action: 'rebound', option: 'left'});
+                //player.SetInstruction({action: 'disabled', option: 15});
+                
+                piker.SetInstruction({action: 'bounce', option: 'right'});
+                //piker.SetInstruction({action: 'disabled', option: 30});
+            }
+            else if (player.x > piker.x) {
+                
+                player.SetInstruction({action: 'rebound', option: 'right'});
+                //player.SetInstruction({action: 'disabled', option: 15});
+
+                piker.SetInstruction({action: 'bounce', option: 'left'});
+                //piker.SetInstruction({action: 'disabled', option: 30});
+            }
+        }
     }
 
 }

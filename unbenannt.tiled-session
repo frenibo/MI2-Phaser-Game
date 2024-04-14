@@ -3,13 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "assets/tilemaps/level2.tmx",
+    "activeFile": "assets/tilemaps/level_2.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
-        "assets/tilesets",
-        ".",
+        "assets/tilemaps",
         "assets",
-        "assets/tilemaps"
+        "assets/tilesets",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -115,9 +115,9 @@
         },
         "assets/tilemaps/level_2.tmx": {
             "scale": 0.75,
-            "selectedLayer": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 523.9999999999999,
+                "x": 521.3333333333333,
                 "y": 374
             }
         },
@@ -174,12 +174,14 @@
     "map.tileWidth": 16,
     "map.width": 200,
     "openFiles": [
-        "assets/tilemaps/level1.tmx",
-        "assets/tilemaps/level2.tmx"
+        "assets/tilemaps/level_1.tmx",
+        "assets/tilemaps/level_2.tmx"
     ],
     "project": "unbenannt.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "assets/tilemaps/level_1.tmx",
+        "assets/tilemaps/level_2.tmx",
         "assets/tilemaps/small_tileset1.tmx",
         "assets/tilemaps/level2.tmx",
         "assets/tilemaps/level1.tmx",
@@ -189,9 +191,7 @@
         "C:/Users/fboro/Desktop/Tiled/level1.tmx",
         "C:/Users/fboro/Desktop/Tiled/tilesets/pa1-terrain.tsx",
         "assets/tilemaps/sky.tsx",
-        "assets/tilemaps/blue_sky1.tsx",
-        "C:/Users/fboro/Desktop/Tiled/unbenannt.tmx",
-        "assets/tilesets/blue_sky1.tsx"
+        "assets/tilemaps/blue_sky1.tsx"
     ],
     "resizeMap.removeObjects": true,
     "tileset.embedInMap": true,

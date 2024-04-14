@@ -7,6 +7,8 @@ export class Player extends Phaser.GameObjects.Sprite {
 
 ////////// Non-Init attributes
         this.isHit = -1;
+        this.inAnimationLoop = 0;
+        this.instructionsLength = 0;
         this.portalCooldown = 0;
         this.previousXPosition;
         this.previousXVelocity;
@@ -98,7 +100,14 @@ export class Player extends Phaser.GameObjects.Sprite {
             this.oneWayLayerCollider.active = true;
         }else{
             // Always reset the local velocity to maintain a constant acceleration
-            this.body.setVelocityX(0);
+            if(this.inAnimationLoop == 0) {
+                
+                this.body.setVelocityX(0);
+            } else {
+                this.inAnimationLoop = this.inAnimationLoop -1;
+            }
+
+            //console.log(this.inAnimationLoop);
 
             // Process the instructions array
             this.DoInstructions();
@@ -142,22 +151,10 @@ export class Player extends Phaser.GameObjects.Sprite {
      * Process the current instruction stack
      */
     DoInstructions(){
-        while(this.instructions.length > 0){
-            // Unload the first instruction from the stack
-            let instruction = this.instructions.pop();
-            switch(instruction.action){
-                case 'move':
-                    this.DoMove(instruction.option);
-                    break;
-                case 'jump':
-                    this.DoJump();
-                    break;
-                case 'patrol':
-                    this.DoPatrol();
-                    break
-            }
-        }
-        if(this.simpleInstruction.action !== '') {
+        this.instructions.reverse();
+        this.instructionsLength = this.instructions.length;
+        if(this.instructionsLength == 0 && this.simpleInstruction.action !== '') {
+            console.log('player: simpleInstruction');
             switch(this.simpleInstruction.action){
                 case 'move':
                     this.DoMove(this.simpleInstruction.option);
@@ -170,6 +167,33 @@ export class Player extends Phaser.GameObjects.Sprite {
                     break
             }
         }
+        while(this.instructionsLength > 0){
+            // Unload the first instruction from the stack
+            let instruction = this.instructions.pop();
+            this.instructionsLength = this.instructionsLength -1;
+            //console.log(instruction.action)
+            switch(instruction.action){
+                case 'move':
+                    this.DoMove(instruction.option);
+                    break;
+                case 'jump':
+                    this.DoJump();
+                    break;
+                case 'patrol':
+                    this.DoPatrol();
+                    break
+                case 'bounce':
+                    this.DoBounce(instruction.option);
+                    break
+                case 'rebound':
+                    this.DoRebound(instruction.option);
+                    break
+                case 'blockI':
+                    this.blockInstructions(instruction.option);
+                    break
+            }
+        }
+        
     }
 
 //// Do-Instruction Methods
@@ -185,10 +209,49 @@ export class Player extends Phaser.GameObjects.Sprite {
         }
     }
 
+    DoRebound(direction){
+        console.log(`player: DoRebound() ${direction}`);
+        switch(direction){
+            case 'left':
+                player.body.setVelocityX(-100);
+                player.body.setVelocityY(-30);
+                this.instructions = [];
+                this.blockInstructions(10);
+                break;
+            case 'right':
+                player.body.setVelocityX(100);
+                player.body.setVelocityY(-30);
+                this.instructions = [];
+                this.blockInstructions(10);
+                break;
+            case 'top':
+                if(this.scene.cursors.up.isDown || this.scene.keyW.isDown) {
+                    this.body.setVelocityY(-this.scene.gravity/3*1.05);
+                } else {
+                    this.body.setVelocityY(-this.scene.gravity/5);
+                }
+                break;
+        }
+    }
+
+    blockInstructions(frames){
+        console.log('player: blockI');
+        this.instructions = [];
+        this.instructionsLength = 0;
+        this.body.setVelocityX(this.body.velocity.x/1.1);
+        if(frames > 1) {
+            this.SetInstruction({action: 'blockI', option: (frames -1)});
+            this.tint = 0x000000;
+        } else {
+            this.tint = 0xFFFFFF;
+        }
+        this.inAnimationLoop = frames -1;
+    }
+
     
     DoJump(){
         if (this.body.blocked.down) {
-            this.body.setVelocityY(-this.speed*1.025);
+            this.body.setVelocityY(-this.scene.gravity/3*1.025); // -205
         }
     }
 
