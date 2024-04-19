@@ -397,7 +397,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
         player.instructions = [];
         piker.instructions = [];
         //jump on head
-        if(player.y <= piker.y -15) {
+        if(player.y <= piker.y -15 && player.isHit < 0) {
             player.SetInstruction({action: 'rebound', option: 'top'});
             piker.SetInstruction({action: 'bounce', option: 'up'});
             //piker.SetInstruction({action: 'disabled', option: 150});
