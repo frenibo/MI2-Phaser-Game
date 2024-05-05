@@ -309,6 +309,19 @@ export class SceneParent extends Phaser.Scene {
 				spawnPoint: sprite.spawnPoint,
 			});
 		}
+
+		if(sprite.type === 'key') {
+			this.spriteGroupArray[indexArray][indexGroup] = this.add.key({
+				x: sprite.x + this.rPos.x,
+				y: sprite.y + this.rPos.y,
+				image: sprite.image,
+				name: sprite.name,
+				indexArray: indexArray,
+				indexGroup: indexGroup,
+				bodyOffset: sprite.bodyOffset,
+				bodySize: sprite.bodySize,
+			});
+		}
     }
 
 	// Really just destroys all non-player sprites

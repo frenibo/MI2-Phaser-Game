@@ -4,6 +4,7 @@ import { CharacterPlugin } from "./plugins/sprites/character.js";
 import { PlayerPlugin } from "./plugins/sprites/player.js";
 import { PikerPlugin } from "./plugins/sprites/piker.js";
 import { PortalPlugin } from "./plugins/sprites/portal.js";
+import { KeyPlugin } from "./plugins/sprites/key.js";
 
 import { TitleScreen } from "./scenes/titlescreen.js";
 import { Level_1 } from "./scenes/level_1.js";
@@ -35,7 +36,8 @@ const config = {
             { key: 'CharacterPlugin', plugin: CharacterPlugin, start: true },
 			{ key: 'PlayerPlugin', plugin: PlayerPlugin, start: true },
 			{ key: 'PikerPlugin', plugin: PikerPlugin, start: true },
-			{ key: 'PortalPlugin', plugin: PortalPlugin, start: true }
+			{ key: 'PortalPlugin', plugin: PortalPlugin, start: true },
+			{ key: 'KeyPlugin', plugin: KeyPlugin, start: true }
 		]
     },
 	//pixelArt: true,

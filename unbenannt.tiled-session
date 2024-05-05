@@ -105,8 +105,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 303,
-                "y": 197.5
+                "x": 288,
+                "y": 159.5
             }
         },
         "assets/tilemaps/level_1.tmx#small_tileset_1": {

@@ -401,6 +401,19 @@ export class Piker extends Phaser.GameObjects.Sprite {
             player.SetInstruction({action: 'rebound', option: 'top'});
             piker.SetInstruction({action: 'bounce', option: 'up'});
             //piker.SetInstruction({action: 'disabled', option: 150});
+            return;
+        }
+        else if(player.y > piker.y + 15 && player.isHit < 0) {
+            //piker.SetInstruction({action: 'bounce', option: 'up'});
+            if(player.x < piker.x) {                
+                piker.SetInstruction({action: 'bounce', option: 'up'});
+                //piker.SetInstruction({action: 'disabled', option: 30});
+            }
+            else if (player.x > piker.x) {
+                piker.SetInstruction({action: 'bounce', option: 'up'});
+                //piker.SetInstruction({action: 'disabled', option: 30});
+            }
+            return;
         }
         //push from side
         else if(player.y >= piker.y -15) {
@@ -420,6 +433,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
                 piker.SetInstruction({action: 'bounce', option: 'left'});
                 //piker.SetInstruction({action: 'disabled', option: 30});
             }
+            return;
         }
     }
 
