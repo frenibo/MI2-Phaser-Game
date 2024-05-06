@@ -1,7 +1,7 @@
 export class Player extends Phaser.GameObjects.Sprite {
 
     constructor({ scene, x, y, image = 'player', name, path, speed, playable, simpleInstruction, type, 
-        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce, progressData}){
+        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce, progressData, collectedItems}){
 
         super(scene, x, y, image);
 
@@ -28,8 +28,8 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.bounce = bounce || 0.2;
         this.bodyOffset = bodyOffset || {x: 0, y: 0},
         this.bodySize = bodySize || {x: 16, y: 32},
-        this.progressData = progressData || null;
-        
+        this.progressData = progressData || [];
+        this.collectedItems = collectedItems || [];        
 ////////// Player-Init attributes
         this.playable = playable || true;
         
@@ -85,6 +85,10 @@ export class Player extends Phaser.GameObjects.Sprite {
     }
 
     update(){
+
+        //this.collectedItems.forEach( item => console.log(item));
+        //console.log(this.collectedItems.length);
+
         if(this.isHit > 0){
             // While a character is hit, count dowm on each update to allow for recovery time
 			this.isHit--;
@@ -261,6 +265,20 @@ export class Player extends Phaser.GameObjects.Sprite {
     DoHalt(){
         this.body.setVelocityX(0);
         //this.anims.stopAfterRepeat();
+    }
+
+    collectItem(item) {
+        if(this.collectedItems.findIndex(find => find.name === item.name) === -1) {
+            this.collectedItems.push(item);
+            console.log(item);
+            console.log(this.collectedItems.length);
+            this.addProgress(item, '.destroy();');
+        }
+    }
+
+    addProgress(object, executionString) {
+        this.progressData.push([object, executionString]);
+        console.log(this.progressData);
     }
 
 }

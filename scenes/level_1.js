@@ -95,20 +95,24 @@ export class Level_1 extends SceneParent
                 {
                     x: 72,
                     y: 256,
-                    name: 'portal1',
+                    //name: 'portal1',
                     originScene: 'level_1',
                     destinationScene: 'level_2',
                     spawnPoint: {x: 232, y: 544},
                     type: 'portal',
+                    active: false,
+                    keyColor: 'aqua',
+                    image: 'portalClosed',
                 },
                 {
                     x: 232,
                     y: 256, 
-                    name: 'portal2',
+                    //name: 'portal2',
                     originScene: 'level_1',
                     destinationScene: 'level_2',
                     spawnPoint: {x: 120, y: 544},
                     type: 'portal',
+                    active: true,
                 },
     
             ];
@@ -118,15 +122,17 @@ export class Level_1 extends SceneParent
             let keyGroup = [
                 {
                     x: 320,
-                    y: 208,
-                    name: 'key1',
-                    color: 'key',
+                    y: 200,
+                    image: 'key',
+                    color: 'aqua',
                     type: 'key',
                 },
+
     
             ];
 
             this.spriteGroupArray.push(keyGroup);
+            //this.load.image('key', './assets/key.png');
 
         }
 
@@ -141,8 +147,10 @@ export class Level_1 extends SceneParent
     {
         this.load.tilemapTiledJSON('level_1', './assets/tilemaps/level_1.json');
         this.load.image('tileset_level_1', './assets/tilemaps/small_tileset_1.png');
-        this.load.image('piker', './assets/piker.png');
-        this.load.image('portal', './assets/portal.png');
+        //this.animsManager.preload();
+        //this.load.image('piker', './assets/piker.png');
+        //this.load.image('portal', './assets/portal.png');
+        //this.load.image('key', './assets/key.png');
 
         super.preload();
     }

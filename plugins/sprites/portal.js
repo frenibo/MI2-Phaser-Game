@@ -1,6 +1,8 @@
+import { sharedMethods } from "../../sharedMethods.js";
+
 export class Portal extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x = 0, y = 0, image = 'portal', name, bodyOffset, bodySize, active, indexArray, indexGroup, originScene, destinationScene, type, spawnPoint}){
+    constructor({ scene, x = 0, y = 0, image = 'portal', name, bodyOffset, bodySize, active, indexArray, indexGroup, originScene, destinationScene, type, spawnPoint, keyColor}){
 
         super(scene, x, y, image);
 
@@ -13,13 +15,14 @@ export class Portal extends Phaser.GameObjects.Sprite {
         this.image = image || 'portal';
         this.bodyOffset = bodyOffset || {x: 4, y: 16};
         this.bodySize = bodySize || {x: 8, y: 16};
-        this.active = active || true;
-        this.indexArray = indexArray || undefined;
-        this.indexGroup = indexGroup || undefined;
+        this.active = active || false;
+        this.indexArray = indexArray;
+        this.indexGroup = indexGroup;
         this.originScene = originScene || this.scene.scene.key;
         this.destinationScene = destinationScene || 'level_1';
         this.spawnPoint = spawnPoint || {x: 0, y: 0};
         this.type = type || 'portal';
+        this.keyColor = keyColor || "";
         
 ////////// Player-Init attributes
         
@@ -50,9 +53,12 @@ export class Portal extends Phaser.GameObjects.Sprite {
     }
 
     update(){
-        this.tint = 0xffffff;
+        this.tint = sharedMethods.colorToHex('white');
+        if(this.active == false) {
+            this.tint = sharedMethods.colorToHex(this.keyColor);
+        }
 
-        if(this.playerOverlap == true && window.player.portalCooldown == 0) {
+        if(this.active == true && this.playerOverlap == true && window.player.portalCooldown == 0) {
             this.tint = 0xff0000; //TODO: replace tint with animation
             if(this.scene.cursors.down.isDown || this.scene.keyS.isDown) {
                 this.scene.input.stopPropagation();
@@ -70,6 +76,13 @@ export class Portal extends Phaser.GameObjects.Sprite {
     handlePlayerPortalOverlap(player, portal) {
         if(portal.active == true) {
             portal.playerOverlap = true;
+        }
+        if(portal.active == false) {
+            //portal.playerOverlap = false;
+            if(player.body.blocked.down && player.isHit === -1 && (player.collectedItems.findIndex(item => (item.type === 'key' && item.color === this.keyColor)) !== -1)) {
+                this.unlockPortal(player);
+            }
+
         }
     }
 
@@ -91,6 +104,15 @@ export class Portal extends Phaser.GameObjects.Sprite {
         }
     }
 
+    unlockPortal(player) {
+        player.DoHalt();
+        player.blockInstructions(30);
+        this.active = true;
+        this.setTexture('portal');
+        player.addProgress(this, '.active = true;');
+        //player.addProgress(this, '.image = "potal";');
+        player.addProgress(this, '.setTexture("portal");');
+    }
 }
 
 export class PortalPlugin extends Phaser.Plugins.BasePlugin {

@@ -3,6 +3,6 @@
 
 - fix handlePlayerHit() in piker.js (remove is.Hit from player. Convert to Do-move)
 
-- fix bug where hit player lands on piker and both rise upwards.
++ fix bug where hit player lands on piker and both rise upwards.
 
 - add piker player bounce collision from bottom

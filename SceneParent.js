@@ -21,7 +21,7 @@ export class SceneParent extends Phaser.Scene {
 ////////// Map attributes
 
 		this.map = null;
-		this.portals = [];
+		//this.portals = [];
 		this.gravity = null;
 		//relativePosition
 		this.rPos = { x: 0, y: 0 };
@@ -58,6 +58,11 @@ export class SceneParent extends Phaser.Scene {
 
 	preload() {
 		this.load.image('player', './assets/player.png');
+		//this.animsManager.preload();
+		this.load.image('piker', './assets/piker.png');
+        this.load.image('portal', './assets/portal.png');
+		this.load.image('portalClosed', './assets/portalClosed.png');
+        this.load.image('key', './assets/key.png');
 		
 	}
 
@@ -167,6 +172,7 @@ export class SceneParent extends Phaser.Scene {
 ////////// Create Player
 
 		if(!window.player && this.playerData) {
+			console.log('player from playerData')
 			// Creates global Player object
 			window.player = this.add.player({
 				x: this.spawnPoint.x + this.rPos.x,
@@ -180,12 +186,13 @@ export class SceneParent extends Phaser.Scene {
 				bodySize: this.playerData.bodySize,
 				bounce: this.playerData.bounce,
 				progressData: this.playerData.progressData,
+				collectedItems: this.playerData.collectedItems,
 			});
 
 			this.createCamera(window.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
 		}
 		else if(window.player) {
-			
+			console.log('player from window.player')
 			window.player = this.add.player({
 				x: this.spawnPoint.x + this.rPos.x,
 				y: this.spawnPoint.y + this.rPos.y,
@@ -198,6 +205,7 @@ export class SceneParent extends Phaser.Scene {
 				bodySize: window.player.bodySize,
 				bounce: window.player.bounce,
 				progressData: window.player.progressData,
+				collectedItems: window.player.collectedItems,
 			});
 			
 			this.createCamera(window.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
@@ -206,6 +214,8 @@ export class SceneParent extends Phaser.Scene {
 ////////// Create Sprites
 
 		this.spriteGroupArray.forEach((spriteGroup, indexArray) => spriteGroup.forEach((sprite, indexGroup) => this.initSprite(sprite, indexArray, indexGroup)));
+
+		this.applyProgressData(window.player);
 		
 	}
 
@@ -307,6 +317,7 @@ export class SceneParent extends Phaser.Scene {
 				originScene: sprite.originScene,
 				destinationScene: sprite.destinationScene,
 				spawnPoint: sprite.spawnPoint,
+				keyColor: sprite.keyColor,
 			});
 		}
 
@@ -315,6 +326,7 @@ export class SceneParent extends Phaser.Scene {
 				x: sprite.x + this.rPos.x,
 				y: sprite.y + this.rPos.y,
 				image: sprite.image,
+				color: sprite.color,
 				name: sprite.name,
 				indexArray: indexArray,
 				indexGroup: indexGroup,
@@ -333,6 +345,29 @@ export class SceneParent extends Phaser.Scene {
 		this.scene.start(destinationScene, data);
 		this.destroyAllGameObjects();
 
+	}
+
+	applyProgressData(player) {
+		console.log("applyProgressData");
+		// For each object-executionString-pair, find each sprite in spriteGroupArray whose name matches the name of the object.
+		if(player.progressData) {
+			window.player.progressData.forEach(pair => this.spriteGroupArray.forEach(spriteGroup => spriteGroup[0].type == pair[0].type ? spriteGroup.forEach(sprite => sprite.name === pair[0].name ? executeString(sprite, pair) : null): null))
+		}
+		function executeString(sprite, pair){
+			if(sprite.name === pair[0].name && pair[1]) // double checking names matching
+			{
+				let codeString = pair[1];
+				console.log(codeString);
+				//executeString2(sprite, codeString)
+				let func = new Function(`window.player.scene.spriteGroupArray[${sprite.indexArray}][${sprite.indexGroup}]${codeString}`);
+				console.log(window.player.scene.spriteGroupArray[sprite.indexArray][sprite.indexGroup]);
+				try {
+					return (func());
+				} catch (error) {
+					console.log('Error: Cross-site scripting failed', error)    
+				}
+			}
+		}
 	}
 
 	// This method should never be called !

@@ -6,8 +6,8 @@
     "activeFile": "assets/tilemaps/level_2.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
-        "assets/tilemaps",
         "assets",
+        "assets/tilemaps",
         "assets/tilesets",
         "."
     ],
@@ -117,8 +117,8 @@
             "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 521.3333333333333,
-                "y": 374
+                "x": 518.6666666666667,
+                "y": 372.66666666666663
             }
         },
         "assets/tilemaps/level_2.tmx#small_tileset_1": {

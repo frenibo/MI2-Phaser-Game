@@ -96,6 +96,7 @@ export class Level_2 extends SceneParent
                     destinationScene: 'level_1',
                     spawnPoint: {x: 232, y: 256},
                     type: 'portal',
+                    active: true,
                 },
                 {
                     x: 232,
@@ -105,6 +106,7 @@ export class Level_2 extends SceneParent
                     destinationScene: 'level_1',
                     spawnPoint: {x: 72, y: 256},
                     type: 'portal',
+                    active: true,
                 },
 
             ];

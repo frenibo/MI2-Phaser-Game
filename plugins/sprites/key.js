@@ -1,6 +1,8 @@
+import { sharedMethods } from '../../sharedMethods.js';
+
 export class Key extends Phaser.GameObjects.Sprite {
 
-    constructor({ scene, x = 0, y = 0, image = 'key', color = 'grey', name, bodyOffset, bodySize, active, indexArray, indexGroup, type}){
+    constructor({ scene, x = 0, y = 0, image = 'key', color = 'grey', name, bodyOffset, bodySize, indexArray = undefined, indexGroup = undefined, type}){
 
         super(scene, x, y, image);
 
@@ -14,9 +16,8 @@ export class Key extends Phaser.GameObjects.Sprite {
         this.color = color || 'grey';
         this.bodyOffset = bodyOffset || {x: 0, y: 0};
         this.bodySize = bodySize || {x: 16, y: 32};
-        this.active = active || true;
-        this.indexArray = indexArray || undefined;
-        this.indexGroup = indexGroup || undefined;
+        this.indexArray = indexArray;
+        this.indexGroup = indexGroup;
         this.type = type || 'key';
         
 ////////// Player-Init attributes
@@ -45,10 +46,13 @@ export class Key extends Phaser.GameObjects.Sprite {
         this.setDepth(10);
 
         scene.physics.add.overlap(window.player.body, this.body, () => this.handlePlayerKeyOverlap(window.player, this), null, this);
+
+        scene.load.image('key', './assets/key.png');
     }
 
     update(){
-      
+        //console.log(this.name)
+        this.tint = sharedMethods.colorToHex(this.color);
     }
 
 //// Do-Instruction Methods
@@ -56,7 +60,9 @@ export class Key extends Phaser.GameObjects.Sprite {
 
 ///// Helper Methods
     handlePlayerKeyOverlap(player, key) {
+        player.collectItem(key);
         key.destroy();
+        console.log(window.player.scene.spriteGroupArray);
     }
 }
 

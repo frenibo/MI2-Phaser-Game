@@ -34,8 +34,8 @@ export class Piker extends Phaser.GameObjects.Sprite {
         
         
 ////////// Enemy-Init attributes
-        this.indexArray = indexArray || 0;
-        this.indexGroup = indexGroup || 0;
+        this.indexArray = indexArray;
+        this.indexGroup = indexGroup;
         this.simpleInstruction = simpleInstruction || {action: 'patrol', option: ''};
         this.constantHitbox = constantHitbox || {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5};
         this.constantHitboxOffset = constantHitboxOffset || {x: 0, y: 0};
