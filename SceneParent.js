@@ -1,5 +1,6 @@
 //import Phaser from 'phaser';
 //import { Animationss } from './Animations';
+import { sharedMethods } from "../../sharedMethods.js";
 
 /**
  * Parent class for all playable scenes
@@ -63,7 +64,7 @@ export class SceneParent extends Phaser.Scene {
         this.load.image('portal', './assets/portal.png');
 		this.load.image('portalClosed', './assets/portalClosed.png');
         this.load.image('key', './assets/key.png');
-		
+		this.load.image('key_collected', './assets/key_collected.png');
 	}
 
 	create(settings) {
@@ -209,6 +210,8 @@ export class SceneParent extends Phaser.Scene {
 			});
 			
 			this.createCamera(window.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
+
+			this.updateInfoOverlay();
 		}
 
 ////////// Create Sprites
@@ -368,6 +371,19 @@ export class SceneParent extends Phaser.Scene {
 				}
 			}
 		}
+	}
+
+	updateInfoOverlay() {
+		console.log('updateInfoOverlay()');
+		window.player.collectedItems.forEach((item, index) => {
+			//let image = this.add.image((this.cameras.main.centerX - this.rPos.x)*2 +14 -index*14, 440, `${item.type}_collected`).setScrollFactor(0); // 592, 440
+			let image = this.add.image(600-8-index*14, 440, `${item.type}_collected`).setScrollFactor(0); // TODO: Werte dynamisch berechnen.
+			if(item.color) {
+				image.tint = sharedMethods.colorToHex(item.color);
+			}
+			//let image = this.add.image(this.canvasDimensions.width + this.rPos.x -20, this.canvasDimensions.height + this.rPos.y -20, `${item.type}_collected`).setScrollFactor(0);
+			console.log((this.cameras.main.centerX - this.rPos.x)*2)
+		})
 	}
 
 	// This method should never be called !

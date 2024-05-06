@@ -121,14 +121,20 @@ export class Level_1 extends SceneParent
 
             let keyGroup = [
                 {
-                    x: 320,
-                    y: 200,
+                    x: 220,
+                    y: 185,
                     image: 'key',
                     color: 'aqua',
                     type: 'key',
                 },
-
-    
+                {
+                    x: 280,
+                    y: 185,
+                    image: 'key',
+                    color: 'lightgrey',
+                    type: 'key',
+                },
+                    
             ];
 
             this.spriteGroupArray.push(keyGroup);

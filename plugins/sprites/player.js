@@ -273,6 +273,7 @@ export class Player extends Phaser.GameObjects.Sprite {
             console.log(item);
             console.log(this.collectedItems.length);
             this.addProgress(item, '.destroy();');
+            this.scene.updateInfoOverlay();
         }
     }
 
