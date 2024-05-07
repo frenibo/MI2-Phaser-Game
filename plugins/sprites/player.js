@@ -1,7 +1,7 @@
 export class Player extends Phaser.GameObjects.Sprite {
 
     constructor({ scene, x, y, image = 'player', name, path, speed, playable, simpleInstruction, type, 
-        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce, progressData, collectedItems}){
+        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce, progressData, collectedItems, clock, portalCooldown}){
 
         super(scene, x, y, image);
 
@@ -9,7 +9,6 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.isHit = -1;
         this.inAnimationLoop = 0;
         this.instructionsLength = 0;
-        this.portalCooldown = 0;
         this.previousXPosition;
         this.previousXVelocity;
         this.solidLayerCollider;
@@ -29,7 +28,9 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.bodyOffset = bodyOffset || {x: 0, y: 0},
         this.bodySize = bodySize || {x: 16, y: 32},
         this.progressData = progressData || [];
-        this.collectedItems = collectedItems || [];        
+        this.collectedItems = collectedItems || [];
+        this.clock = clock || performance.now();
+        this.portalCooldown = portalCooldown || 0;   
 ////////// Player-Init attributes
         this.playable = playable || true;
         
@@ -135,7 +136,7 @@ export class Player extends Phaser.GameObjects.Sprite {
 
         if(this.portalCooldown > 0) {
             this.portalCooldown = this.portalCooldown -1;
-            //console.log(this.portalCooldown);
+            console.log(this.portalCooldown);
         }
        
     }

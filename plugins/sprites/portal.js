@@ -8,7 +8,7 @@ export class Portal extends Phaser.GameObjects.Sprite {
 
 ////////// Non-Init attributes
 
-        this.playerOverlap = false;
+        //this.playerOverlap = false;
 
 ////////// General-Init attributes
         this.name = name || `portal_${indexArray}_${indexGroup}_${scene.scene.key}`;
@@ -45,6 +45,16 @@ export class Portal extends Phaser.GameObjects.Sprite {
 			this.body.setSize(this.bodySize.x, this.bodySize.y, false);
 		}
 
+        if(this.active == false) {
+            if(this.keyColor) {
+                this.tint = sharedMethods.colorToHex(this.keyColor);
+            }
+            else {
+                this.tint = sharedMethods.colorToHex('green');
+            }
+
+        }
+
         this.body.setAllowGravity(false);
 
         this.setDepth(9);
@@ -53,20 +63,18 @@ export class Portal extends Phaser.GameObjects.Sprite {
     }
 
     update(){
-        this.tint = sharedMethods.colorToHex('white');
-        if(this.active == false) {
-            this.tint = sharedMethods.colorToHex(this.keyColor);
-        }
-
-        if(this.active == true && this.playerOverlap == true && window.player.portalCooldown == 0) {
-            this.tint = 0xff0000; //TODO: replace tint with animation
-            if(this.scene.cursors.down.isDown || this.scene.keyS.isDown) {
-                this.scene.input.stopPropagation();
-                this.enterPortal(this);
+        /*
+        if(this.active == true) {
+            if(this.playerOverlap == true && window.player.portalCooldown == 0) {
+                if(this.scene.cursors.down.isDown || this.scene.keyS.isDown) {
+                    this.scene.input.stopPropagation();
+                    this.enterPortal(this);
+                }
             }
         }
 
-        this.playerOverlap = false;        
+        this.playerOverlap = false; 
+        */      
     }
 
 //// Do-Instruction Methods
@@ -75,7 +83,13 @@ export class Portal extends Phaser.GameObjects.Sprite {
 ///// Helper Methods
     handlePlayerPortalOverlap(player, portal) {
         if(portal.active == true) {
-            portal.playerOverlap = true;
+            //portal.playerOverlap = true;
+            if( window.player.portalCooldown == 0) {
+                if(this.scene.cursors.down.isDown || this.scene.keyS.isDown) {
+                    this.scene.input.stopPropagation();
+                    this.enterPortal(this);
+                }
+            }
         }
         if(portal.active == false) {
             //portal.playerOverlap = false;
@@ -108,6 +122,7 @@ export class Portal extends Phaser.GameObjects.Sprite {
         player.DoHalt();
         player.blockInstructions(30);
         this.active = true;
+        this.tint = sharedMethods.colorToHex('white');
         this.setTexture('portal');
         player.addProgress(this, '.active = true;');
         //player.addProgress(this, '.image = "potal";');

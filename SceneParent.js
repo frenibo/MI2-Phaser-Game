@@ -31,6 +31,10 @@ export class SceneParent extends Phaser.Scene {
 		this.tileDimensions = { width: 16, height: 16 };
 		this.tiles_solid_collides = [];
 		this.tiles_solid_oneWay = [];
+		//timer attributes
+		this.timerDisplay;
+		this.timedEvent;
+		this.clock = 0;
 
 ////////// Player attributes
 
@@ -188,6 +192,8 @@ export class SceneParent extends Phaser.Scene {
 				bounce: this.playerData.bounce,
 				progressData: this.playerData.progressData,
 				collectedItems: this.playerData.collectedItems,
+				clock: this.playerData.clock,
+				portalCooldown: this.portalCooldown,
 			});
 
 			this.createCamera(window.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
@@ -207,6 +213,8 @@ export class SceneParent extends Phaser.Scene {
 				bounce: window.player.bounce,
 				progressData: window.player.progressData,
 				collectedItems: window.player.collectedItems,
+				clock: window.player.clock,
+				portalCooldown: window.player.portalCooldown,
 			});
 			
 			this.createCamera(window.player, this.map, this.zoom, this.canvasDimensions, this.mapDimensions, this.rPos);
@@ -217,6 +225,8 @@ export class SceneParent extends Phaser.Scene {
 ////////// Create Sprites
 
 		this.spriteGroupArray.forEach((spriteGroup, indexArray) => spriteGroup.forEach((sprite, indexGroup) => this.initSprite(sprite, indexArray, indexGroup)));
+
+		this.createTimer();
 
 		this.applyProgressData(window.player);
 		
@@ -239,6 +249,7 @@ export class SceneParent extends Phaser.Scene {
 			}
 
 			window.player.update();
+			this.updateTimer();
 		}
 
 ////////// Sprite Update
@@ -385,6 +396,29 @@ export class SceneParent extends Phaser.Scene {
 			//let image = this.add.image(this.canvasDimensions.width + this.rPos.x -20, this.canvasDimensions.height + this.rPos.y -20, `${item.type}_collected`).setScrollFactor(0);
 			console.log((this.cameras.main.centerX - this.rPos.x)*2)
 		})
+	}
+
+	createTimer() {
+		//this.timer = this.add.text(400, 230, 'Click to Start.', { fontSize: '15px', fill: '#000' }).setScrollFactor(0).setDepth(11);
+		//console.log(performance.now())
+		if(window.player.clock) {
+			this.timerDisplay = this.add.text(202, 435, '00:00:00', { fontSize: '12px', fill: '#fff' , border: '#000'}).setScrollFactor(0).setDepth(11);
+		}
+		//this.timedEvent = this.time.delayedCall(1000, this.onEvent, [], this);
+	}
+
+	updateTimer() {
+		//console.log(this.clock);
+		
+		function convertNumToTimeElapsed(ms) {
+			let date = new Date(null);
+			date.setMilliseconds(ms); // specify value for SECONDS here
+			let result = date.toISOString().slice(14, 22);
+			return result
+		}
+
+		this.timerDisplay.setText(`${convertNumToTimeElapsed(performance.now()-window.player.clock)}`);
+		
 	}
 
 	// This method should never be called !

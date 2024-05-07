@@ -70,15 +70,15 @@ export class Level_2 extends SceneParent
             let pikerGroup = [
                 {
                     x: 330, // + this.rPos.x,
-                    y: 430, // + this.rPos.y,
+                    y: 302, // + this.rPos.y,
                     name: 'piker4',
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                     type: 'piker',
                 },
                 
                 {
-                    x: 500, // + this.rPos.x,
-                    y: 420, // + this.rPos.y,
+                    x: 420, // + this.rPos.x,
+                    y: 292, // + this.rPos.y,
                     name: 'piker5',
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
                     type: 'piker',
@@ -90,7 +90,7 @@ export class Level_2 extends SceneParent
             let portalGroup = [
                 {
                     x: 120,
-                    y: 544, 
+                    y: 416, 
                     name: 'portal3',
                     originScene: 'level_2',
                     destinationScene: 'level_1',
@@ -100,13 +100,25 @@ export class Level_2 extends SceneParent
                 },
                 {
                     x: 232,
-                    y: 544,
+                    y: 416,
                     name: 'portal4',
                     originScene: 'level_2',
                     destinationScene: 'level_1',
                     spawnPoint: {x: 72, y: 256},
                     type: 'portal',
                     active: true,
+                },
+                {
+                    x: 408,
+                    y: 304,
+                    name: 'portal5',
+                    originScene: 'level_2',
+                    destinationScene: 'level_1',
+                    spawnPoint: {x: 200, y: 240},
+                    type: 'portal',
+                    active: false,
+                    keyColor: 'red',
+                    image: 'portalClosed',
                 },
 
             ];
@@ -116,7 +128,7 @@ export class Level_2 extends SceneParent
             let keyGroup = [
                 {
                     x: 330,
-                    y: 530,
+                    y: 402,
                     image: 'key',
                     color: 'red',
                     type: 'key',
