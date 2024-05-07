@@ -69,6 +69,8 @@ export class SceneParent extends Phaser.Scene {
 		this.load.image('portalClosed', './assets/portalClosed.png');
         this.load.image('key', './assets/key.png');
 		this.load.image('key_collected', './assets/key_collected.png');
+		this.load.image('timeBonus', './assets/timeBonus.png');
+		this.load.image('timeBonus_collected', './assets/timeBonus.png');
 	}
 
 	create(settings) {
@@ -348,6 +350,20 @@ export class SceneParent extends Phaser.Scene {
 				bodySize: sprite.bodySize,
 			});
 		}
+
+		if(sprite.type === 'timeBonus') {
+			this.spriteGroupArray[indexArray][indexGroup] = this.add.timeBonus({
+				x: sprite.x + this.rPos.x,
+				y: sprite.y + this.rPos.y,
+				image: sprite.image,
+				name: sprite.name,
+				indexArray: indexArray,
+				indexGroup: indexGroup,
+				bodyOffset: sprite.bodyOffset,
+				bodySize: sprite.bodySize,
+				bonus: sprite.bonus,
+			});
+		}
     }
 
 	// Really just destroys all non-player sprites
@@ -388,7 +404,7 @@ export class SceneParent extends Phaser.Scene {
 		console.log('updateInfoOverlay()');
 		window.player.collectedItems.forEach((item, index) => {
 			//let image = this.add.image((this.cameras.main.centerX - this.rPos.x)*2 +14 -index*14, 440, `${item.type}_collected`).setScrollFactor(0); // 592, 440
-			let image = this.add.image(600-8-index*14, 440, `${item.type}_collected`).setScrollFactor(0); // TODO: Werte dynamisch berechnen.
+			let image = this.add.image(600-8-index*16, 440, `${item.type}_collected`).setScrollFactor(0); // TODO: Werte dynamisch berechnen.
 			image.setDepth(11);
 			if(item.color) {
 				image.tint = sharedMethods.colorToHex(item.color);

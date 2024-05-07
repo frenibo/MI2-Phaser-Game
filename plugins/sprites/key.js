@@ -45,14 +45,13 @@ export class Key extends Phaser.GameObjects.Sprite {
 
         this.setDepth(10);
 
-        scene.physics.add.overlap(window.player.body, this.body, () => this.handlePlayerKeyOverlap(window.player, this), null, this);
+        this.tint = sharedMethods.colorToHex(this.color);
 
-        scene.load.image('key', './assets/key.png');
+        scene.physics.add.overlap(window.player.body, this.body, () => this.handlePlayerKeyOverlap(window.player, this), null, this);
     }
 
     update(){
-        //console.log(this.name)
-        this.tint = sharedMethods.colorToHex(this.color);
+
     }
 
 //// Do-Instruction Methods

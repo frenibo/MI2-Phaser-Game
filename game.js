@@ -5,6 +5,7 @@ import { PlayerPlugin } from "./plugins/sprites/player.js";
 import { PikerPlugin } from "./plugins/sprites/piker.js";
 import { PortalPlugin } from "./plugins/sprites/portal.js";
 import { KeyPlugin } from "./plugins/sprites/key.js";
+import { TimeBonusPlugin } from "./plugins/sprites/timeBonus.js";
 
 import { sharedMethods } from "./sharedMethods.js";
 
@@ -39,7 +40,8 @@ const config = {
 			{ key: 'PlayerPlugin', plugin: PlayerPlugin, start: true },
 			{ key: 'PikerPlugin', plugin: PikerPlugin, start: true },
 			{ key: 'PortalPlugin', plugin: PortalPlugin, start: true },
-			{ key: 'KeyPlugin', plugin: KeyPlugin, start: true }
+			{ key: 'KeyPlugin', plugin: KeyPlugin, start: true },
+			{ key: 'TimeBonusPlugin', plugin: TimeBonusPlugin, start: true },
 		]
     },
 	//pixelArt: true,

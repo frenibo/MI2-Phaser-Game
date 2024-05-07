@@ -136,7 +136,7 @@ export class Player extends Phaser.GameObjects.Sprite {
 
         if(this.portalCooldown > 0) {
             this.portalCooldown = this.portalCooldown -1;
-            console.log(this.portalCooldown);
+            //console.log(this.portalCooldown);
         }
        
     }

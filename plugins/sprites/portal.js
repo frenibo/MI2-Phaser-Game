@@ -8,8 +8,6 @@ export class Portal extends Phaser.GameObjects.Sprite {
 
 ////////// Non-Init attributes
 
-        //this.playerOverlap = false;
-
 ////////// General-Init attributes
         this.name = name || `portal_${indexArray}_${indexGroup}_${scene.scene.key}`;
         this.image = image || 'portal';
@@ -63,18 +61,7 @@ export class Portal extends Phaser.GameObjects.Sprite {
     }
 
     update(){
-        /*
-        if(this.active == true) {
-            if(this.playerOverlap == true && window.player.portalCooldown == 0) {
-                if(this.scene.cursors.down.isDown || this.scene.keyS.isDown) {
-                    this.scene.input.stopPropagation();
-                    this.enterPortal(this);
-                }
-            }
-        }
-
-        this.playerOverlap = false; 
-        */      
+        
     }
 
 //// Do-Instruction Methods

@@ -94,7 +94,7 @@ export class Level_2 extends SceneParent
                     name: 'portal3',
                     originScene: 'level_2',
                     destinationScene: 'level_1',
-                    spawnPoint: {x: 232, y: 256},
+                    spawnPoint: {x: 72, y: 256},
                     type: 'portal',
                     active: true,
                 },
@@ -104,7 +104,7 @@ export class Level_2 extends SceneParent
                     name: 'portal4',
                     originScene: 'level_2',
                     destinationScene: 'level_1',
-                    spawnPoint: {x: 72, y: 256},
+                    spawnPoint: {x: 232, y: 256},
                     type: 'portal',
                     active: true,
                 },
@@ -137,6 +137,19 @@ export class Level_2 extends SceneParent
             ];
 
             this.spriteGroupArray.push(keyGroup);
+
+            let timeBonusGroup = [
+                {
+                    x: 420,
+                    y: 360,
+                    image: 'timeBonus',
+                    type: 'timeBonus',
+                    bonus: 15,
+                },
+                    
+            ];
+
+            this.spriteGroupArray.push(timeBonusGroup);
         }
 
 	}
