@@ -113,6 +113,9 @@ export class Level_1 extends SceneParent
                     spawnPoint: {x: 120, y: 544},
                     type: 'portal',
                     active: true,
+                    active: false,
+                    keyColor: 'lightgrey',
+                    image: 'portalClosed',
                 },
     
             ];
@@ -128,8 +131,8 @@ export class Level_1 extends SceneParent
                     type: 'key',
                 },
                 {
-                    x: 280,
-                    y: 185,
+                    x: 170,
+                    y: 250,
                     image: 'key',
                     color: 'lightgrey',
                     type: 'key',

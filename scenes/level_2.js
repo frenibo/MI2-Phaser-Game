@@ -112,6 +112,19 @@ export class Level_2 extends SceneParent
             ];
 
             this.spriteGroupArray.push(portalGroup);
+
+            let keyGroup = [
+                {
+                    x: 330,
+                    y: 530,
+                    image: 'key',
+                    color: 'red',
+                    type: 'key',
+                },
+                    
+            ];
+
+            this.spriteGroupArray.push(keyGroup);
         }
 
 	}

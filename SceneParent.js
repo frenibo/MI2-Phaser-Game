@@ -378,6 +378,7 @@ export class SceneParent extends Phaser.Scene {
 		window.player.collectedItems.forEach((item, index) => {
 			//let image = this.add.image((this.cameras.main.centerX - this.rPos.x)*2 +14 -index*14, 440, `${item.type}_collected`).setScrollFactor(0); // 592, 440
 			let image = this.add.image(600-8-index*14, 440, `${item.type}_collected`).setScrollFactor(0); // TODO: Werte dynamisch berechnen.
+			image.setDepth(11);
 			if(item.color) {
 				image.tint = sharedMethods.colorToHex(item.color);
 			}
