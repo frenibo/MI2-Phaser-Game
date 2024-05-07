@@ -1,4 +1,3 @@
-
 export class sharedMethods {
 
     //constructor(sceneName) {}

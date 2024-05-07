@@ -1,6 +1,6 @@
 //import Phaser from 'phaser';
 //import { Animationss } from './Animations';
-import { sharedMethods } from "../../sharedMethods.js";
+import { sharedMethods } from "./sharedMethods.js";
 
 /**
  * Parent class for all playable scenes

@@ -6,6 +6,8 @@ import { PikerPlugin } from "./plugins/sprites/piker.js";
 import { PortalPlugin } from "./plugins/sprites/portal.js";
 import { KeyPlugin } from "./plugins/sprites/key.js";
 
+import { sharedMethods } from "./sharedMethods.js";
+
 import { TitleScreen } from "./scenes/titlescreen.js";
 import { Level_1 } from "./scenes/level_1.js";
 import { Level_2 } from "./scenes/level_2.js";
