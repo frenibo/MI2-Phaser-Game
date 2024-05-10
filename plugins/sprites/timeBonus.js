@@ -9,6 +9,7 @@ export class TimeBonus extends Phaser.GameObjects.Sprite {
 ////////// Non-Init attributes
 
         this.timeBonusText;
+        this.overlayText;
 
 ////////// General-Init attributes
         this.name = name || `timeBonus_${indexArray}_${indexGroup}_${scene.scene.key}`;
@@ -42,8 +43,8 @@ export class TimeBonus extends Phaser.GameObjects.Sprite {
 		}
 
         this.body.setAllowGravity(false);
-
-        this.timeBonusText = this.scene.add.text(x-7, y-7, bonus.toString(), { fontSize: '11px', fill: '#000'});
+        this.overlayText = bonus.toString();
+        this.timeBonusText = this.scene.add.text(x-3.5*this.overlayText.length, y-7, this.overlayText, { fontSize: '11px', fill: '#000'});
         this.scene.add.existing(this.timeBonusText).setDepth(10);
         //this.Sprite.addChild(this.timeBonusText); //.setDepth(10);
 
@@ -63,9 +64,13 @@ export class TimeBonus extends Phaser.GameObjects.Sprite {
     handlePlayerTimeBonusOverlap(player, timeBonus) {
         player.collectItem(timeBonus);
         player.clock = player.clock + this.bonus*1000;
-        timeBonus.destroy();
-        //timeBonus.timeBonusText.destroy();
+        timeBonus.destroyItem();
         console.log(window.player.scene.spriteGroupArray);
+    }
+
+    destroyItem() {
+        this.destroy();
+        this.timeBonusText.destroy();
     }
 }
 

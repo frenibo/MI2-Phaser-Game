@@ -159,21 +159,28 @@ export class SceneParent extends Phaser.Scene {
 		
 
 		// Itterates through all tiles in a given layer and sets collision based on Custom Properties set in Tiled.
-		this.solidLayer.forEachTile(tile => {
-            if(tile.properties['collides']) {
-                tile.setCollision(true, true, true, true, false);
-            }
-        });
-
-		this.oneWayLayer.forEachTile(tile => {
-            if(tile.properties['oneWay']) {
-				// collides only from bottom
-                tile.setCollision(false, false, true, false, false);
-            }
-        });
+		if(this.solidLayer) {
+			this.solidLayer.forEachTile(tile => {
+				if(tile.properties['collides']) {
+					tile.setCollision(true, true, true, true, false);
+				}
+			});
+		}
+		
+		if(this.oneWayLayer) {
+			this.oneWayLayer.forEachTile(tile => {
+				if(tile.properties['oneWay']) {
+					// collides only from bottom
+					tile.setCollision(false, false, true, false, false);
+				}
+			});
+		}
+		
 
 		// Place the overhead layer above everything else
-		this.overheadLayer.setDepth(20);
+		if(this.overheadLayer) {
+			this.overheadLayer.setDepth(20);
+		}
 
 
 ////////// Create Player
@@ -194,7 +201,7 @@ export class SceneParent extends Phaser.Scene {
 				bounce: this.playerData.bounce,
 				progressData: this.playerData.progressData,
 				collectedItems: this.playerData.collectedItems,
-				clock: this.playerData.clock,
+				clock: performance.now(),
 				portalCooldown: this.portalCooldown,
 			});
 
@@ -316,6 +323,7 @@ export class SceneParent extends Phaser.Scene {
 				constantHitboxOffset: {x: sprite.constantHitbox.offsetX, y: sprite.constantHitbox.offsetY},
 				bodyOffset: sprite.bodyOffset,
 				bodySize: sprite.bodySize,
+				direction: sprite.direction,
 			});
 		}
 
@@ -404,8 +412,10 @@ export class SceneParent extends Phaser.Scene {
 		console.log('updateInfoOverlay()');
 		window.player.collectedItems.forEach((item, index) => {
 			//let image = this.add.image((this.cameras.main.centerX - this.rPos.x)*2 +14 -index*14, 440, `${item.type}_collected`).setScrollFactor(0); // 592, 440
-			let image = this.add.image(600-8-index*16, 440, `${item.type}_collected`).setScrollFactor(0); // TODO: Werte dynamisch berechnen.
-			image.setDepth(11);
+			let image = this.add.image(600-8-index*16, 440, `${item.type}_collected`).setScrollFactor(0).setDepth(11); // TODO: Werte dynamisch berechnen.
+			if(item.overlayText) {
+				this.add.text(600-8-index*16-3.5*item.overlayText.length, 440-7, item.overlayText, { fontSize: '11px', fill: '#000'}).setScrollFactor(0).setDepth(12);
+			}
 			if(item.color) {
 				image.tint = sharedMethods.colorToHex(item.color);
 			}

@@ -75,9 +75,10 @@ export class Level_1 extends SceneParent
                 {
                     type: 'piker',
                     name: 'piker2',
-                    x: 130, // + this.rPos.x,
+                    x: 80, // + this.rPos.x,
                     y: 150, // + this.rPos.y,
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},
+                    direction: 'right',
                 },
                 {
                     type: 'piker',
@@ -109,8 +110,10 @@ export class Level_1 extends SceneParent
                     y: 256, 
                     //name: 'portal2',
                     originScene: 'level_1',
-                    destinationScene: 'level_2',
-                    spawnPoint: {x: 232, y: 430},
+                    //destinationScene: 'level_2',
+                    //spawnPoint: {x: 232, y: 430},
+                    destinationScene: 'level_complete',
+                    spawnPoint: {x: 0, y: 0},
                     type: 'portal',
                     active: false,
                     keyColor: 'lightgrey',
@@ -140,7 +143,19 @@ export class Level_1 extends SceneParent
             ];
 
             this.spriteGroupArray.push(keyGroup);
-            //this.load.image('key', './assets/key.png');
+
+            let timeBonusGroup = [
+                {
+                    x: 420,
+                    y: 80,
+                    image: 'timeBonus',
+                    type: 'timeBonus',
+                    bonus: 5,
+                },
+                    
+            ];
+
+            this.spriteGroupArray.push(timeBonusGroup);
 
         }
 

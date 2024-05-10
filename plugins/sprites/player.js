@@ -207,9 +207,11 @@ export class Player extends Phaser.GameObjects.Sprite {
         switch(direction){
             case 'left':
                 this.body.setVelocityX(-this.speed);
+                this.flipX = true;
                 break;
             case 'right':
                 this.body.setVelocityX(this.speed);
+                this.flipX = false;
                 break;
         }
     }
@@ -236,6 +238,23 @@ export class Player extends Phaser.GameObjects.Sprite {
                     this.body.setVelocityY(-this.scene.gravity/5);
                 }
                 break;
+        }
+    }
+
+    accalerate(direction) {
+        if(direction === 'left' && this.body.velocity.x < this.speed) {
+            if(this.body.velocity.x > 0) {
+                this.body.velocity.x = 0;
+            } else {
+                this.body.velocity.x = this.body.velocity.x + this.speed/10;
+            }
+        }
+        if(direction === 'right' && this.body.velocity.x > this.speed) {
+            if(this.body.velocity.x < 0) {
+                this.body.velocity.x = 0;
+            } else {
+                this.body.velocity.x = this.body.velocity.x - this.speed/10;
+            }
         }
     }
 
@@ -273,7 +292,7 @@ export class Player extends Phaser.GameObjects.Sprite {
             this.collectedItems.push(item);
             console.log(item);
             console.log(this.collectedItems.length);
-            this.addProgress(item, '.destroy();');
+            this.addProgress(item, '.destroyItem();');
             this.scene.updateInfoOverlay();
         }
     }

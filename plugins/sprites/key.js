@@ -63,6 +63,10 @@ export class Key extends Phaser.GameObjects.Sprite {
         key.destroy();
         console.log(window.player.scene.spriteGroupArray);
     }
+
+    destroyItem() {
+        this.destroy();
+    }
 }
 
 export class KeyPlugin extends Phaser.Plugins.BasePlugin {

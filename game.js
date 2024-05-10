@@ -12,10 +12,12 @@ import { sharedMethods } from "./sharedMethods.js";
 import { TitleScreen } from "./scenes/titlescreen.js";
 import { Level_1 } from "./scenes/level_1.js";
 import { Level_2 } from "./scenes/level_2.js";
+import { Level_Complete } from "./scenes/level_complete.js";
 
 var titleScreen = new TitleScreen();
 var level_1 = new Level_1();
 var level_2 = new Level_2();
+var level_complete = new Level_Complete();
 
 const config = {
 	type: Phaser.AUTO,
@@ -51,6 +53,7 @@ const config = {
 		titleScreen,
 		level_1,
 		level_2,
+		level_complete,
 	]
 };
 

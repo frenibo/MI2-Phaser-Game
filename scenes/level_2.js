@@ -77,7 +77,7 @@ export class Level_2 extends SceneParent
                 },
                 
                 {
-                    x: 420, // + this.rPos.x,
+                    x: 412, // + this.rPos.x,
                     y: 292, // + this.rPos.y,
                     name: 'piker5',
                     constantHitbox: {offsetX: -6, offsetY: 8, width: 6, height: 10, color: 0xff0000, alpha: 0.5},

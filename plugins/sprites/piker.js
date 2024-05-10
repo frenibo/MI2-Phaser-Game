@@ -1,7 +1,7 @@
 export class Piker extends Phaser.GameObjects.Sprite {
 
     constructor({ scene, x = 0, y = 0, image = 'piker', name, path, speed, playable, indexArray, indexGroup, simpleInstruction,
-        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce}){
+        constantHitbox, constantHitboxOffset, bodyOffset, bodySize, bounce, direction}){
 
         super(scene, x, y, image);
 
@@ -28,6 +28,7 @@ export class Piker extends Phaser.GameObjects.Sprite {
         this.bounce = bounce || 0;
         this.bodyOffset = bodyOffset || {x: 8, y: 0},
         this.bodySize = bodySize || {x: 16, y: 16},
+        this.direction = direction || 'left';
         
 ////////// Player-Init attributes
         this.playable = playable || false;
@@ -83,6 +84,10 @@ export class Piker extends Phaser.GameObjects.Sprite {
             // '() =>' necessary for some reason ?
             this.hitboxCollider = scene.physics.add.overlap(window.player, this.constantHitbox, () => this.handlePlayerHit(window.player, this), null, this);
             this.constantHitbox.setDepth(10);
+        }
+
+        if(this.direction === 'right') {
+            this.changeDirection();
         }
 
     }
