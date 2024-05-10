@@ -21,6 +21,7 @@ export class Portal extends Phaser.GameObjects.Sprite {
         this.spawnPoint = spawnPoint || {x: 0, y: 0};
         this.type = type || 'portal';
         this.keyColor = keyColor || "";
+        this.thisScene = this.scene;
         
 ////////// Player-Init attributes
         

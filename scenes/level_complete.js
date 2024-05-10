@@ -7,14 +7,30 @@ export class Level_Complete extends Phaser.Scene
 		super({key:'level_complete'});
 	}
 
+    previousScene;
+    rankingList;
+    timeScore = performance.now();
+    highscore = false;
+    username = 'noUsername';
+
+    init(data){
+
+		if(data) {
+			if(data.type === 'portal') {
+                console.log(data);
+                this.previousScene = data.thisScene.nameLevel;
+			}
+		}
+    }
+
     preload ()
     {
 
     }
 
-    create ()
+    async create ()
     {
-        this.add.text(200, 180, 'Level Complete!', { fontSize: '20px', fill: '#fff'}).setScrollFactor(0).setDepth(12);
+        this.add.text(200, 180, `${this.previousScene} Complete!`, { fontSize: '20px', fill: '#fff'}).setScrollFactor(0).setDepth(12);
         this.createTimer();
         this.createInfoOverlay();
         this.input.keyboard.on('keydown', () =>
@@ -25,6 +41,23 @@ export class Level_Complete extends Phaser.Scene
             }
         );
 
+        await this.fetchRankingList();
+
+        if(this.rankingList) {
+            this.rankingList.forEach(ranking => Number(ranking.time) < this.timeScore ? this.highscore = true : null);
+            if(this.highscore == true) {
+                let newScore = {'username': this.username, 'time': this.timeScore.toString(), 'datum': new Date().toISOString()};
+                this.rankingList.push(newScore);
+                this.rankingList = this.rankingList.sort((a, b) => Number(a.time) < Number(b.time) ? -1 : 1)
+                if(this.rankingList.length > 10) {
+                    this.rankingList.pop();
+                }
+                console.log(this.rankingList);
+                this.writeToFile(this.rankingList);
+            }
+        }
+
+        
 
     }
 
@@ -38,15 +71,16 @@ export class Level_Complete extends Phaser.Scene
         //console.log(performance.now())
         if(window.player.clock) {
             this.timerDisplay = this.add.text(200, 200, '00:00:00', { fontSize: '20px', fill: '#fff'}).setScrollFactor(0).setDepth(11);
-            this.timerDisplay.setText(`${convertNumToTimeElapsed(performance.now()-window.player.clock)}`);
-            function convertNumToTimeElapsed(ms) {
-                let date = new Date(null);
-                date.setMilliseconds(ms); // specify value for SECONDS here
-                let result = date.toISOString().slice(14, 22);
-                return result
-            }
+            this.timeScore = performance.now()-window.player.clock;
+            this.timerDisplay.setText(`${this.convertNumToTimeElapsed(this.timeScore)}`);
         }
-        //this.timedEvent = this.time.delayedCall(1000, this.onEvent, [], this);
+    }
+
+    convertNumToTimeElapsed(ms) {
+        let date = new Date(null);
+        date.setMilliseconds(ms); // specify value for SECONDS here
+        let result = date.toISOString().slice(14, 22);
+        return result
     }
 
     createInfoOverlay() {
@@ -64,4 +98,24 @@ export class Level_Complete extends Phaser.Scene
 			console.log((this.cameras.main.centerX)*2)
 		})
 	}
+
+    compareRanking() {
+
+    }
+
+    writeToFile(data) {
+        const fs = require('fs');
+        const filepath = '../storage/ranking.json';
+        //const data = JSON.parse(fs.readFileSync(filepath));
+        //data[someKey] = "newValue";
+        fs.writeFileSync(filepath, JSON.stringify(data, null, 4));
+    }
+
+    async fetchRankingList() {
+        return await fetch('../storage/ranking.json')
+            .then(response => response.json())
+            .then(data => this.rankingList = data)
+            .catch(error => console.log(error));
+
+    }
 }

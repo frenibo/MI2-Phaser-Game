@@ -4,11 +4,15 @@ export class TitleScreen extends Phaser.Scene {
         super({key:'titleScreen'});
     };
 
+    gameTitle = 'MI2 Phaser Game';
+
     preload () {
 
     }
     
     create () {
+
+        this.add.text(180, 100, `${this.gameTitle}`, { fontSize: '40px', fill: '#fff' })
 
         this.input.keyboard.on('keydown', () =>
             {
@@ -17,7 +21,7 @@ export class TitleScreen extends Phaser.Scene {
                     window.player = undefined;
                 }
                 this.input.stopPropagation();
-                this.scene.start('level_1');
+                this.scene.start('level_1_1');
                 //this.scene.switch('level_1');
             }
         );

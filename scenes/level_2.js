@@ -17,6 +17,7 @@ export class Level_2 extends SceneParent
     player;
     tileset;
     map;
+    nameLevel = 'Level 1';
 
     spawnPoint = {x: 232, y: 544};
 
@@ -93,7 +94,7 @@ export class Level_2 extends SceneParent
                     y: 416, 
                     name: 'portal3',
                     originScene: 'level_2',
-                    destinationScene: 'level_1',
+                    destinationScene: 'level_1_1',
                     spawnPoint: {x: 72, y: 256},
                     type: 'portal',
                     active: true,
@@ -103,7 +104,7 @@ export class Level_2 extends SceneParent
                     y: 416,
                     name: 'portal4',
                     originScene: 'level_2',
-                    destinationScene: 'level_1',
+                    destinationScene: 'level_1_1',
                     spawnPoint: {x: 232, y: 256},
                     type: 'portal',
                     active: true,
@@ -113,7 +114,7 @@ export class Level_2 extends SceneParent
                     y: 304,
                     name: 'portal5',
                     originScene: 'level_2',
-                    destinationScene: 'level_1',
+                    destinationScene: 'level_1_1',
                     spawnPoint: {x: 200, y: 240},
                     type: 'portal',
                     active: false,

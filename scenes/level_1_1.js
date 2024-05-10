@@ -1,9 +1,9 @@
 import { SceneParent } from '../SceneParent.js';
 
-export class Level_1 extends SceneParent
+export class Level_1_1 extends SceneParent
 {
     constructor(){
-		super('level_1');
+		super('level_1_1');
         //super({key:'level_1'});
 
 		//this.portals.lab = 'Lab1';
@@ -13,6 +13,7 @@ export class Level_1 extends SceneParent
     player;
     tileset;
     map;
+    nameLevel = 'Level 1';
 
     spawnPoint = {x: 200, y: 240};
 
@@ -97,7 +98,7 @@ export class Level_1 extends SceneParent
                     x: 72,
                     y: 256,
                     //name: 'portal1',
-                    originScene: 'level_1',
+                    originScene: 'level_1_1',
                     destinationScene: 'level_2',
                     spawnPoint: {x: 120, y: 430},
                     type: 'portal',
@@ -109,7 +110,7 @@ export class Level_1 extends SceneParent
                     x: 232,
                     y: 256, 
                     //name: 'portal2',
-                    originScene: 'level_1',
+                    originScene: 'level_1_1',
                     //destinationScene: 'level_2',
                     //spawnPoint: {x: 232, y: 430},
                     destinationScene: 'level_complete',
@@ -158,17 +159,11 @@ export class Level_1 extends SceneParent
             this.spriteGroupArray.push(timeBonusGroup);
 
         }
-
-        
-
-        
-
-
 	}
 
     preload ()
     {
-        this.load.tilemapTiledJSON('level_1', './assets/tilemaps/level_1.json');
+        this.load.tilemapTiledJSON('level_1_1', './assets/tilemaps/level_1_1.json');
         this.load.image('tileset_level_1', './assets/tilemaps/small_tileset_1.png');
         //this.animsManager.preload();
         //this.load.image('piker', './assets/piker.png');
@@ -185,7 +180,7 @@ export class Level_1 extends SceneParent
             // This populates the 'settings' object used in GameScene create(settings){}.
             // TODO: Difference between settings and init(data){} ???
             // Answer: This happens after preload() has loaded all assets ?!?!
-            mapKey: 'level_1',
+            mapKey: 'level_1_1',
             // 'tilesetNameInTiled' is the name of the tileset in Tiled.
             tilesetNameInTiled: 'small_tileset_1', 
             // 'tilesetImageKey' is the key of the tileset image used when loading the file in preload.

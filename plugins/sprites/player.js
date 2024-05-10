@@ -241,23 +241,6 @@ export class Player extends Phaser.GameObjects.Sprite {
         }
     }
 
-    accalerate(direction) {
-        if(direction === 'left' && this.body.velocity.x < this.speed) {
-            if(this.body.velocity.x > 0) {
-                this.body.velocity.x = 0;
-            } else {
-                this.body.velocity.x = this.body.velocity.x + this.speed/10;
-            }
-        }
-        if(direction === 'right' && this.body.velocity.x > this.speed) {
-            if(this.body.velocity.x < 0) {
-                this.body.velocity.x = 0;
-            } else {
-                this.body.velocity.x = this.body.velocity.x - this.speed/10;
-            }
-        }
-    }
-
     blockInstructions(frames){
         console.log('player: blockI');
         this.instructions = [];
