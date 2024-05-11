@@ -3,13 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "assets/tilemaps/level_2.tmx",
+    "activeFile": "assets/tilemaps/level_1_1.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
         "assets/tilemaps",
-        "assets/tilesets",
         "assets",
-        "."
+        ".",
+        "assets/tilesets"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -113,6 +113,17 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "assets/tilemaps/level_1_1.tmx": {
+            "scale": 1.6592013888888888,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 252.53112901538142,
+                "y": 88.2954902165952
+            }
+        },
+        "assets/tilemaps/level_1_1.tmx#small_tileset_1": {
+            "scaleInDock": 1
+        },
         "assets/tilemaps/level_2.tmx": {
             "scale": 0.75,
             "selectedLayer": 3,
@@ -174,14 +185,15 @@
     "map.tileWidth": 16,
     "map.width": 200,
     "openFiles": [
-        "assets/tilemaps/level_1.tmx",
-        "assets/tilemaps/level_2.tmx"
+        "assets/tilemaps/level_2.tmx",
+        "assets/tilemaps/level_1_1.tmx"
     ],
     "project": "unbenannt.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "assets/tilemaps/level_1.tmx",
         "assets/tilemaps/level_2.tmx",
+        "assets/tilemaps/level_1_1.tmx",
+        "assets/tilemaps/level_1.tmx",
         "assets/tilemaps/small_tileset1.tmx",
         "assets/tilemaps/level2.tmx",
         "assets/tilemaps/level1.tmx",
@@ -190,8 +202,7 @@
         "assets/tilemaps/pa1-terrain.tsx",
         "C:/Users/fboro/Desktop/Tiled/level1.tmx",
         "C:/Users/fboro/Desktop/Tiled/tilesets/pa1-terrain.tsx",
-        "assets/tilemaps/sky.tsx",
-        "assets/tilemaps/blue_sky1.tsx"
+        "assets/tilemaps/sky.tsx"
     ],
     "resizeMap.removeObjects": true,
     "tileset.embedInMap": true,

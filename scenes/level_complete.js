@@ -35,8 +35,8 @@ export class Level_Complete extends Phaser.Scene
 
     async create ()
     {
-        this.timeScore = window.player.clock;
-        console.log(this.timeScore);
+        //this.timeScore = window.player.clock;
+        //console.log(this.timeScore);
 
         this.add.text(200, 180, `${this.previousScene} Complete!`, { fontSize: '20px', fill: '#fff'}).setScrollFactor(0).setDepth(12);
         this.createTimer();
@@ -140,17 +140,33 @@ export class Level_Complete extends Phaser.Scene
             }
         }
         console.log(username);
+        let timeScoreString = Math.floor(this.timeScore).toString();
+        console.log(timeScoreString);
 
-        await fetch(`http://dreamlo.com/lb/lQc4nWb0k06MGIgC_sOlLQQ1BuQTZlw0yYSLIOZvD7Pg/add/${username}/${this.timeScore.toString()}`);
+        let response = await fetch(`http://dreamlo.com/lb/lQc4nWb0k06MGIgC_sOlLQQ1BuQTZlw0yYSLIOZvD7Pg/add/${username}/${timeScoreString}`, {
+            mode: 'no-cors',
+        })
+        .then(response => response.text())
+        .then(text => console.log(text))
+        .catch(error => console.log('Authorization failed: ' + error.message));
+        //let data = await response.text();
 
     }
 
     async fetchRankingList() {
        //Source: https://stackoverflow.com/a/59916857/16613784
-        let response = await fetch(`http://dreamlo.com/lb/663e84b78f40bc5de4ae67f8/json-asc`);
-        if(!response.ok) {// check if response worked (no 404 errors etc...)
-            throw new Error(response.statusText);
+        let response = await fetch(`http://dreamlo.com/lb/663e84b78f40bc5de4ae67f8/json-asc`)
+        .catch(error => console.log('Authorization failed: ' + error.message));
+        if(response) {
+            if(!response.ok) {// check if response worked (no 404 errors etc...)
+                throw new Error(response.statusText);
+            }
+            else {
+                console.log('response.ok');
+                let json = await response.json()
+                .catch(error => console.log('Authorization failed: ' + error.message));
+                return json
+            }
         }
-        return await response.json();
     }
 }
