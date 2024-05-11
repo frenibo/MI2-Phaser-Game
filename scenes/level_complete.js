@@ -9,9 +9,14 @@ export class Level_Complete extends Phaser.Scene
 
     previousScene;
     rankingList;
-    timeScore = performance.now();
+    rankingListArray = [];
+    timeScore = 0;
     highscore = false;
-    username = 'noUsername';
+    username = 'ANONYM';
+    privateCode = 'lQc4nWb0k06MGIgC_sOlLQQ1BuQTZlw0yYSLIOZvD7Pg';
+    publicCode = '663e84b78f40bc5de4ae67f8';
+    webURL = "http://dreamlo.com/lb/";
+
 
     init(data){
 
@@ -30,9 +35,38 @@ export class Level_Complete extends Phaser.Scene
 
     async create ()
     {
+        this.timeScore = window.player.clock;
+        console.log(this.timeScore);
+
         this.add.text(200, 180, `${this.previousScene} Complete!`, { fontSize: '20px', fill: '#fff'}).setScrollFactor(0).setDepth(12);
         this.createTimer();
         this.createInfoOverlay();
+        console.log('prefetch');
+        this.rankingList = await this.fetchRankingList();
+        console.log('postfetch');
+        console.log(this.rankingList.dreamlo.leaderboard);
+
+        if(this.rankingList.dreamlo.leaderboard) {
+            if(this.rankingList.dreamlo.leaderboard.entry.length) {
+                this.rankingList.dreamlo.leaderboard.entry.forEach(ranking => Number(ranking.score) < this.timeScore ? this.highscore = true : null);
+            }
+            else {
+                this.highscore = true;
+            }
+        }
+        else {
+            this.highscore = true;
+        }
+
+        if(this.highscore == true) {
+
+           await this.writeToFile();
+           this.rankingList = await this.fetchRankingList();
+           console.log(this.rankingList.dreamlo.leaderboard);
+        }
+
+        
+        
         this.input.keyboard.on('keydown', () =>
             {
                 this.input.stopPropagation();
@@ -40,25 +74,6 @@ export class Level_Complete extends Phaser.Scene
                 //this.scene.switch('level_1');
             }
         );
-
-        await this.fetchRankingList();
-
-        if(this.rankingList) {
-            this.rankingList.forEach(ranking => Number(ranking.time) < this.timeScore ? this.highscore = true : null);
-            if(this.highscore == true) {
-                let newScore = {'username': this.username, 'time': this.timeScore.toString(), 'datum': new Date().toISOString()};
-                this.rankingList.push(newScore);
-                this.rankingList = this.rankingList.sort((a, b) => Number(a.time) < Number(b.time) ? -1 : 1)
-                if(this.rankingList.length > 10) {
-                    this.rankingList.pop();
-                }
-                console.log(this.rankingList);
-                this.writeToFile(this.rankingList);
-            }
-        }
-
-        
-
     }
 
     update ()
@@ -73,6 +88,9 @@ export class Level_Complete extends Phaser.Scene
             this.timerDisplay = this.add.text(200, 200, '00:00:00', { fontSize: '20px', fill: '#fff'}).setScrollFactor(0).setDepth(11);
             this.timeScore = performance.now()-window.player.clock;
             this.timerDisplay.setText(`${this.convertNumToTimeElapsed(this.timeScore)}`);
+        }
+        else {
+            console.log(window.player);
         }
     }
 
@@ -103,19 +121,36 @@ export class Level_Complete extends Phaser.Scene
 
     }
 
-    writeToFile(data) {
-        const fs = require('fs');
-        const filepath = '../storage/ranking.json';
-        //const data = JSON.parse(fs.readFileSync(filepath));
-        //data[someKey] = "newValue";
-        fs.writeFileSync(filepath, JSON.stringify(data, null, 4));
+    async writeToFile() {
+        let username = this.username;
+        let count = 0;
+        console.log(this.rankingList.dreamlo.leaderboard)
+        if(this.rankingList.dreamlo.leaderboard) {
+            console.log(this.rankingList.dreamlo.leaderboard.entry)
+            if(this.rankingList.dreamlo.leaderboard.entry.length > 1) {
+                this.rankingList.dreamlo.leaderboard.entry.forEach(entry => entry.name.split('_')[0] === this.username ? count = count +1 : null);
+                if(count > 0) {
+                    username = username + '_' + count.toString();
+                }
+            }
+            else if (this.rankingList.dreamlo.leaderboard.entry.name) {
+                if(this.rankingList.dreamlo.leaderboard.entry.name === username) {
+                    username = username + '_1';
+                }
+            }
+        }
+        console.log(username);
+
+        await fetch(`http://dreamlo.com/lb/lQc4nWb0k06MGIgC_sOlLQQ1BuQTZlw0yYSLIOZvD7Pg/add/${username}/${this.timeScore.toString()}`);
+
     }
 
     async fetchRankingList() {
-        return await fetch('../storage/ranking.json')
-            .then(response => response.json())
-            .then(data => this.rankingList = data)
-            .catch(error => console.log(error));
-
+       //Source: https://stackoverflow.com/a/59916857/16613784
+        let response = await fetch(`http://dreamlo.com/lb/663e84b78f40bc5de4ae67f8/json-asc`);
+        if(!response.ok) {// check if response worked (no 404 errors etc...)
+            throw new Error(response.statusText);
+        }
+        return await response.json();
     }
 }
